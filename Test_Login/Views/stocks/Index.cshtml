@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Test_Login.Models.stocks>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<form method="post" action="/stocks/Chart">
+    <div>
+        <input type="text" name="stockID" placeholder="股票代號或名稱" onfocus="this.placeholder=' '" onblur="this.placeholder='股票代號或名稱'" />
+        <button type="submit">送出</button>
+    </div>
+</form>
+
+

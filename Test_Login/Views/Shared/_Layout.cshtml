@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Digger</title>
+    <logo> </logo>
+
+    <link rel="stylesheet" href="~/Content/vendor.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="~/assets/custom.css">
+
+</head>
+<body>
+
+    <section class="header header-fixed-xl">
+        <div class="header-top-line bg-blue">
+            @*上方Navbar(綠色)欄位*@
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-expand navbar-dark navbar-short justify-content-between w-100">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown dropdown-flat dropdown-flat-info">
+                                <a class="nav-link text-white dropdown-toggle" href="#" data-toggle="dropdown">
+                                    <span class="text-uppercase">欄位1</span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="https://demo.htmlhunters.com/profi/index.html">Browse all</a>
+
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown dropdown-flat dropdown-flat-info">
+                                <a class="nav-link text-white dropdown-toggle" href="#" data-toggle="dropdown">
+                                    <span class="text-uppercase">欄位2</span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="getting-started/introduction.html">Introduction</a>
+                                    <a class="dropdown-item" href="getting-started/build-tools.html">
+                                        Build
+                                        Tools
+                                    </a>
+                                    <a class="dropdown-item" href="getting-started/customizing.html">Customizing</a>
+                                    <a class="dropdown-item" href="components/alerts.html">Components</a>
+                                    <a class="dropdown-item" href="plugins/calendar.html">Plugins</a>
+                                </div>
+                            </li>
+                            <li class="nav-item  ">
+                                <a class="nav-link text-white">
+                                    <span class="text-uppercase">
+                                        欄位三
+                                    </span>
+                                </a>
+                            </li>
+                            @*<li class="nav-item ">
+            <a class="nav-link text-white">
+                <span class="text-uppercase">
+                    @Html.ActionLink("註冊", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+
+                </span>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link text-white" href="https://demo.htmlhunters.com/profi/booking.html">
+                <span class="text-uppercase">
+                    @Html.ActionLink("登入", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </span>
+            </a>
+        </li>*@
+                            <li class="nav-item  nav-link text-white">
+
+                                <span class="text-uppercase">
+                                    @Html.Partial("_LoginPartial")
+                                </span>
+
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link text-white" href="https://demo.htmlhunters.com/profi/booking.html">
+                                    <span class="text-uppercase">欄位三</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="header-main bg-white">
+            <div class="container">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg navbar-light w-100" id="header-navbar">
+                        @*Navbar(白色)*@
+                        <a class="navbar-brand font-weight-bold" href="/Home/Index"><img src="~/img/logo3.png" style="width: 200px;" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/therapist.html">
+                                        Row1
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/attorney.html">
+                                        Row2
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/contractor.html">
+                                        Row3
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                                        會員註冊
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                                        會員登入
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" @Html.ActionLink("討論區", "Message")
+
+                                </li>
+                            </ul>
+                            <div class="navbar-spacer"></div>
+                            <a class="btn btn-outline-danger text-nowrap" href="#" data-toggle="none" target="">
+                                開始發掘
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    @RenderBody()
+
+
+    <section class="footer bg-secondary">
+        <div class="container py-19 py-sm-23 py-lg-25">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="mb-14 mb-md-0">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <a href="/Home/Index" class="footer-brand">Gold Digger</a>
+                        <div class="brand-icons-list ml-10 ml-sm-20">
+                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-facebook">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-twitter">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-pinterest">
+                                <i class="fa fa-pinterest-p"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="footer-menu">
+                    <li><a href="/Home/Index">聯絡我們</a></li>
+                    <li><a href="/Home/Index">^_^</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <script src="~/Scripts/vendor.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

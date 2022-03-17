@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LabModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--產生期間發現錯誤:
+警告 6013: 資料表/檢視 'Lab.dbo.buy_and_sell_report_0309' 未定義主索引鍵，也無法推斷有效的主索引鍵。此資料表/檢視已被排除。如果要使用此實體，您必須檢閱您的結構描述，加入正確的索引鍵，並將它取消註解。
+        <EntityType Name="buy_and_sell_report_0309">
+          <Property Name="StockCode" Type="varchar" MaxLength="8" />
+          <Property Name="StockName" Type="nchar" MaxLength="10" />
+          <Property Name="globalCompany" Type="int" />
+          <Property Name="investmentTrust" Type="int" />
+          <Property Name="Dealer_1" Type="int" />
+          <Property Name="Dealer_2" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="stock_date" Type="char" MaxLength="8" />
+        </EntityType>-->
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserPwd" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mymessage">
+          <Key>
+            <PropertyRef Name="messageID" />
+          </Key>
+          <Property Name="messageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="10" />
+          <Property Name="main" Type="nvarchar" MaxLength="200" />
+          <Property Name="replyID" Type="int" />
+          <Property Name="heart" Type="int" />
+          <Property Name="dislike" Type="int" />
+          <Property Name="initDate" Type="datetime" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Lab.dbo.stockPrice' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="stockPrice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="stockID" Type="char" MaxLength="4" />
+          <Property Name="stockName" Type="nvarchar" MaxLength="20" />
+          <Property Name="numOfSharesTrade" Type="int" />
+          <Property Name="numOfTrade" Type="int" />
+          <Property Name="moneyOfDeal" Type="bigint" />
+          <Property Name="openPrice" Type="varchar" MaxLength="8" />
+          <Property Name="highPrice" Type="varchar" MaxLength="8" />
+          <Property Name="lowPrice" Type="varchar" MaxLength="8" />
+          <Property Name="endPrice" Type="varchar" MaxLength="8" />
+          <Property Name="stockDate" Type="char" MaxLength="8" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stocks">
+          <Key>
+            <PropertyRef Name="id_pk" />
+          </Key>
+          <Property Name="stockID" Type="char" MaxLength="4" />
+          <Property Name="stockName" Type="nvarchar" MaxLength="20" />
+          <Property Name="numOfSharesTrade" Type="varchar" MaxLength="15" />
+          <Property Name="numOfTrade" Type="varchar" MaxLength="15" />
+          <Property Name="moneyOfDeal" Type="varchar" MaxLength="15" />
+          <Property Name="openPrice" Type="varchar" MaxLength="10" />
+          <Property Name="highPrice" Type="varchar" MaxLength="10" />
+          <Property Name="lowPrice" Type="varchar" MaxLength="10" />
+          <Property Name="endPrice" Type="varchar" MaxLength="10" />
+          <Property Name="upDowm" Type="char" MaxLength="1" />
+          <Property Name="upDowmPrice" Type="varchar" MaxLength="10" />
+          <Property Name="PER" Type="varchar" MaxLength="10" />
+          <Property Name="stockDate" Type="char" MaxLength="8" />
+          <Property Name="id_pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LabModelStoreContainer">
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mymessage" EntityType="Self.Mymessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stocks" EntityType="Self.stocks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stockPrice" EntityType="Self.stockPrice" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [stockPrice].[stockID] AS [stockID], 
+    [stockPrice].[stockName] AS [stockName], 
+    [stockPrice].[numOfSharesTrade] AS [numOfSharesTrade], 
+    [stockPrice].[numOfTrade] AS [numOfTrade], 
+    [stockPrice].[moneyOfDeal] AS [moneyOfDeal], 
+    [stockPrice].[openPrice] AS [openPrice], 
+    [stockPrice].[highPrice] AS [highPrice], 
+    [stockPrice].[lowPrice] AS [lowPrice], 
+    [stockPrice].[endPrice] AS [endPrice], 
+    [stockPrice].[stockDate] AS [stockDate], 
+    [stockPrice].[id] AS [id]
+    FROM [dbo].[stockPrice] AS [stockPrice]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LabModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPwd" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mymessage">
+          <Key>
+            <PropertyRef Name="messageID" />
+          </Key>
+          <Property Name="messageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="main" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="replyID" Type="Int32" />
+          <Property Name="heart" Type="Int32" />
+          <Property Name="dislike" Type="Int32" />
+          <Property Name="initDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="stocks">
+          <Key>
+            <PropertyRef Name="id_pk" />
+          </Key>
+          <Property Name="stockID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="stockName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="numOfSharesTrade" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="numOfTrade" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="moneyOfDeal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="openPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="highPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="lowPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="endPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="upDowm" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="upDowmPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="stockDate" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="id_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="stockPrice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="stockID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="stockName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="numOfSharesTrade" Type="Int32" />
+          <Property Name="numOfTrade" Type="Int32" />
+          <Property Name="moneyOfDeal" Type="Int64" />
+          <Property Name="openPrice" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="highPrice" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="lowPrice" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="endPrice" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="stockDate" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityContainer Name="LabEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="Mymessage" EntityType="Self.Mymessage" />
+          <EntitySet Name="stocks" EntityType="Self.stocks" />
+          <EntitySet Name="stockPrice" EntityType="Self.stockPrice" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LabModelStoreContainer" CdmEntityContainer="LabEntities">
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="LabModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mymessage">
+            <EntityTypeMapping TypeName="LabModel.Mymessage">
+              <MappingFragment StoreEntitySet="Mymessage">
+                <ScalarProperty Name="messageID" ColumnName="messageID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="main" ColumnName="main" />
+                <ScalarProperty Name="replyID" ColumnName="replyID" />
+                <ScalarProperty Name="heart" ColumnName="heart" />
+                <ScalarProperty Name="dislike" ColumnName="dislike" />
+                <ScalarProperty Name="initDate" ColumnName="initDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stocks">
+            <EntityTypeMapping TypeName="LabModel.stocks">
+              <MappingFragment StoreEntitySet="stocks">
+                <ScalarProperty Name="stockID" ColumnName="stockID" />
+                <ScalarProperty Name="stockName" ColumnName="stockName" />
+                <ScalarProperty Name="numOfSharesTrade" ColumnName="numOfSharesTrade" />
+                <ScalarProperty Name="numOfTrade" ColumnName="numOfTrade" />
+                <ScalarProperty Name="moneyOfDeal" ColumnName="moneyOfDeal" />
+                <ScalarProperty Name="openPrice" ColumnName="openPrice" />
+                <ScalarProperty Name="highPrice" ColumnName="highPrice" />
+                <ScalarProperty Name="lowPrice" ColumnName="lowPrice" />
+                <ScalarProperty Name="endPrice" ColumnName="endPrice" />
+                <ScalarProperty Name="upDowm" ColumnName="upDowm" />
+                <ScalarProperty Name="upDowmPrice" ColumnName="upDowmPrice" />
+                <ScalarProperty Name="PER" ColumnName="PER" />
+                <ScalarProperty Name="stockDate" ColumnName="stockDate" />
+                <ScalarProperty Name="id_pk" ColumnName="id_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stockPrice">
+            <EntityTypeMapping TypeName="LabModel.stockPrice">
+              <MappingFragment StoreEntitySet="stockPrice">
+                <ScalarProperty Name="stockID" ColumnName="stockID" />
+                <ScalarProperty Name="stockName" ColumnName="stockName" />
+                <ScalarProperty Name="numOfSharesTrade" ColumnName="numOfSharesTrade" />
+                <ScalarProperty Name="numOfTrade" ColumnName="numOfTrade" />
+                <ScalarProperty Name="moneyOfDeal" ColumnName="moneyOfDeal" />
+                <ScalarProperty Name="openPrice" ColumnName="openPrice" />
+                <ScalarProperty Name="highPrice" ColumnName="highPrice" />
+                <ScalarProperty Name="lowPrice" ColumnName="lowPrice" />
+                <ScalarProperty Name="endPrice" ColumnName="endPrice" />
+                <ScalarProperty Name="stockDate" ColumnName="stockDate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

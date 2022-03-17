@@ -1,0 +1,277 @@
+﻿@using Test_Login.Models
+@{
+    List<message>
+    messageList = ViewBag.messageList;
+    }
+
+    @*<table class="table">
+        <thead>
+            <tr>
+                <th>文章編號 messageID</th>
+                <th>用戶名稱 userName</th>
+                <th>文章內容 main</th>
+                <th>回應編號 replyID</th>
+                <th>案讚數 heart</th>
+                <th>倒讚數 dislike</th>
+                <th>文章日期 initDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (message message in messageList)
+            {
+            <tr>
+                <th>@message.messageID</th>
+                <th>@message.userName</th>
+                <th>@message.main</th>
+                <th>@message.replyID</th>
+                <th>@message.heart</th>
+                <th>@message.dislike</th>
+                <th>@message.initDate</th>
+            </tr>
+            }
+        </tbody>
+    </table>*@
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-success btn-sm">@*<i class="fa fa-plus" aria-hidden="true"></i>*@發文</button></span></h2>
+        <div class="panel-group">
+            @foreach (message message in messageList)
+            {
+            List<message>
+                articleList = new List<message>
+                    ();
+                    if (message.replyID == 0)
+                    {
+                    articleList.Add(message);
+                    }
+                    foreach (message article in articleList)
+                    {
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@article.userName<span class="pull-right">@article.initDate</span></div>
+                        <div class="panel-body">
+
+                            @article.main
+                            <br />
+                            <div>
+
+                                <button class="btntest btnHeart+@article.messageID btn btn-success" id="heart+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-heart="@article.heart" alt="Add Password">推 @article.heart</button>
+                                <button class="btntest btnDislike+@article.messageID btn btn-danger" id="dislike+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-dislike="@article.dislike" alt="Add Password">噓 @article.dislike</button>
+
+                                <br />
+                                <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID">回覆</button>
+                            </div>
+                            <br />
+                            @foreach (message reply in messageList)
+                            {
+                            if (reply.replyID == article.messageID)
+                            {
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">@reply.userName<span class="pull-right">@reply.initDate</span></div>
+                                <div class="panel-body">
+                                    @reply.main
+                                    <br />
+                                    <button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
+                                    <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>
+                                </div>
+                            </div>
+
+                            }
+
+                            }
+                        </div>
+                    </div>
+                    }
+
+                    }
+
+        </div>
+
+
+        <!-- 新增貼文 -->
+        <div id="newsModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">發文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/Home/Message">
+                            <div class="form-group">
+                                <label for="userNameBox">
+                                    <span class="glyphicon glyphicon-bullhorn"></span>
+                                    使用者名稱
+                                </label>
+                                <input type="text"
+                                       name="userNameBox"
+                                       class="form-control"
+                                       placeholder="使用者名稱" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mainBox">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    在想些什麼呢?
+                                </label>
+                                @*<input type="text"
+                                         name="mainBox"
+                                         class="form-control"
+                                         placeholder="main">*@
+                                <textarea class="form-control"
+                                          name="mainBox"
+                                          id="exampleFormControlTextarea1"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">發文</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- 新增貼文 -->
+        <!-- 回覆貼文 -->
+        <div id="replyModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">回覆</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/Home/Reply">
+                            <div>
+                                <input type="text" id="messageID" name="messageID" value="0" hidden />
+                            </div>
+                            <div class="form-group">
+                                <label for="userNameBox">
+                                    <span class="glyphicon glyphicon-bullhorn"></span>
+                                    使用者名稱
+                                </label>
+                                <input type="text"
+                                       name="userNameBox"
+                                       class="form-control"
+                                       placeholder="使用者名稱" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mainBox">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    回覆內容
+                                </label>
+                                @*<input type="text"
+                                         name="mainBox"
+                                         class="form-control"
+                                         placeholder="main">*@
+                                <textarea class="form-control"
+                                          name="mainBox"
+                                          id="exampleFormControlTextarea1"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">回覆</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- 回覆貼文 -->
+    </div>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Content/vendor.css"></script>
+    <script>
+
+
+
+        $("#newItem").click(function () {
+            $("#newsModal").modal({ backdrop: "static" });
+        })
+
+
+
+        $(".btnRelpy").click(function () {
+            $("#messageID").val(this.dataset.messageid);
+            $("#replyModal").modal({ backdrop: "static" });
+        })
+
+
+
+        $(".btntest").click(function () {
+            var message = {
+                messageID: 0,
+                heart: -1,
+                dislike: -1
+            }
+            message.messageID = this.dataset.messageid;
+            message.heart = this.dataset.heart;
+            message.dislike = this.dataset.dislike;
+            if (message.heart) {
+                //alert("true")
+                console.log(message.heart);
+                console.log(message.dislike);
+                console.log('message.heart != -1');
+                $.ajax({
+                    type: "post",
+                    url: "/Home/APILike",
+                    data: message
+                }).then(function (e) {
+                    document.getElementById(`heart+${message.messageID}`).innerHTML = `讚 ${e.heart}`;
+                    document.getElementById(`heart+${message.messageID}`).dataset.heart = e.heart;
+                })
+            }
+            else {
+                console.log(message.heart);
+                console.log(message.dislike);
+                console.log('else');
+                //alert("false")
+                $.ajax({
+                    type: "post",
+                    url: "/Home/APIDislike",
+                    data: message
+                }).then(function (e) {
+                    document.getElementById(`dislike+${message.messageID}`).innerHTML = `倒讚 ${e.dislike}`;
+                    document.getElementById(`dislike+${message.messageID}`).dataset.dislike = e.dislike;
+                })
+            }
+
+        })
+
+        $(".btnHeart").click(function () {
+            /*     console.log("/home/Index/" + this.dataset.messageid);*/
+            //$.ajax({
+            //    type: "put",
+            //    url: "/home/Index" + this.dataset.messageid,
+            //    data: newsList[currentIndex]
+            //})
+            //    .then(function (e) {
+            //        showToast(e);
+            //    })
+        })
+
+
+
+        $(".btnDislike").click(function () {
+            console.log(this.dataset.messageid);
+        })
+
+
+
+    </script>

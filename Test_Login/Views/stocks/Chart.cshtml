@@ -1,0 +1,218 @@
+﻿@model IEnumerable<Test_Login.Models.stocks>
+
+@{
+    ViewBag.Title = ViewBag.id;
+}
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-stock.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+<script src="https://cdn.anychart.com/csv-data/csco-daily.js"></script>
+<link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+<link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+<style type="text/css">
+    #container, #container_kdj {
+        height:600px;
+        width:400%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .anychart-credits-text, .anychart-credits-logo {
+        display: none !important;
+    }
+    .tabs-wrapper {
+        width: 300px;
+    }
+
+    .tabClass {
+        position: absolute;
+        right: 100%;
+    }
+
+    .tabs {
+    }
+
+    .tabs label {
+        border: 1px solid black;
+        background: #BABABA;
+        display: inline-block;
+
+    }
+
+    .tabs, .tabs-main-content {
+        display: inline-block;
+        vertical-align: top;
+        margin: 10px 10px;
+    }
+
+    .tabs-main-content {
+        background: green;
+    }
+
+    .tabClass:checked + .tabs-content {
+        display: block;
+    }
+
+    .tabs-content {
+        display: none;
+    }
+</style>
+
+<body>
+    <h2>@ViewBag.id</h2>
+    <div class="tabs-wrapper">
+        <div class="tabs">
+            <label for="one" class="tabLabel">基本資料</label>
+            <label for="two" class="tabLabel">KDJ圖</label>
+        </div>
+        <div class="tabs-main-content">
+            <input type="radio" class="tabClass" id="one" name="tab" checked="checked" />
+            <div class="tabs-content">
+                <div id="container"></div>
+            </div>
+
+            <input type="radio" class="tabClass" id="two" name="tab" />
+            <div class="tabs-content">
+                <div id="container_kdj"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="info">
+        <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
+        <a href="https://statementdog.com/analysis/3704">財報狗</a>
+        <a href="https://tw.stock.yahoo.com/quote/3704">YAHOO</a>
+        <a href="https://histock.tw/stock/3704#price">HISTOCK</a>
+        <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
+        <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
+
+
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    var model = @Html.Raw(Json.Encode(Model));
+    var stockData = [];
+    for (let i = 0; i < model.length; i++) {
+        var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
+        stockData.push({
+            x: new Date(date),
+            o: Number(model[i].openPrice),
+            h: Number(model[i].highPrice),
+            l: Number(model[i].lowPrice),
+            c: Number(model[i].endPrice),
+            v: Number(model[i].numOfTrade.replace(/,/g, ""))
+        });
+    }
+
+    var stockDataKDJ = [];
+    for (let i = 0; i < model.length; i++) {
+        var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
+        stockDataKDJ.push(
+            [
+            new Date(date),
+            Number(model[i].openPrice),
+            Number(model[i].highPrice),
+            Number(model[i].lowPrice),
+            Number(model[i].endPrice),
+            Number(model[i].numOfTrade.replace(/,/g, ""))
+            ]
+        );
+    }
+
+    anychart.onDocumentReady(function () {
+
+        // set the data
+        table = anychart.data.table('x');
+        table.addData(stockData);
+
+        // map the data for candlestick plot
+        mapping = table.mapAs({ 'open': "o", 'high': "h", 'low': "l", 'close': "c" });
+
+        // for SMA
+        mapping_sma = table.mapAs({ 'x': "x", 'value': "l" });
+        // for histogram
+        mappping_volume = table.mapAs({ 'x': "x", 'value': "v" });
+
+        // [chart] in
+        var chart = anychart.stock();
+        chart.padding(10, 10, 10, 50);
+
+
+        // set the series for candlestick plot
+        var series = chart.plot(0).candlestick(mapping).zIndex(10);
+        series.name("@ViewBag.id");
+
+        series.risingStroke("#660000");
+        series.risingFill("#990033");
+        series.fallingStroke("#336666");
+        series.fallingFill("#339999");
+
+        // set the series for SMA
+        var sma5 = chart.plot(0).sma(mapping_sma, 5).series();
+        sma5.stroke('#bf360c');
+
+        var sma20 = chart.plot(0).sma(mapping_sma, 20).series();
+        sma20.stroke('#ff6d00');
+
+        var sma60 = chart.plot(0).sma(mapping_sma, 60).series();
+        sma60.stroke('#F0781F');
+
+        // set the series for histogram
+
+        var series_hist = chart.plot(0).column(mappping_volume);
+
+        // set volume series settings
+        series_hist.zIndex(100).maxHeight('25%').bottom(0);
+
+        // create a logarithmic scale
+        var customScale = anychart.scales.log();
+        // sets y-scale
+        series_hist.yScale(customScale);
+
+        series_hist.name("成交量");
+        series_hist.risingStroke("#660000");
+        series_hist.risingFill("#990033");
+        series_hist.fallingStroke("#336666");
+        series_hist.fallingFill("#339999");
+
+        // chart.title('@ViewBag.id');
+        chart.container('container');
+
+        chart.draw();
+        // select the latest 20 points just like the last month data
+        chart.selectRange('points', 20, true);
+    });
+
+    // set the data
+    dataTable = anychart.data.table();
+    dataTable.addData(stockDataKDJ);
+
+    // mapping
+    var mapping2 = dataTable.mapAs();
+    mapping2.addField("x", 0);
+    mapping2.addField("open", 1, "first");
+    mapping2.addField("high", 2, "max");
+    mapping2.addField("low", 3, "min");
+    mapping2.addField("close", 4, "last");
+    // create stock chart
+    var chart2 = anychart.stock();
+    // create plots on the chart
+    var plotKDJ = chart2.plot(0);
+
+    // create first KDJ indicator of default series type
+    var kdj_1 = plotKDJ.kdj(mapping2, 10, "EMA", 10, "SMA", 20);
+    kdj_1.kSeries().stroke("#bf360c");
+    kdj_1.dSeries().stroke("#02660c");
+    kdj_1.jSeries().stroke("#0228b2");
+
+    // set container id for the chart
+    chart2.container("container_kdj");
+    // initiate chart drawing
+    chart2.draw();
+
+</script>

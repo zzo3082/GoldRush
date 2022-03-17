@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Test_Login.Models.stocks>
+
+@{
+    ViewBag.Title = ViewBag.id;
+}
+
+<style>
+    .strategyButton{
+        width:250px;
+        height:100px;
+        text-align:center;
+        margin:10px;
+    }
+    .stockName{
+        width:100px;
+        text-align:center;
+    }
+    .table td {
+        text-align: center;
+    } 
+    .table th{
+        text-align:center;
+    }
+</style>
+
+<h2>Strategy</h2>
+<p>
+    @ViewBag.stringID
+</p>
+
+<form method="post">
+    <input class="strategyButton" type="submit" value="成交爆大量" name="str">
+    <input class="strategyButton" type="submit" value="四海遊龍" name="str">
+    <input class="strategyButton" type="submit" value="強弱勢股" name="str">
+    <input class="strategyButton" type="submit" value="外資連買" name="str">
+    <input class="strategyButton" type="submit" value="投信連買" name="str">
+    <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
+    <input class="strategyButton" type="submit" value="EPS創新高" name="str">
+    <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
+</form>
+
+<hr />
+<div id="Info">
+    @{
+        if (Model != null)
+        {
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>股票名稱</th>
+                        <th colspan="5" style="text-align:center;">今日資訊</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">股票代號</th>
+                        <th scope="col">收盤價</th>
+                        <th scope="col">漲跌</th>
+                        <th scope="col">漲跌%</th>
+                        <th scope="col">成交量</th>
+                        <th scope="col">本益比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
+                        {
+                            // stockDate should use current datetime
+                            var item = Model.Where(x => x.stockID == s && x.stockDate == "20210104").ToList()[0];
+                            <tr>
+                                <td>
+                                    <input class="stockName" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
+                                    <input class="stockName" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                </td>
+                                <td>@Html.Encode(item.endPrice)</td>
+                                <td>@Html.Encode(item.upDowmPrice)</td>
+                                @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}
+                                <td>@ratio </td>
+                                <td>@Html.Encode(item.numOfSharesTrade)</td>
+                                <td>@Html.Encode(item.PER)</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        }
+
+    }
+</div>
+
