@@ -17,7 +17,7 @@ namespace GoldRush.Controllers
         // GET: stocks
         public ActionResult Index()
         {
-            // return View(db.stocks.ToList());
+            // return View(db.stockPrice.ToList());
             return View();
         }
 
@@ -30,7 +30,7 @@ namespace GoldRush.Controllers
             }
             else
             {
-                var stock = db.stocks.Where(x => x.stockID == id).OrderBy(x => x.stockDate).ToList();
+                var stock = db.stockPrice.Where(x => x.stockID == id).OrderBy(x => x.stockDate).ToList();
                 ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
                 return View(stock);
             }
@@ -46,7 +46,7 @@ namespace GoldRush.Controllers
             }
             else
             {
-                var stock = db.stocks.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
+                var stock = db.stockPrice.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
                 ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
                 return View(stock);
             }
@@ -116,7 +116,7 @@ namespace GoldRush.Controllers
             }
             else
             {
-                return View(db.stocks.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
             }
         }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test_Login.Models.stocks>
+﻿@model IEnumerable<Test_Login.Models.stockPrice>
 
 @{
     ViewBag.Title = ViewBag.id;
@@ -72,11 +72,11 @@
                                     <input class="stockName" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
                                 <td>@Html.Encode(item.endPrice)</td>
-                                <td>@Html.Encode(item.upDowmPrice)</td>
-                                @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}
-                                <td>@ratio </td>
+                                @*<td>@Html.Encode(item.upDowmPrice)</td>
+                                @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
+                                @*<td>@ratio </td>*@
                                 <td>@Html.Encode(item.numOfSharesTrade)</td>
-                                <td>@Html.Encode(item.PER)</td>
+                                @*<td>@Html.Encode(item.PER)</td>*@
                             </tr>
                         }
                     }

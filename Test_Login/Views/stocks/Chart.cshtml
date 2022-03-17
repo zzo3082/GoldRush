@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Test_Login.Models.stocks>
+﻿@model IEnumerable<Test_Login.Models.stockPrice>
 
 @{
     ViewBag.Title = ViewBag.id;
@@ -105,10 +105,10 @@
             h: Number(model[i].highPrice),
             l: Number(model[i].lowPrice),
             c: Number(model[i].endPrice),
-            v: Number(model[i].numOfTrade.replace(/,/g, ""))
+            v: Number(model[i].numOfTrade)
         });
     }
-
+    console.log(stockData)
     var stockDataKDJ = [];
     for (let i = 0; i < model.length; i++) {
         var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
@@ -119,7 +119,7 @@
             Number(model[i].highPrice),
             Number(model[i].lowPrice),
             Number(model[i].endPrice),
-            Number(model[i].numOfTrade.replace(/,/g, ""))
+            Number(model[i].numOfTrade)
             ]
         );
     }
