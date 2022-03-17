@@ -100,15 +100,18 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" @Html.ActionLink("挖掘股票", "Strategy", "stocks")
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Strategy">
+                                        挖掘股票
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" @Html.ActionLink("自訂策略", "Customize", "stocks")
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
+                                        自訂策略
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" @Html.ActionLink("股票資訊", "Chart", "stocks")
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Chart">
+                                        股票資訊
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -122,13 +125,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" @Html.ActionLink("討論區", "Message")
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
+                                        討論區
                                     </a>
 
                                 </li>
                             </ul>
                             <div class="navbar-spacer"></div>
-                            <a class="btn btn-outline-danger text-nowrap" href="#" data-toggle="none" target="">
+                            <a class="btn btn-outline-danger text-nowrap" href="/stocks/Strategy" data-toggle="none" target="">
                                 開始發掘
                             </a>
                         </div>
