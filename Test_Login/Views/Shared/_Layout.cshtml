@@ -119,9 +119,11 @@
                             <div class="navbar-spacer"></div>
                             <div class="navbar-spacer"></div>
                             <span>
-                                <i class="material-icons" aria-hidden="true">search </i>
+                                <button id="GoToChart">
+                                    <i class="material-icons" aria-hidden="true">search </i>
+                                </button>
 
-                                <input type="text" class="form-control-sm mb-3 " name="selectStock" placeholder="股票代碼..." value="" />
+                                <input type="text" class="form-control-sm mb-3 " id="selectStock" placeholder="股票代碼..." value="" />
                             </span>
                         </div>
                     </nav>
@@ -163,5 +165,12 @@
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
+    <script>
+    $("#GoToChart").click(function (e) {
+        e.preventDefault();
+        window.location = "/stocks/Chart/" + $("#selectStock").val();
+
+    });
+    </script>
 </body>
 </html>

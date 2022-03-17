@@ -11,6 +11,9 @@
         text-align:center;
         margin:10px;
     }
+    .formStrategy {
+        text-align: center;
+    }
     .stockName{
         width:100px;
         text-align:center;
@@ -21,6 +24,9 @@
     .table th{
         text-align:center;
     }
+    #stockInfo{
+        text-align:center;
+    }
 </style>
 
 <h2>Strategy</h2>
@@ -28,19 +34,21 @@
     @ViewBag.stringID
 </p>
 
-<form method="post">
-    <input class="strategyButton" type="submit" value="成交爆大量" name="str">
-    <input class="strategyButton" type="submit" value="四海遊龍" name="str">
-    <input class="strategyButton" type="submit" value="強弱勢股" name="str">
-    <input class="strategyButton" type="submit" value="外資連買" name="str">
-    <input class="strategyButton" type="submit" value="投信連買" name="str">
-    <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
-    <input class="strategyButton" type="submit" value="EPS創新高" name="str">
-    <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
-</form>
+<div class="formStrategy">
+    <form method="post">
+        <input class="strategyButton" type="submit" value="成交爆大量" name="str">
+        <input class="strategyButton" type="submit" value="四海遊龍" name="str">
+        <input class="strategyButton" type="submit" value="強弱勢股" name="str">
+        <input class="strategyButton" type="submit" value="外資連買" name="str">
+        <input class="strategyButton" type="submit" value="投信連買" name="str">
+        <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
+        <input class="strategyButton" type="submit" value="EPS創新高" name="str">
+        <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
+    </form>
+</div>
 
-<hr />
-<div id="Info">
+<br /><br />
+<div id="stockInfo">
     @{
         if (Model != null)
         {
