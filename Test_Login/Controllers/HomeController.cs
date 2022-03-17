@@ -53,7 +53,7 @@ namespace Test_Login.Controllers
                 messageManager.CreateMessage(message);
                 List<message> messageList = messageManager.GetMessages();
                 ViewBag.messageList = messageList;
-                return View();
+                return Redirect("Message");
             }
             else
             {
@@ -82,7 +82,7 @@ namespace Test_Login.Controllers
             messageManager.ReplyMessage(message);
             List<message> messageList = messageManager.GetMessages();
             ViewBag.messageList = messageList;
-            return View("Message");
+            return Redirect("Message");
         }
 
         [HttpPost]
