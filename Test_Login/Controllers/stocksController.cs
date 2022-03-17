@@ -125,6 +125,20 @@ namespace GoldRush.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Customize(DateTime? selectDate, string priceType, string minValue, string maxValue)
+        {
+            if(selectDate == null || priceType == null || minValue == null || maxValue == null)
+            {
+                return View();
+                // minValue and maxValue could only have one
+            }else if(selectDate != null && priceType != null && minValue != null && maxValue != null)
+            {
+                ViewBag.Info = string.Format("{0:yyyy-MM-dd}", selectDate) + " " + priceType + " " + minValue + " " + maxValue;
+            }
+            return View();
+        }
+
         public ActionResult StockMarketIndex()
         {
             return View();

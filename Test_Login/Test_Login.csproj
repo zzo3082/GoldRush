@@ -203,6 +203,7 @@
     <Compile Include="Models\Mymessage.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockAll.cs" />
     <Compile Include="Models\stockPrice.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
