@@ -25,21 +25,8 @@
     </div>
 </form>
 
-
 <p>
-    @ViewBag.date
-</p>
-<p>
-    @ViewBag.priceType
-</p>
-<p>
-    @ViewBag.minValue
-</p>
-<p>
-    @ViewBag.maxValue
-</p>
-<p>
-    123 @ViewBag.Info
+    @ViewBag.value
 </p>
 
 <div id="stockInfo">
@@ -67,7 +54,7 @@
                         foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
                         {
                             // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s && x.stockDate == "20210104").ToList()[0];
+                            var item = Model.Where(x => x.stockID == s && x.stockDate == ViewBag.date1).ToList()[0];
                             <tr>
                                 <td>
                                     <input class="stockName" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />

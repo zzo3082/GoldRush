@@ -60,20 +60,20 @@ namespace GoldRush.Controllers
             switch (str)
             {
                 case "成交爆大量":
-                    //foreach (string s in db.stocks.Select(x => x.stockID).Distinct().OrderBy(x => x))
-                    //{
-                    //    var dbs = db.stocks.Where(x => x.stockID == s).ToList();
-                    //    try
-                    //    {
-                    //        if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
-                    //        {
-                    //            stringID = stringID + s + "\n";
-                    //        }
-                    //    }
-                    //    catch
-                    //    {
-                    //    }
-                    //}
+                    foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    {
+                        var dbs = db.stocks.Where(x => x.stockID == s).ToList();
+                        try
+                        {
+                            if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
+                            {
+                                stockArray = stockArray + s + " ";
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
                     stockArray += ", 2303";
                     stockArray += ", 2330";
                     break;
@@ -132,11 +132,45 @@ namespace GoldRush.Controllers
             {
                 return View();
                 // minValue and maxValue could only have one
-            }else if(selectDate != null && priceType != null && minValue != null && maxValue != null)
+            }else
             {
-                ViewBag.Info = string.Format("{0:yyyy-MM-dd}", selectDate) + " " + priceType + " " + minValue + " " + maxValue;
+                //string priceTypeEnglish;
+                //switch (priceType)
+                //{
+                //    case "開盤價":
+                //        priceTypeEnglish = "openPrice";break;
+                //    case "最高價":
+                //        priceTypeEnglish = "highPrice";break;
+                //    case "最低價":
+                //        priceTypeEnglish = "lowPrice";break;
+                //    case "收盤價":
+                //        priceTypeEnglish = "endPrice";break;
+                //    default:
+                //        break;
+                //}
+
+
+                string stockArray = "";
+                string Date1 = string.Format("{0:yyyyMMdd}", selectDate);
+                ViewBag.date1 = Date1;
+                float minV = float.Parse(minValue);
+                foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                {
+
+                    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                    try
+                    {
+                        if (float.Parse(dbs.Where(x => x.stockDate == Date1).Select(x => x.endPrice).ToList()[0]) > minV)
+                        {
+                            stockArray = stockArray + s + " ";
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
             }
-            return View();
         }
 
         public ActionResult StockMarketIndex()
