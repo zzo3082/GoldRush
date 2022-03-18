@@ -5,28 +5,33 @@
 }
 
 <style>
-    .strategyButton{
-        width:250px;
-        height:100px;
-        text-align:center;
-        margin:10px;
+    .strategyButton {
+        width: 250px;
+        height: 100px;
+        text-align: center;
+        margin: 10px;
     }
+
     .formStrategy {
         text-align: center;
-        width:60%;
+        width: 60%;
     }
-    .stockName{
-        width:100px;
-        text-align:center;
+
+    .stockName {
+        width: 100px;
+        text-align: center;
     }
+
     .table td {
         text-align: center;
-    } 
-    .table th{
-        text-align:center;
     }
-    #stockInfo{
-        text-align:center;
+
+    .table th {
+        text-align: center;
+    }
+
+    #stockInfo {
+        text-align: center;
     }
 </style>
 
@@ -39,28 +44,29 @@
     <form method="post">
         <div class="positiveStrategy">
             <h3>利多</h3>
-            <input class="strategyButton" type="submit" value="成交爆大量" name="str">
-            <input class="strategyButton" type="submit" value="四海遊龍" name="str">
-            <input class="strategyButton" type="submit" value="外資連買" name="str">
-            <input class="strategyButton" type="submit" value="投信連買" name="str">
-            <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
-            <input class="strategyButton" type="submit" value="EPS創新高" name="str">
-            <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
-            <input class="strategyButton" type="submit" value="強勢股票" name="str">
+            <input class="btn btn-outline-danger text-uppercase " type="submit" value="成交爆大量" name="str" style="">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="四海遊龍" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="外資連買" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="投信連買" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="KD黃金交叉" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="EPS創新高" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="營收由虧轉盈" name="str">
+            <input class="btn btn-outline-danger text-uppercase" type="submit" value="強勢股票" name="str">
 
         </div>
         <div class="negativeStrategy">
             <h3>利空</h3>
-            <input class="strategyButton" type="submit" value="弱勢股票" name="str">
-            <input class="strategyButton" type="submit" value="外資連賣" name="str">
-            <input class="strategyButton" type="submit" value="投信連賣" name="str">
-            <input class="strategyButton" type="submit" value="KD死亡交叉" name="str">
+            <input class="btn btn-outline-primary" type="submit" value="弱勢股票" name="str">
+            <input class="btn btn-outline-primary" type="submit" value="外資連賣" name="str">
+            <input class="btn btn-outline-primary" type="submit" value="投信連賣" name="str">
+            <input class="btn btn-outline-primary" type="submit" value="KD死亡交叉" name="str">
 
         </div>
     </form>
 </div>
 
-<br /><br />
+<br />
+<br />
 <div id="stockInfo">
     @{
         if (Model != null)
@@ -94,7 +100,7 @@
                                 </td>
                                 <td>@Html.Encode(item.endPrice)</td>
                                 @*<td>@Html.Encode(item.upDowmPrice)</td>
-                                @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
+                                    @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
                                 @*<td>@ratio </td>*@
                                 <td>@Html.Encode(item.numOfSharesTrade)</td>
                                 @*<td>@Html.Encode(item.PER)</td>*@
@@ -109,3 +115,20 @@
     }
 </div>
 
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<br />
+<br />
+<br />
+
+<br />
+<br />
