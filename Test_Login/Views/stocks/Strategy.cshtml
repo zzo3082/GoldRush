@@ -13,6 +13,7 @@
     }
     .formStrategy {
         text-align: center;
+        width:60%;
     }
     .stockName{
         width:100px;
@@ -34,16 +35,28 @@
     @ViewBag.stringID
 </p>
 
-<div class="formStrategy">
+<div class="formStrategy mx-auto">
     <form method="post">
-        <input class="strategyButton" type="submit" value="成交爆大量" name="str">
-        <input class="strategyButton" type="submit" value="四海遊龍" name="str">
-        <input class="strategyButton" type="submit" value="強弱勢股" name="str">
-        <input class="strategyButton" type="submit" value="外資連買" name="str">
-        <input class="strategyButton" type="submit" value="投信連買" name="str">
-        <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
-        <input class="strategyButton" type="submit" value="EPS創新高" name="str">
-        <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
+        <div class="positiveStrategy">
+            <h3>利多</h3>
+            <input class="strategyButton" type="submit" value="成交爆大量" name="str">
+            <input class="strategyButton" type="submit" value="四海遊龍" name="str">
+            <input class="strategyButton" type="submit" value="外資連買" name="str">
+            <input class="strategyButton" type="submit" value="投信連買" name="str">
+            <input class="strategyButton" type="submit" value="KD黃金交叉" name="str">
+            <input class="strategyButton" type="submit" value="EPS創新高" name="str">
+            <input class="strategyButton" type="submit" value="營收由虧轉盈" name="str">
+            <input class="strategyButton" type="submit" value="強勢股票" name="str">
+
+        </div>
+        <div class="negativeStrategy">
+            <h3>利空</h3>
+            <input class="strategyButton" type="submit" value="弱勢股票" name="str">
+            <input class="strategyButton" type="submit" value="外資連賣" name="str">
+            <input class="strategyButton" type="submit" value="投信連賣" name="str">
+            <input class="strategyButton" type="submit" value="KD死亡交叉" name="str">
+
+        </div>
     </form>
 </div>
 
