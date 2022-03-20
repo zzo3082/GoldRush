@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "BackTesting001";
+}
+<h1>定期定額</h1>
+<form action="/BackTesting/BackTesting001" method="post">
+    <input type="submit" name="name" value="定期定額" />
+</form>
+<form action="/BackTesting/BackTesting002" method="post">
+    <input type="submit" name="name" value="定股定額" />
+</form>
+
+
+<table>
+    <tr>
+        <td>股票標的</td>
+        <td>
+            <input type="text" name="name" placeholder="輸入股票代碼" />
+        </td>
+    </tr>
+    <tr>
+        <td>幾號投入</td>
+        <td>
+            <input type="text" name="name" placeholder="填入日期" />
+        </td>
+    </tr>
+    <tr>
+        <td>固定買幾股</td>
+        <td>
+            <input type="text" name="name" placeholder="填入股數" />
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

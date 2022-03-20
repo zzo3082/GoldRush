@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "BackTesting002";
+}
+
+
+<h1>定期固定股數</h1>
+
+<form action="/BackTesting/BackTesting001" method="post">
+    <input type="submit" name="name" value="定期定額" />
+</form>
+<form action="/BackTesting/BackTesting002" method="post">
+    <input type="submit" name="name" value="定期定股" />
+</form>
+
+<table>
+    <tr>
+        <td>股票標的</td>
+        <td>
+            <input type="text" name="name" placeholder="輸入股票代碼"  />
+        </td>
+    </tr>
+    <tr>
+        <td>幾號投入</td>
+        <td>
+            <input type="text" name="name" placeholder="填入日期" />
+        </td>
+    </tr>
+    <tr>
+        <td>固定買多少金額(新台幣)</td>
+        <td>
+            <input type="text" name="name" placeholder="填入金額" />
+        </td>
+    </tr>
+</table>
