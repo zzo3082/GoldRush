@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "自訂策略";
 }
-<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style type="text/css">
     .stockCustomize {
         text-align: center;
@@ -12,19 +11,18 @@
 <h2>自訂策略</h2>
 
 
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion"
-                   href="#collapseOne">
-                    範例1
-                </a>
-            </h4>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    基本面
+                </button>
+            </h2>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse">
-            <div class="panel-body">
 
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
                 @*[form] in*@
                 <form method="post" action="/stocks/Customize">
                     <div class="stockCustomize">
@@ -43,64 +41,63 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion"
-                   href="#collapseTwo">
-                    範例2
-                </a>
-            </h4>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    技術面
+                </button>
+            </h2>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">
-
-                @*[form] in*@
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                @*[checkbox] [form] in*@
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion"
-                   href="#collapseThree">
-                    範例3
-                </a>
-            </h4>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    籌碼面
+                </button>
+            </h2>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">
-
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
                 @*[form] in*@
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <p>
