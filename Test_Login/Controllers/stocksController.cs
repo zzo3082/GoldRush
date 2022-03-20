@@ -60,20 +60,20 @@ namespace GoldRush.Controllers
             switch (str)
             {
                 case "成交爆大量":
-                    foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
-                    {
-                        var dbs = db.stocks.Where(x => x.stockID == s).ToList();
-                        try
-                        {
-                            if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
-                            {
-                                stockArray = stockArray + s + " ";
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
+                    //foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    //{
+                    //    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                    //    try
+                    //    {
+                    //        if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
+                    //        {
+                    //            stockArray = stockArray + s + " ";
+                    //        }
+                    //    }
+                    //    catch
+                    //    {
+                    //    }
+                    //}
                     stockArray += ", 2303";
                     stockArray += ", 2330";
                     break;

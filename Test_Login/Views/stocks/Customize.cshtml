@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "自訂策略";
 }
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style type="text/css">
     .stockCustomize {
         text-align: center;
@@ -10,20 +11,97 @@
 </style>
 <h2>自訂策略</h2>
 
-<form method="post" action="/stocks/Customize">
-    <div class="stockCustomize">
-        <input name="selectDate" type="date" />
-        <select name="priceType">
-            <option>開盤價</option>
-            <option>最高價</option>
-            <option>最低價</option>
-            <option>收盤價</option>
-        </select>
-        從<input type="text" name="minValue" />
-        到<input type="text" name="maxValue" />
-        <button type="submit">送出</button>
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseOne">
+                    範例1
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+
+                @*[form] in*@
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseTwo">
+                    範例2
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+
+                @*[form] in*@
+                <div class="stockCustomize">
+                    <input name="selectDate" type="date" />
+                    <select name="priceType">
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>
+                    從<input type="text" name="minValue" />
+                    到<input type="text" name="maxValue" />
+                    <button type="submit">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseThree">
+                    範例3
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">
+
+                @*[form] in*@
+                <div class="stockCustomize">
+                    <input name="selectDate" type="date" />
+                    <select name="priceType">
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>
+                    從<input type="text" name="minValue" />
+                    到<input type="text" name="maxValue" />
+                    <button type="submit">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <p>
     @ViewBag.value
