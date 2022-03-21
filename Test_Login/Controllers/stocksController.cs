@@ -134,24 +134,30 @@ namespace GoldRush.Controllers
                 // minValue and maxValue could only have one
             }else
             {
-                //string priceTypeEnglish;
-                //switch (priceType)
-                //{
-                //    case "開盤價":
-                //        priceTypeEnglish = "openPrice";break;
-                //    case "最高價":
-                //        priceTypeEnglish = "highPrice";break;
-                //    case "最低價":
-                //        priceTypeEnglish = "lowPrice";break;
-                //    case "收盤價":
-                //        priceTypeEnglish = "endPrice";break;
-                //    default:
-                //        break;
-                //}
+                ViewBag.priceType = priceType;
+                ViewBag.minValue = minValue;
+                ViewBag.maxValue = maxValue;
+                string priceTypeEnglish = "";
+                switch (priceType)
+                {
+                    case "開盤價":
+                        priceTypeEnglish = "openPrice"; break;
+                    case "最高價":
+                        priceTypeEnglish = "highPrice"; break;
+                    case "最低價":
+                        priceTypeEnglish = "lowPrice"; break;
+                    case "收盤價":
+                        priceTypeEnglish = "endPrice"; break;
+                    default:
+                        break;
+                }
 
-
+                //dbs[0].GetType().GetProperty(priceTypeEnglish).GetValue(dbs[0])
+                //float.Parse(dbs[0].GetType().GetProperty(priceTypeEnglish).GetValue(dbs[0]).ToString())
                 string stockArray = "";
                 string Date1 = string.Format("{0:yyyyMMdd}", selectDate);
+
+                // date1 because that stock at the date could have no value
                 ViewBag.date1 = Date1;
                 float minV = float.Parse(minValue);
                 foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
@@ -160,7 +166,7 @@ namespace GoldRush.Controllers
                     var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
                     try
                     {
-                        if (float.Parse(dbs.Where(x => x.stockDate == Date1).Select(x => x.endPrice).ToList()[0]) > minV)
+                        if (float.Parse(dbs.Where(x => x.stockDate == Date1).Select(x => x.GetType().GetProperty(priceTypeEnglish).GetValue(x).ToString()).ToList()[0]) > minV)
                         {
                             stockArray = stockArray + s + " ";
                         }
@@ -175,6 +181,13 @@ namespace GoldRush.Controllers
 
         public ActionResult StockMarketIndex()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult StockMarketIndex( string[] factor1)
+        {
+            ViewBag.factor1 = string.Join(", ", factor1);
             return View();
         }
     }
