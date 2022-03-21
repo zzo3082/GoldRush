@@ -26,8 +26,11 @@ namespace Test_Login.Models
                     message message = new message()
                     {
                         messageID = reader.GetInt32(reader.GetOrdinal("messageID")),
-                        userName = reader.GetString(reader.GetOrdinal("userName")),
+                        UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                        UserId = reader.GetString(reader.GetOrdinal("UserId")),
                         main = reader.GetString(reader.GetOrdinal("main")),
+                        wholike = reader.GetString(reader.GetOrdinal("wholike")),
+                        whohate = reader.GetString(reader.GetOrdinal("whohate")),
                         replyID = reader.GetInt32(reader.GetOrdinal("replyID")),
                         heart = reader.GetInt32(reader.GetOrdinal("heart")),
                         dislike = reader.GetInt32(reader.GetOrdinal("dislike")),
@@ -50,9 +53,11 @@ namespace Test_Login.Models
         {
             SqlConnection conn = new SqlConnection(ConnStr);
             SqlCommand cmd = new SqlCommand(
-                "insert  into Mymessage (userName, main, replyID, heart, dislike, initDate) values (@userName, @main, 0, 0, 0, GETDATE())",
+                //insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate,  initDate) values ('小名', 'xiaomin', '早安', 0, 0, 0, '', '' ,  GETDATE())
+                "insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0, 0, 0, '' ,'', GETDATE())",
                 conn);
-            cmd.Parameters.Add(new SqlParameter("userName", message.userName));
+            cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
+            cmd.Parameters.Add(new SqlParameter("UserId", message.UserId));
             cmd.Parameters.Add(new SqlParameter("main", message.main));
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -64,9 +69,11 @@ namespace Test_Login.Models
         {
             SqlConnection conn = new SqlConnection(ConnStr);
             SqlCommand cmd = new SqlCommand(
-                "insert  into Mymessage (userName, main, replyID, heart, dislike, initDate) values (@userName, @main, @replyID, 0, 0, GETDATE())",
+                //insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate,  initDate) values ('小名', 'xiaomin', '早安', 0, 0, 0, '', '' ,  GETDATE())
+                "insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, @replyID, 0, 0, '', '' ,GETDATE())",
                 conn);
-            cmd.Parameters.Add(new SqlParameter("userName", message.userName));
+            cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
+            cmd.Parameters.Add(new SqlParameter("UserId", message.UserId));
             cmd.Parameters.Add(new SqlParameter("main", message.main));
             cmd.Parameters.Add(new SqlParameter("replyID", message.replyID));
             conn.Open();
@@ -93,14 +100,33 @@ namespace Test_Login.Models
         {
             SqlConnection conn = new SqlConnection(ConnStr);
             SqlCommand cmd = new SqlCommand(
-                "update Mymessage set heart = @heart where messageID = @messageID",
+                "update Mymessage set heart = @heart, wholike=@UserName where messageID = @messageID",
                 conn);
             cmd.Parameters.Add(new SqlParameter("heart", message.heart + 1));
+            cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
             cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
             return message.heart + 1;
+        }
+
+        // 案讚 ajax版 因為 應該
+        public int LikeCancelAjax(message message)
+        {
+            SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmdselect = new SqlCommand(
+                $"select wholike from Mymessage where messageID = {message.messageID}",
+                conn);
+            conn.Open();
+            string strWholike =((string)cmdselect.ExecuteScalar()).Replace($"{message.UserName}", "");
+            strWholike = strWholike == string.Empty ? "''" : strWholike;
+            SqlCommand cmd = new SqlCommand(
+                $"update Mymessage set heart = {message.heart-1}, wholike={strWholike} where messageID = {message.messageID}",
+                conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return message.heart - 1;
         }
 
         // 案倒讚

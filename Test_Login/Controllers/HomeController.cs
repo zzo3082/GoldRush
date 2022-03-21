@@ -32,7 +32,6 @@ namespace Test_Login.Controllers
         // Message 取得資料庫資料
         public ActionResult Message()
         {
-            
             messageManager messageManager = new messageManager();
             List<message> messageList = messageManager.GetMessages();
             ViewBag.messageList = messageList;
@@ -40,14 +39,15 @@ namespace Test_Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Message(string userNameBox, string mainBox, int heart = 0, int messageID = 0)
+        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, int heart = 0, int messageID = 0)
         {
             messageManager messageManager = new messageManager();
-            if (userNameBox != null)
+            if (UserNameBox != null)
             {
                 message message = new message()
                 {
-                    userName = userNameBox,
+                    UserId = UserIdbox,
+                    UserName = UserNameBox,
                     main = mainBox
                 };
                 messageManager.CreateMessage(message);
@@ -70,13 +70,14 @@ namespace Test_Login.Controllers
 
         }
         [HttpPost]
-        public ActionResult Reply(string userNameBox, string mainBox, int messageID)
+        public ActionResult Reply(string UserNameBox, string UserIdbox, string mainBox, int messageID)
         {
             messageManager messageManager = new messageManager();
             message message = new message()
             {
+                UserId = UserIdbox,
                 replyID = messageID,
-                userName = userNameBox,
+                UserName = UserNameBox,
                 main = mainBox
             };
             messageManager.ReplyMessage(message);
@@ -121,6 +122,14 @@ namespace Test_Login.Controllers
         {
             messageManager messageManager = new messageManager();
             int heartReturn = messageManager.LikeAjax(message);
+            return Json(new { heart = heartReturn, messageID = message.messageID }, JsonRequestBehavior.AllowGet);
+        }
+        // 當取消讚post到這裡 從ajax收到一個message
+        [HttpPost]
+        public JsonResult APILikeCancel(message message)
+        {
+            messageManager messageManager = new messageManager();
+            int heartReturn = messageManager.LikeCancelAjax(message);
             return Json(new { heart = heartReturn, messageID = message.messageID }, JsonRequestBehavior.AllowGet);
         }
         // 當按讚post到這裡 從ajax收到一個message

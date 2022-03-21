@@ -15,7 +15,7 @@ namespace Test_Login.Models
     public partial class Mymessage
     {
         public int messageID { get; set; }
-        public string userName { get; set; }
+        public string UserName { get; set; }
         public string main { get; set; }
         public Nullable<int> replyID { get; set; }
         public Nullable<int> heart { get; set; }
