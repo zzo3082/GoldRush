@@ -32,16 +32,23 @@
     <br/><br/><br/>
     <h3>計算結果</h3>
     <table>
+        @*ViewBag.total_cost = total_cost;
+        ViewBag.nowTotalVal = nowTotalVal;
+        ViewBag.profit_and_loss = profit_and_loss;
+        ViewBag.percentage = percentage;*@
         <tr>
-            <td>總付出成本</td>   
-        </tr>        
-        <tr>
-            <td>當前市值</td> 
-        </tr>        
-        <tr>
-            <td>損益 / 百分比</td>   
+            <td>總付出成本</td>
+            <td>@ViewBag.total_cost</td>
         </tr>
-        
+        <tr>
+            <td>當前市值</td>
+            <td>@ViewBag.nowTotalVal</td>
+        </tr>
+        <tr>
+            <td>未實現損益 / 百分比</td>
+            <td>@ViewBag.profit_and_loss / @ViewBag.percentage %</td>
+        </tr>
+
     </table>
 </form>
 
