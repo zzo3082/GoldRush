@@ -2,35 +2,58 @@
 @{
     ViewBag.Title = "BackTesting001";
 }
-<h1>定期定額</h1>
+@ViewBag.result
+@*@result*@
+@ViewBag.tt
+
 <form action="/BackTesting/BackTesting001" method="post">
-    <input type="submit" name="name" value="定期定額" />
-</form>
-<form action="/BackTesting/BackTesting002" method="post">
-    <input type="submit" name="name" value="定股定額" />
+    <h1>定期定額</h1>
+    <table>
+        <tr>
+            <td>股票標的</td>
+            <td>
+                <input type="text" name="stockID" placeholder="輸入股票代碼" />
+            </td>
+        </tr>
+        <tr>
+            <td>幾號投入</td>
+            <td>
+                <input type="text" name="day" placeholder="填入日期" />
+            </td>
+        </tr>
+        <tr>
+            <td>固定買幾股</td>
+            <td>
+                <input type="text" name="totalUnit" placeholder="填入數量" />
+            </td>
+        </tr>
+    </table>
+    <input type="submit" name="name" value="送出" />
+    <br/><br/><br/>
+    <h3>計算結果</h3>
+    <table>
+        <tr>
+            <td>總付出成本</td>   
+        </tr>        
+        <tr>
+            <td>當前市值</td> 
+        </tr>        
+        <tr>
+            <td>損益 / 百分比</td>   
+        </tr>
+        
+    </table>
 </form>
 
 
-<table>
-    <tr>
-        <td>股票標的</td>
-        <td>
-            <input type="text" name="name" placeholder="輸入股票代碼" />
-        </td>
-    </tr>
-    <tr>
-        <td>幾號投入</td>
-        <td>
-            <input type="text" name="name" placeholder="填入日期" />
-        </td>
-    </tr>
-    <tr>
-        <td>固定買幾股</td>
-        <td>
-            <input type="text" name="name" placeholder="填入股數" />
-        </td>
-    </tr>
-</table>
+
+
+@*<form action="/BackTesting/BackTesting002" method="post">
+        <input type="submit" name="name" value="定股定額" />
+    </form>*@
+
+
+
 
 
 
