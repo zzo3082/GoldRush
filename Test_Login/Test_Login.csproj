@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BackTestingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\stocksController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Models\Mymessage.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockAll.cs" />
     <Compile Include="Models\stockPrice.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -293,6 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TEST\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\font-awesome\css\font-awesome.css.map" />
@@ -327,6 +330,8 @@
     <Content Include="Views\stocks\Index.cshtml" />
     <Content Include="Views\stocks\StockMarketIndex.cshtml" />
     <Content Include="Views\stocks\Strategy.cshtml" />
+    <Content Include="Views\BackTesting\BackTesting001.cshtml" />
+    <Content Include="Views\BackTesting\BackTesting002.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

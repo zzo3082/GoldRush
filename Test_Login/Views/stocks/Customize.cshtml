@@ -1,10 +1,222 @@
-﻿
+﻿@model IEnumerable<Test_Login.Models.stockPrice>
+
 @{
-    ViewBag.Title = "Customize";
+    ViewBag.Title = "自訂策略";
 }
+<style type="text/css">
+    .stockCustomize {
+        text-align: center;
+    }
+</style>
+<h2>自訂策略</h2>
 
-<h2>Customize</h2>
 
-<form action="/stocks/Customize" method="post">
-    <input type="submit" />
-</form>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    基本面
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                @*[form] in*@
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    技術面
+                </button>
+            </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                @*[checkbox] [form] in*@
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    籌碼面
+                </button>
+            </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                @*[form] in*@
+                <form method="post" action="/stocks/Customize">
+                    <div class="stockCustomize">
+                        <input name="selectDate" type="date" />
+                        <select name="priceType">
+                            <option>開盤價</option>
+                            <option>最高價</option>
+                            <option>最低價</option>
+                            <option>收盤價</option>
+                        </select>
+                        從<input type="text" name="minValue" />
+                        到<input type="text" name="maxValue" />
+                        <button type="submit">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    測試區
+                </button>
+            </h2>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+            <div class="card-body">
+                @*[form] in*@
+                <label>
+                    <input type="checkbox" name="factor1" />&nbsp
+                    <input name="selectDate" type="date" />&nbsp
+                    <select name="priceType">
+                        &nbsp
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>&nbsp
+                    從 <input type="text" name="minValue" />&nbsp
+                    到 <input type="text" name="maxValue" />
+                </label>                
+                <br />
+                <label>
+                    <input type="checkbox" name="factor2" />&nbsp
+                    <input name="selectDate" type="date" />&nbsp
+                    <select name="priceType">
+                        &nbsp
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>&nbsp
+                    從 <input type="text" name="minValue" />&nbsp
+                    到 <input type="text" name="maxValue" />
+                </label>               
+                <br />
+                <label>
+                    <input type="checkbox" name="factor3" />&nbsp
+                    <input name="selectDate" type="date" />&nbsp
+                    <select name="priceType">
+                        &nbsp
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>&nbsp
+                    從 <input type="text" name="minValue" />&nbsp
+                    到 <input type="text" name="maxValue" />
+                </label>
+                <br />
+                <label>
+                    <input type="checkbox" name="factor4" />&nbsp
+                    <input name="selectDate" type="date" />&nbsp
+                    <select name="priceType">
+                        &nbsp
+                        <option>開盤價</option>
+                        <option>最高價</option>
+                        <option>最低價</option>
+                        <option>收盤價</option>
+                    </select>&nbsp
+                    從 <input type="text" name="minValue" />&nbsp
+                    到 <input type="text" name="maxValue" />
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p>
+    @ViewBag.value
+</p>
+
+<div id="stockInfo">
+    @{
+        if (Model != null)
+        {
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>股票名稱</th>
+                        <th colspan="5" style="text-align:center;">今日資訊</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">股票代號</th>
+                        <th scope="col">收盤價</th>
+                        <th scope="col">漲跌</th>
+                        <th scope="col">漲跌%</th>
+                        <th scope="col">成交量</th>
+                        <th scope="col">本益比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
+                        {
+                            // stockDate should use current datetime
+                            var item = Model.Where(x => x.stockID == s && x.stockDate == ViewBag.date1).ToList()[0];
+                            <tr>
+                                <td>
+                                    <input class="stockName" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
+                                    <input class="stockName" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                </td>
+                                <td>@Html.Encode(item.endPrice)</td>
+                                @*<td>@Html.Encode(item.upDowmPrice)</td>
+                                    @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
+                                @*<td>@ratio </td>*@
+                                <td>@Html.Encode(item.numOfSharesTrade)</td>
+                                @*<td>@Html.Encode(item.PER)</td>*@
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        }
+
+    }
+</div>

@@ -60,14 +60,14 @@ namespace GoldRush.Controllers
             switch (str)
             {
                 case "成交爆大量":
-                    //foreach (string s in db.stocks.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    //foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
                     //{
-                    //    var dbs = db.stocks.Where(x => x.stockID == s).ToList();
+                    //    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
                     //    try
                     //    {
                     //        if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
                     //        {
-                    //            stringID = stringID + s + "\n";
+                    //            stockArray = stockArray + s + " ";
                     //        }
                     //    }
                     //    catch
@@ -123,6 +123,54 @@ namespace GoldRush.Controllers
         public ActionResult Customize()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Customize(DateTime? selectDate, string priceType, string minValue, string maxValue)
+        {
+            if(selectDate == null || priceType == null || minValue == null || maxValue == null)
+            {
+                return View();
+                // minValue and maxValue could only have one
+            }else
+            {
+                //string priceTypeEnglish;
+                //switch (priceType)
+                //{
+                //    case "開盤價":
+                //        priceTypeEnglish = "openPrice";break;
+                //    case "最高價":
+                //        priceTypeEnglish = "highPrice";break;
+                //    case "最低價":
+                //        priceTypeEnglish = "lowPrice";break;
+                //    case "收盤價":
+                //        priceTypeEnglish = "endPrice";break;
+                //    default:
+                //        break;
+                //}
+
+
+                string stockArray = "";
+                string Date1 = string.Format("{0:yyyyMMdd}", selectDate);
+                ViewBag.date1 = Date1;
+                float minV = float.Parse(minValue);
+                foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                {
+
+                    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                    try
+                    {
+                        if (float.Parse(dbs.Where(x => x.stockDate == Date1).Select(x => x.endPrice).ToList()[0]) > minV)
+                        {
+                            stockArray = stockArray + s + " ";
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
+            }
         }
 
         public ActionResult StockMarketIndex()
