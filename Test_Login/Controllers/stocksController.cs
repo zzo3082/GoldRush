@@ -31,7 +31,10 @@ namespace GoldRush.Controllers
             else
             {
                 var stock = db.stockPrice.Where(x => x.stockID == id).OrderBy(x => x.stockDate).ToList();
-                ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+                if (stock.Count != 0)
+                {
+                    ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+                }
                 return View(stock);
             }
         }
@@ -47,7 +50,10 @@ namespace GoldRush.Controllers
             else
             {
                 var stock = db.stockPrice.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
-                ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+                if(stock.Count != 0)
+                {
+                    ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+                }
                 return View(stock);
             }
         }
