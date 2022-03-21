@@ -33,8 +33,8 @@
                             <option>最低價</option>
                             <option>收盤價</option>
                         </select>
-                        從<input type="text" name="minValue" />
-                        到<input type="text" name="maxValue" />
+                        從<input type="text" name="minValue" value="@(ViewBag.minValue ?? string.Empty)" />
+                        到<input type="text" name="maxValue" value="@(ViewBag.maxValue ?? string.Empty)" />
                         <button type="submit">送出</button>
                     </div>
                 </form>
@@ -167,11 +167,6 @@
         </div>
     </div>
 </div>
-
-
-<p>
-    @ViewBag.value
-</p>
 
 <div id="stockInfo">
     @{
