@@ -81,31 +81,36 @@ namespace Test_Login.Models
             conn.Close();
         }
 
-        // 案讚
-        public void Like(message message)
-        {
-            SqlConnection conn = new SqlConnection(ConnStr);
-            SqlCommand cmd = new SqlCommand(
-                "update Mymessage set heart = @heart where messageID = @messageID",
-                conn);
-            cmd.Parameters.Add(new SqlParameter("heart", message.heart +1));
-            cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
-        }
+        //// 案讚
+        //public void Like(message message)
+        //{
+        //    SqlConnection conn = new SqlConnection(ConnStr);
+        //    SqlCommand cmd = new SqlCommand(
+        //        "update Mymessage set heart = @heart where messageID = @messageID",
+        //        conn);
+        //    cmd.Parameters.Add(new SqlParameter("heart", message.heart +1));
+        //    cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
+        //    conn.Open();
+        //    cmd.ExecuteNonQuery();
+        //    conn.Close();
+        //}
 
         // 案讚 ajax版
         public int LikeAjax(message message)
         {
             SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmdselect = new SqlCommand(
+                $"select wholike from Mymessage where messageID = {message.messageID}",
+                conn);
+            conn.Open(); // (string) cmdselect.ExecuteScalar()+',' + message.UserName
+            string strWholike = (string)cmdselect.ExecuteScalar() == string.Empty ? message.UserName : (string)cmdselect.ExecuteScalar() + ',' + message.UserName;
             SqlCommand cmd = new SqlCommand(
                 "update Mymessage set heart = @heart, wholike=@UserName where messageID = @messageID",
                 conn);
             cmd.Parameters.Add(new SqlParameter("heart", message.heart + 1));
-            cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
+            cmd.Parameters.Add(new SqlParameter("UserName", strWholike));
             cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
-            conn.Open();
+
             cmd.ExecuteNonQuery();
             conn.Close();
             return message.heart + 1;
@@ -119,44 +124,99 @@ namespace Test_Login.Models
                 $"select wholike from Mymessage where messageID = {message.messageID}",
                 conn);
             conn.Open();
-            string strWholike =((string)cmdselect.ExecuteScalar()).Replace($"{message.UserName}", "");
-            strWholike = strWholike == string.Empty ? "''" : strWholike;
-            SqlCommand cmd = new SqlCommand(
-                $"update Mymessage set heart = {message.heart-1}, wholike={strWholike} where messageID = {message.messageID}",
-                conn);
+            string strWholike = ""; //((string)cmdselect.ExecuteScalar()).Replace($"{message.UserName}", "");
+
+            if (((string)cmdselect.ExecuteScalar()).Contains($",{message.UserName}"))
+            {
+                strWholike = ((string)cmdselect.ExecuteScalar()).Replace($",{message.UserName}", "");
+            }
+            else
+            {
+                strWholike = ((string)cmdselect.ExecuteScalar()).Replace($"{message.UserName}", "");
+            }
+            SqlCommand cmd = new SqlCommand();
+            if (strWholike == string.Empty)
+            {
+                cmd.CommandText = $"update Mymessage set heart = {message.heart - 1}, wholike= ' ' where messageID = {message.messageID}";
+                cmd.Connection = conn;
+            }
+            else
+            {
+                cmd.CommandText = $"update Mymessage set heart = {message.heart - 1}, wholike=@UserName where messageID = {message.messageID}";
+                cmd.Parameters.Add(new SqlParameter("UserName", strWholike));
+                cmd.Connection = conn;
+            }
             cmd.ExecuteNonQuery();
             conn.Close();
             return message.heart - 1;
         }
 
-        // 案倒讚
-        public void Dislike(message message)
-        {
-            SqlConnection conn = new SqlConnection(ConnStr);
-            SqlCommand cmd = new SqlCommand(
-                "update Mymessage set dislike = @dislike where messageID = @messageID",
-                conn);
-            cmd.Parameters.Add(new SqlParameter("dislike", message.dislike + 1));
-            cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
-        }
+        //// 案倒讚
+        //public void Dislike(message message)
+        //{
+        //    SqlConnection conn = new SqlConnection(ConnStr);
+        //    SqlCommand cmd = new SqlCommand(
+        //        "update Mymessage set dislike = @dislike where messageID = @messageID",
+        //        conn);
+        //    cmd.Parameters.Add(new SqlParameter("dislike", message.dislike + 1));
+        //    cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
+        //    conn.Open();
+        //    cmd.ExecuteNonQuery();
+        //    conn.Close();
+        //}
         // 案倒讚 Ajax版
         public int DislikeAjax(message message)
         {
             SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmdselect = new SqlCommand(
+                $"select whohate from Mymessage where messageID = {message.messageID}",
+                conn);
+            conn.Open();
+            string strWhohate = (string)cmdselect.ExecuteScalar() == string.Empty ? message.UserName : (string)cmdselect.ExecuteScalar() + ',' + message.UserName;
             SqlCommand cmd = new SqlCommand(
-                "update Mymessage set dislike = @dislike where messageID = @messageID",
+                "update Mymessage set dislike = @dislike, whohate=@UserName where messageID = @messageID",
                 conn);
             cmd.Parameters.Add(new SqlParameter("dislike", message.dislike + 1));
+            cmd.Parameters.Add(new SqlParameter("UserName", strWhohate));
             cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
-            conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
             return message.dislike + 1;
+
         }
+        //DislikeCancelAjax
+        public int DislikeCancelAjax(message message)
+        {
+            SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmdselect = new SqlCommand(
+                $"select whohate from Mymessage where messageID = {message.messageID}",
+                conn);
+            conn.Open();
+            string strWhohate = "";
+            if (((string)cmdselect.ExecuteScalar()).Contains($",{message.UserName}"))
+            {
+                strWhohate = ((string)cmdselect.ExecuteScalar()).Replace($",{message.UserName}", "");
+            }
+            else
+            {
+                strWhohate = ((string)cmdselect.ExecuteScalar()).Replace($"{message.UserName}", "");
+            }
+            SqlCommand cmd = new SqlCommand();
+            if (strWhohate == string.Empty)
+            {
+                cmd.CommandText = $"update Mymessage set dislike = {message.dislike - 1}, whohate= ' ' where messageID = {message.messageID}";
+                cmd.Connection = conn;
+            }
+            else
+            {
+                cmd.CommandText = $"update Mymessage set dislike = {message.dislike - 1}, whohate=@UserName where messageID = {message.messageID}";
+                cmd.Parameters.Add(new SqlParameter("UserName", strWhohate));
+                cmd.Connection = conn;
+            }
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return message.dislike - 1;
 
-
+        }
     }
 }

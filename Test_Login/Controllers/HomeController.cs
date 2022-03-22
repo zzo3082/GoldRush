@@ -62,7 +62,7 @@ namespace Test_Login.Controllers
                     messageID = (int)messageID,
                     heart = (int)heart
                 };
-                messageManager.Like(message);
+                //messageManager.Like(message);
                 List<message> messageList = messageManager.GetMessages();
                 ViewBag.messageList = messageList;
                 return View();
@@ -86,35 +86,35 @@ namespace Test_Login.Controllers
             return Redirect("Message");
         }
 
-        [HttpPost]
-        public ActionResult Like(int heart, int messageID)
-        {
-            messageManager messageManager = new messageManager();
-            message message = new message()
-            {
-                messageID = messageID,
-                heart = heart
-            };
-            messageManager.Like(message);
-            List<message> messageList = messageManager.GetMessages();
-            ViewBag.messageList = messageList;
-            return View("Message");
-        }
+        //[HttpPost]
+        //public ActionResult Like(int heart, int messageID)
+        //{
+        //    messageManager messageManager = new messageManager();
+        //    message message = new message()
+        //    {
+        //        messageID = messageID,
+        //        heart = heart
+        //    };
+        //   // messageManager.Like(message);
+        //    List<message> messageList = messageManager.GetMessages();
+        //    ViewBag.messageList = messageList;
+        //    return View("Message");
+        //}
 
-        [HttpPost]
-        public ActionResult Dislike(int dislike, int messageID)
-        {
-            messageManager messageManager = new messageManager();
-            message message = new message()
-            {
-                messageID = messageID,
-                dislike = dislike
-            };
-            messageManager.Dislike(message);
-            List<message> messageList = messageManager.GetMessages();
-            ViewBag.messageList = messageList;
-            return View("Message");
-        }
+        //[HttpPost]
+        //public ActionResult Dislike(int dislike, int messageID)
+        //{
+        //    messageManager messageManager = new messageManager();
+        //    message message = new message()
+        //    {
+        //        messageID = messageID,
+        //        dislike = dislike
+        //    };
+        //    //messageManager.Dislike(message);
+        //    List<message> messageList = messageManager.GetMessages();
+        //    ViewBag.messageList = messageList;
+        //    return View("Message");
+        //}
 
         // 當按讚post到這裡 從ajax收到一個message
         [HttpPost]
@@ -138,6 +138,14 @@ namespace Test_Login.Controllers
         {
             messageManager messageManager = new messageManager();
             int dislikeReturn = messageManager.DislikeAjax(message);
+            return Json(new { dislike = dislikeReturn, messageID = message.messageID }, JsonRequestBehavior.AllowGet);
+        }
+        // 當按讚post到這裡 從ajax收到一個message
+        [HttpPost]
+        public JsonResult APIDislikeCancel(message message)
+        {
+            messageManager messageManager = new messageManager();
+            int dislikeReturn = messageManager.DislikeCancelAjax(message);
             return Json(new { dislike = dislikeReturn, messageID = message.messageID }, JsonRequestBehavior.AllowGet);
         }
         #endregion
