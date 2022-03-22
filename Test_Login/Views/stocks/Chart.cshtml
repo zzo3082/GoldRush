@@ -13,8 +13,8 @@
 <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
 <style type="text/css">
     #container, #container_kdj {
-        height:600px;
-        width:400%;
+        height:800px;
+        width:100%;
         margin: 0;
         padding: 0;
     }
@@ -22,7 +22,7 @@
     .anychart-credits-text, .anychart-credits-logo {
         display: none !important;
     }
-    .tabs-wrapper {
+    /*.tabs-wrapper {
         width: 300px;
     }
 
@@ -57,12 +57,12 @@
 
     .tabs-content {
         display: none;
-    }
+    }*/
 </style>
 
 <body>
     <h2>@ViewBag.id</h2>
-    <div class="tabs-wrapper">
+    @*<div class="tabs-wrapper">
         <div class="tabs">
             <label for="one" class="tabLabel">基本資料</label>
             <label for="two" class="tabLabel">KDJ圖</label>
@@ -78,8 +78,29 @@
                 <div id="container_kdj"></div>
             </div>
         </div>
-    </div>
+    </div>*@
 
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本面</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">技術面</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">籌碼面</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div id="container"></div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div id="container_kdj"></div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
+        </div>
+    </div>
 
     <div id="info">
         <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
