@@ -2,69 +2,120 @@
 @{
     ViewBag.Title = "BackTesting001";
 }
-@ViewBag.result
-@*@result*@
-@ViewBag.tt
 
-<form action="/BackTesting/BackTesting001" method="post">
-    <h1>定期定額</h1>
-    <table>
-        <tr>
-            <td>股票標的</td>
-            <td>
-                <input type="text" name="stockID" placeholder="輸入股票代碼" />
-            </td>
-        </tr>
-        <tr>
-            <td>幾號投入</td>
-            <td>
-                <input type="text" name="day" placeholder="填入日期" />
-            </td>
-        </tr>
-        <tr>
-            <td>固定買幾股</td>
-            <td>
-                <input type="text" name="totalUnit" placeholder="填入數量" />
-            </td>
-        </tr>
-    </table>
-    <input type="submit" name="name" value="送出" />
-    <br/><br/><br/>
-    <h3>計算結果</h3>
-    <table>
-        @*ViewBag.total_cost = total_cost;
-        ViewBag.nowTotalVal = nowTotalVal;
-        ViewBag.profit_and_loss = profit_and_loss;
-        ViewBag.percentage = percentage;*@
-        <tr>
-            <td>總付出成本</td>
-            <td>@ViewBag.total_cost</td>
-        </tr>
-        <tr>
-            <td>當前市值</td>
-            <td>@ViewBag.nowTotalVal</td>
-        </tr>
-        <tr>
-            <td>未實現損益 / 百分比</td>
-            <td>@ViewBag.profit_and_loss / @ViewBag.percentage %</td>
-        </tr>
-
-    </table>
-</form>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-backTest001-tab" data-toggle="tab" href="#nav-backTest001" role="tab" aria-controls="nav-backTest001" aria-selected="true">定期定額</a>
+        <a class="nav-link" id="nav-backTest002-tab" data-toggle="tab" href="#nav-backTest002" role="tab" aria-controls="nav-backTest002" aria-selected="false">定期定股</a>
+    </div>
+</nav>
 
 
+@* 定期定額 *@
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-backTest001" role="tabpanel" aria-labelledby="nav-backTest001-tab">
+        <form action="/BackTesting/BackTesting002" method="post">
+            <h2>定期定額</h2>
+            <table>
+                <tr>
+                    <td>股票標的</td>
+                    <td>
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>幾號投入</td>
+                    <td>
+                        <input type="text" name="day" placeholder="填入日期" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>固定投入多少錢</td>
+                    <td>
+                        <input type="text" name="totalUnit" placeholder="填入金額" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="name1" value="送出" formaction="/BackTesting/BackTesting002" />
+            <br /><br /><br />
+            <h3>計算結果</h3>
+            <table>
+                <tr>
+                    <td>投資標的</td>
+                    <td>@($"{ViewBag.stockID2} {ViewBag.stockName2}" )</td>
+                </tr>
+                <tr>
+                    <td>每月@(ViewBag.day2)號固定投入</td>
+                    <td>@(ViewBag.count2)新台幣</td>
+                </tr>
+                <tr>
+                    <td>總付出成本(新台幣)</td>
+                    <td>@ViewBag.total_cost2</td>
+                </tr>
+                <tr>
+                    <td>當前市值</td>
+                    <td>@ViewBag.nowTotalVal2</td>
+                </tr>
+                <tr>
+                    <td>未實現損益 / 百分比</td>
+                    <td>@ViewBag.profit_and_loss2 / @ViewBag.percentage2 %</td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
 
-@*<form action="/BackTesting/BackTesting002" method="post">
-        <input type="submit" name="name" value="定股定額" />
-    </form>*@
+    @* 定期定股 *@
+    <div class="tab-pane fade" id="nav-backTest002" role="tabpanel" aria-labelledby="nav-backTest002-tab">
+        <form action="/BackTesting/BackTesting001" method="post">
+            <h2>定期定股</h2>
+            <table>
+                <tr>
+                    <td>股票標的</td>
+                    <td>
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>幾號投入</td>
+                    <td>
+                        <input type="text" name="day" placeholder="填入日期" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>固定買幾股</td>
+                    <td>
+                        <input type="text" name="totalUnit" placeholder="填入數量" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="name2" value="送出" />
+            <br /><br /><br />
+            <h3>計算結果</h3>
+            <table>
+                <tr>
+                    <td>投資標的</td>
+                    <td>@($"{ViewBag.stockID} {ViewBag.stockName}" )</td>
+                </tr>
+                <tr>
+                    <td>每月@(ViewBag.day)號固定投入</td>
+                    <td>@(ViewBag.count)股</td>
+                </tr>
+                <tr>
+                    <td>總付出成本(新台幣)</td>
+                    <td>@ViewBag.total_cost</td>
+                </tr>
+                <tr>
+                    <td>當前市值</td>
+                    <td>@ViewBag.nowTotalVal</td>
+                </tr>
+                <tr>
+                    <td>未實現損益 / 百分比</td>
+                    <td>@ViewBag.profit_and_loss / @ViewBag.percentage %</td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
+</div>
 
-
-
-
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
