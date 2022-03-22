@@ -74,7 +74,7 @@ namespace Test_Login
             manager.RegisterTwoFactorProvider("電子郵件代碼", new EmailTokenProvider<ApplicationUser>
             {
                 Subject = "安全碼",
-                BodyFormat = "您的安全碼為 {0}"
+                BodyFormat = "您的安全碼為 {3}"
             });
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
