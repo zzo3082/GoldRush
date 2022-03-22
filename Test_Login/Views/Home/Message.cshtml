@@ -85,77 +85,203 @@
     @if (Request.IsAuthenticated)
     {
         <h2>討論區 有登入 @User.Identity.GetUserName()<span class="pull-right"><button id="newItem" class="btn btn-success btn-sm">發文</button></span></h2>
+        <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
+        @*發文在這*@
+        <div class="panel-group">
+            @foreach (message message in messageList)
+            {
+                List<message> articleList = new List<message>();
+                if (message.replyID == 0)
+                {
+                    articleList.Add(message);
+                }
+                foreach (message article in articleList)
+                {
+                    <div class="panel panel-primary msg">
+                        <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
+                        <div class="panel-body">
+
+                            @article.main
+                            <br />
+                            <div>
+                                @if (article.wholike.Contains(@User.Identity.GetUserName()))
+                                {
+                                    @*Toggle Switch*@
+                                    <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="heartChange(this)" checked />
+                                    <label for="heart+@article.messageID"></label>
+                                    <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
+                                    @*Toggle Switch*@
+                                }
+                                else
+                                {
+                                    @*Toggle Switch*@
+                                    <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="heartChange(this)" />
+                                    <label for="heart+@article.messageID"></label>
+                                    <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
+                                    @*Toggle Switch*@
+                                }
+                                @if (article.whohate.Contains(@User.Identity.GetUserName()))
+                                {
+                                    @*Toggle Switch *@
+                                    <input type="checkbox" class="switch switchDislike" id="dislike+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@article.dislike" data-messageID="@article.messageID" onchange="dislikeChange(this)" checked />
+                                    <label for="dislike+@article.messageID"></label>
+                                    <span id="dislikeCnt+@article.messageID" data-dislike="@article.dislike" data-messageID="@article.messageID">噓 @article.dislike</span>
+                                    @*Toggle Switch *@
+                                }
+                                else
+                                {
+                                    @*Toggle Switch*@
+                                    <input type="checkbox" class="switch switchDislike" id="dislike+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@article.dislike" data-messageID="@article.messageID" onchange="dislikeChange(this)" />
+                                    <label for="dislike+@article.messageID"></label>
+                                    <span id="dislikeCnt+@article.messageID" data-dislike="@article.dislike" data-messageID="@article.messageID">噓 @article.dislike</span>
+                                    @*Toggle Switch*@
+                                }
+                                <br />
+                                <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID">回覆</button>
+                            </div>
+                            <br />
+
+                            @*回覆在這*@
+                            @foreach (message reply in messageList)
+                            {
+                                if (reply.replyID == article.messageID)
+                                {
+
+                                    <div class="panel panel-info rpl">
+                                        <div class="panel-heading">@reply.UserName<span class="pull-right">@reply.initDate</span></div>
+                                        <div class="panel-body">
+                                            @reply.main
+                                            <br />
+                                            @*<button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
+                                                <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>*@
+                                            <div>
+                                                @if (reply.wholike.Contains(@User.Identity.GetUserName()))
+                                                {
+                                                    @*Toggle Switch*@
+                                                    <input type="checkbox" class="switch switchHeart" id="heart+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@reply.heart" data-messageID="@reply.messageID" onchange="heartChange(this)" checked />
+                                                    <label for="heart+@reply.messageID"></label>
+                                                    <span id="heartCnt+@reply.messageID" data-heart="@reply.heart" data-messageID="@reply.messageID">推 @reply.heart</span>
+                                                    @*Toggle Switch*@
+                                                }
+                                                else
+                                                {
+                                                    @*Toggle Switch*@
+                                                    <input type="checkbox" class="switch switchHeart" id="heart+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@reply.heart" data-messageID="@reply.messageID" onchange="heartChange(this)" />
+                                                    <label for="heart+@reply.messageID"></label>
+                                                    <span id="heartCnt+@reply.messageID" data-heart="@reply.heart" data-messageID="@reply.messageID">推 @reply.heart</span>
+                                                    @*Toggle Switch*@
+                                                }
+                                                @if (reply.whohate.Contains(@User.Identity.GetUserName()))
+                                                {
+                                                    @*Toggle Switch *@
+                                                    <input type="checkbox" class="switch switchDislike" id="dislike+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@reply.dislike" data-messageID="@reply.messageID" onchange="dislikeChange(this)" checked />
+                                                    <label for="dislike+@reply.messageID"></label>
+                                                    <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
+                                                    @*Toggle Switch *@
+                                                }
+                                                else
+                                                {
+                                                    @*Toggle Switch*@
+                                                    <input type="checkbox" class="switch switchDislike" id="dislike+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@reply.dislike" data-messageID="@reply.messageID" onchange="dislikeChange(this)" />
+                                                    <label for="dislike+@reply.messageID"></label>
+                                                    <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
+                                                    @*Toggle Switch*@
+                                                }
+                                                <br />
+                                                <button class="btn btnRelpy btn-secondary " data-messageID="@reply.messageID">回覆</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @*回覆結束*@
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @*發文結束*@
     }
     else
     {
-        <h2>討論區 沒登入 @User.Identity.GetUserName() <span class="pull-right"><button id="newItem" class="btn btn-success btn-sm">發文</button></span></h2>
+        <h2>討論區 沒登入 @User.Identity.GetUserName() <span class="pull-right"><button id="newItem" class="btn btn-success btn-sm" onclick="login()"> @Html.ActionLink("發文", "Login", "Account")</button></span></h2>
+        @*發文在這*@
+        <div class="panel-group">
+            @foreach (message message in messageList)
+            {
+                List<message> articleList = new List<message>();
+                if (message.replyID == 0)
+                {
+                    articleList.Add(message);
+                }
+                foreach (message article in articleList)
+                {
+                    <div class="panel panel-primary msg">
+                        <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
+                        <div class="panel-body">
+
+                            @article.main
+                            <br />
+                            <div>
+                                @*Toggle Switch*@
+                                <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="heartChange(this)" />
+                                <label for="heart+@article.messageID">
+
+                                    @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
+                                </label>
+                                <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
+                                @*Toggle Switch*@
+                                @*Toggle Switch*@
+                                <input type="checkbox" class="switch switchDislike" id="dislike+@article.messageID" />
+                                <label for="dislike+@article.messageID">
+                                    @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
+                                </label>
+                                <span>噓 @article.dislike</span>
+                                @*Toggle Switch*@
+                                @*<button class="btntest btnHeart+@article.messageID btn btn-success" id="heart+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-heart="@article.heart" alt="Add Password">推 @article.heart</button>
+                                    <button class="btntest btnDislike+@article.messageID btn btn-danger" id="dislike+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-dislike="@article.dislike" alt="Add Password">噓 @article.dislike</button>*@
+                                <br />
+                                <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID" onclick="login()">@Html.ActionLink("回覆", "Login", "Account")</button>
+                            </div>
+                            <br />
+
+                            @*回覆在這*@
+                            @foreach (message reply in messageList)
+                            {
+                                if (reply.replyID == article.messageID)
+                                {
+
+                                    <div class="panel panel-info rpl">
+                                        <div class="panel-heading">@reply.UserName<span class="pull-right">@reply.initDate</span></div>
+                                        <div class="panel-body">
+                                            @reply.main
+                                            <br />
+                                            @*<button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
+                                                <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>*@
+                                            @*Toggle Switch*@
+                                            <input type="checkbox" class="switch switchHeart" id="heart+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@reply.heart" data-messageID="@reply.messageID" onchange="heartChange(this)" />
+                                            <label for="heart+@reply.messageID"></label>
+                                            <span id="heartCnt+@reply.messageID" data-heart="@reply.heart" data-messageID="@reply.messageID">推 @reply.heart</span>
+                                            @*Toggle Switch*@
+                                            @*Toggle Switch*@
+                                            <input type="checkbox" class="switch switchDislike" id="dislike+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@reply.dislike" data-messageID="@reply.messageID" onchange="dislikeChange(this)" />
+                                            <label for="dislike+@reply.messageID"></label>
+                                            <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
+                                            @*Toggle Switch*@
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @*回覆結束*@
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @*發文結束*@
     }
 
-    <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
-    @*發文在這*@
-    <div class="panel-group">
-        @foreach (message message in messageList)
-        {
-            List<message> articleList = new List<message>();
-            if (message.replyID == 0)
-            {
-                articleList.Add(message);
-            }
-            foreach (message article in articleList)
-            {
-                <div class="panel panel-primary msg">
-                    <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
-                    <div class="panel-body">
 
-                        @article.main
-                        <br />
-                        <div>
-                            @*Toggle Switch*@
-                            <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="heartChange(this)" />
-                            <label for="heart+@article.messageID">
-
-                                @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
-                            </label>
-                            <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
-                            @*Toggle Switch*@
-                            @*Toggle Switch*@
-                            <input type="checkbox" class="switch switchDislike" id="dislike+@article.messageID" />
-                            <label for="dislike+@article.messageID">
-                                @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
-                            </label>
-                            <span>噓 @article.dislike</span>
-                            @*Toggle Switch*@
-                            @*<button class="btntest btnHeart+@article.messageID btn btn-success" id="heart+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-heart="@article.heart" alt="Add Password">推 @article.heart</button>
-                                <button class="btntest btnDislike+@article.messageID btn btn-danger" id="dislike+@article.messageID" AutoPostBack="true" data-messageID="@article.messageID" data-dislike="@article.dislike" alt="Add Password">噓 @article.dislike</button>*@
-                            <br />
-                            <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID">回覆</button>
-                        </div>
-                        <br />
-
-                        @*回覆在這*@
-                        @foreach (message reply in messageList)
-                        {
-                            if (reply.replyID == article.messageID)
-                            {
-
-                                <div class="panel panel-info rpl">
-                                    <div class="panel-heading">@reply.UserName<span class="pull-right">@reply.initDate</span></div>
-                                    <div class="panel-body">
-                                        @reply.main
-                                        <br />
-                                        <button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
-                                        <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        @*回覆結束*@
-                    </div>
-                </div>
-            }
-        }
-    </div>
-    @*發文結束*@
 
     <!-- 新增貼文 -->
     <div id="newsModal" class="modal fade" role="dialog">
@@ -320,26 +446,11 @@
 
     })
 
-    $('.switchHeart')
-    $(".btnHeart").click(function () {
-        /*     console.log("/home/Index/" + this.dataset.messageid);*/
-        //$.ajax({
-        //    type: "put",
-        //    url: "/home/Index" + this.dataset.messageid,
-        //    data: newsList[currentIndex]
-        //})
-        //    .then(function (e) {
-        //        showToast(e);
-        //    })
-    })
+    function login() {
+        alert("未登入 請先登入!");
+    }
 
-    $('#test').click(function () {
 
-        alert('ok');
-    })
-    $('#btnName').click(function () {
-        alert(document.getElementById('btnName').dataset.UserName)
-    })
     function heartChange(cb) {
         //console.log(cb.dataset.UserName);
         var message = {
@@ -385,11 +496,47 @@
 
     }
 
+    function dislikeChange(cb) {
+        var message = {
+            messageID: 0,
+            heart: -1,
+            dislike: -1,
+            UserName: name,
+            UserId: name
+        }
+        if (cb.checked) {
+            // 案讚
+            //console.log(cb.dataset.heart);
+            //console.log(cb.dataset.messageid);
+            message.messageID = cb.dataset.messageid;
+            message.dislike = cb.dataset.dislike;
+            console.log(message.UserName);
+            $.ajax({
+                type: "post",
+                url: "/Home/APIDislike",
+                data: message
+            }).then(function (e) {
+                document.getElementById(`dislikeCnt+${message.messageID}`).innerHTML = `噓 ${e.dislike}`;
+                document.getElementById(`dislike+${message.messageID}`).dataset.dislike = e.dislike;
+                document.getElementById(`dislikeCnt+${message.messageID}`).dataset.dislike = e.dislike;
+            })
 
-    $(".btnDislike").click(function () {
-        console.log(this.dataset.messageid);
-    })
-
+        } else {
+            // 取消讚
+            message.messageID = cb.dataset.messageid;
+            message.dislike = cb.dataset.dislike;
+            //console.log(message.UserName);
+            $.ajax({
+                type: "post",
+                url: "/Home/APIDislikeCancel",
+                data: message
+            }).then(function (e) {
+                document.getElementById(`dislikeCnt+${message.messageID}`).innerHTML = `噓 ${e.dislike}`;
+                document.getElementById(`dislike+${message.messageID}`).dataset.dislike = e.dislike;
+                document.getElementById(`dislikeCnt+${message.messageID}`).dataset.dislike = e.dislike;
+            })
+        }
+    }
 
 
 </script>

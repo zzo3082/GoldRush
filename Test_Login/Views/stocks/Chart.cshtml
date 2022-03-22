@@ -12,7 +12,7 @@
 <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
 <style type="text/css">
-    #container, #container_kdj {
+    #container, #container_kdj, #container_bands {
         height:800px;
         width:100%;
         margin: 0;
@@ -22,73 +22,21 @@
     .anychart-credits-text, .anychart-credits-logo {
         display: none !important;
     }
-    /*.tabs-wrapper {
-        width: 300px;
-    }
 
-    .tabClass {
-        position: absolute;
-        right: 100%;
-    }
-
-    .tabs {
-    }
-
-    .tabs label {
-        border: 1px solid black;
-        background: #BABABA;
-        display: inline-block;
-
-    }
-
-    .tabs, .tabs-main-content {
-        display: inline-block;
-        vertical-align: top;
-        margin: 10px 10px;
-    }
-
-    .tabs-main-content {
-        background: green;
-    }
-
-    .tabClass:checked + .tabs-content {
-        display: block;
-    }
-
-    .tabs-content {
-        display: none;
-    }*/
 </style>
 
 <body>
     <h2>@ViewBag.id</h2>
-    @*<div class="tabs-wrapper">
-        <div class="tabs">
-            <label for="one" class="tabLabel">基本資料</label>
-            <label for="two" class="tabLabel">KDJ圖</label>
-        </div>
-        <div class="tabs-main-content">
-            <input type="radio" class="tabClass" id="one" name="tab" checked="checked" />
-            <div class="tabs-content">
-                <div id="container"></div>
-            </div>
-
-            <input type="radio" class="tabClass" id="two" name="tab" />
-            <div class="tabs-content">
-                <div id="container_kdj"></div>
-            </div>
-        </div>
-    </div>*@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本面</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">技術面</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">KD/MACD</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">籌碼面</a>
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">通道</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -98,7 +46,8 @@
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="container_kdj"></div>
         </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div id="container_bands"></div>
         </div>
     </div>
 
@@ -215,11 +164,13 @@
 
     // mapping
     var mapping2 = dataTable.mapAs();
-    mapping2.addField("x", 0);
+    //mapping2.addField("x", 0);
     mapping2.addField("open", 1, "first");
     mapping2.addField("high", 2, "max");
     mapping2.addField("low", 3, "min");
     mapping2.addField("close", 4, "last");
+    mapping2.addField("value", 4, "close");
+    mapping2.addField("volume", 5);
     // create stock chart
     var chart2 = anychart.stock();
     // create plots on the chart
@@ -231,9 +182,71 @@
     kdj_1.dSeries().stroke("#02660c");
     kdj_1.jSeries().stroke("#0228b2");
 
+    // create MACD plot
+    var plotMACD = chart2.plot(1);
+
+    macd_default = plotMACD.macd(mapping2, 12, 26, 9);
+
+    macd_default.histogramSeries().normal().fill('red', 0.3).stroke('red');
+    macd_default.histogramSeries().normal().negativeFill('green', 0.3).negativeStroke('green');
+
+    // create PSY plot
+    var plotPSY = chart2.plot(2);
+    psy12 = plotPSY.psy(mapping2, 12).series();
+    psy12.stroke("0.5 gray");
+    psy12.fill("#ffd54f");
+
+    psy24 = plotPSY.psy(mapping2, 26).series();
+    psy24.stroke("0.5 lightGray");
+    psy24.fill("#ff6d00");
+
+    //// create OBV plot
+    var plotOBV = chart2.plot(3);
+    var obv = plotOBV.obv(mapping2);
+
+    chart2.scroller().line(mapping2);
+
+    chart2.selectRange('2022-01-01', '2022-03-01');
+
     // set container id for the chart
     chart2.container("container_kdj");
     // initiate chart drawing
     chart2.draw();
+
+    // mapping3
+    var mapping3 = dataTable.mapAs({
+        'open': 1,
+        'high': 2,
+        'low': 3,
+        'close': 4,
+        'value': { column: 4, type: 'close' }
+    });
+
+    // bands
+    var chart3 = anychart.stock();
+
+
+    // Bollinger Bands
+    plotBB = chart3.plot(0);
+    var candle = plotBB.candlestick(mapping3);
+    var bbands = plotBB.bbands(mapping3, 10, 3, "spline", "spline", "spline");
+
+    // color the series
+    bbands.upperSeries().stroke('#bf360c');
+    bbands.middleSeries().stroke('#ff6600');
+    bbands.lowerSeries().stroke('#bf360c');
+    bbands.rangeSeries().fill('#ffd54f 0.2');
+
+    // Keltner
+    plotKC = chart3.plot(1);
+    var candle2 = plotKC.candlestick(mapping3);
+    var keltnerChannels = plotKC.keltnerChannels(mapping3);
+
+
+    chart3.scroller().line(mapping3);
+    chart3.selectRange('2022-01-01', '2022-03-01');
+    chart3.container('container_bands');
+    chart3.draw();
+
 
 </script>
