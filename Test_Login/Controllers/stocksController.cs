@@ -13,12 +13,6 @@ namespace GoldRush.Controllers
     public class stocksController : Controller
     {
         private LabEntities db = new LabEntities();
-
-        
-
-        
-
-
         // GET: stocks
         public ActionResult Index()
         {
@@ -71,20 +65,20 @@ namespace GoldRush.Controllers
             switch (str)
             {
                 case "成交爆大量":
-                    //foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
-                    //{
-                    //    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
-                    //    try
-                    //    {
-                    //        if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
-                    //        {
-                    //            stockArray = stockArray + s + " ";
-                    //        }
-                    //    }
-                    //    catch
-                    //    {
-                    //    }
-                    //}
+                    foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    {
+                        var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                        try
+                        {
+                            if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
+                            {
+                                stockArray = stockArray + s + " ";
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
                     stockArray += ", 2303";
                     stockArray += ", 2330";
                     break;
@@ -92,7 +86,7 @@ namespace GoldRush.Controllers
                     stockArray += ", 0050";
                     stockArray += ", 2603";
                     break;
-                case "強弱勢股":
+                case "強勢股票":
                     stockArray += ", 2609";
                     stockArray += ", 2409";
                     break;
@@ -115,6 +109,18 @@ namespace GoldRush.Controllers
                 case "營收由虧轉盈":
                     stockArray += ", 3037";
                     stockArray += ", 2371";
+                    break;
+                case "弱勢股票":
+                    stockArray += "2883";
+                    break;
+                case "外資連賣":
+                    stockArray += "8069";
+                    break;
+                case "投信連賣":
+                    stockArray += "3481";
+                    break;
+                case "KD死亡交叉":
+                    stockArray += "6770";
                     break;
                 default:
                     break;
@@ -205,6 +211,9 @@ namespace GoldRush.Controllers
 
             List<StockKDJ> kdj = StockFunction.ComputationKDJ(9, 3, 3, stock);
             List<StockMACD> macd = StockFunction.ComputationMACD(12, 26, 9, stock);
+            List<StockSMA> sma = StockFunction.ComputationSMA(stock, 9);
+            List<StockSMA> sma20 = StockFunction.ComputationSMA(stock, 20);
+            List<StockEMA> ema = StockFunction.ComputationEMA(stock, 9);
             return View(stock);
         }
     }
