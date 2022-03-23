@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="~/Content/style.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="~/assets/custom.css">
-    
+
     <style>
         html, body {
-            height: 100%
+            height: 100%;
+            /* background-color: azure; */
         }
-
     </style>
 
 </head>
@@ -110,15 +110,15 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item">
-            <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
-                會員註冊
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
-                會員登入
-            </a>
-        </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                                            會員註冊
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                                            會員登入
+                                        </a>
+                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
                                         討論區
@@ -146,7 +146,7 @@
                                 }
                                 catch (Exception)
                                 {
-                               
+
                                 }
                             }
 
@@ -159,36 +159,43 @@
 
 
     @RenderBody()
+ 
     @*footer*@
-<footer>
-    <section class="footer   bg-secondary position-bottom-lg-13 " id="layoutFooter">
-        <hr />
+
+    <section class="footer bg-secondary" style=" width: 100%; position:relative; bottom:0; top:50%" >
         <div class="container py-19 py-sm-23 py-lg-25">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <div class="mb-14 mb-md-0">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 col-lg-5 mb-14 mb-md-0">
                     <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-                        <a href="/Home/Index" class="footer-brand">Gold Rush</a>
+                        <a href="index.html" class="footer-brand">PROFI</a>
                         <div class="brand-icons-list ml-10 ml-sm-20">
-                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-facebook">
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-facebook">
                                 <i class="fa fa-facebook-f"></i>
                             </a>
-                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-twitter">
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-twitter">
                                 <i class="fa fa-twitter"></i>
                             </a>
-                            <a href="/Home/Index" class="brand-icon brand-icon-circle brand-icon-pinterest">
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-pinterest">
                                 <i class="fa fa-pinterest-p"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <ul class="footer-menu">
-                    <li><a href="/Home/Index">聯絡我們</a></li>
-                    <li><a href="/Home/Index">^_^</a></li>
-                </ul>
+                <div class="col-12 col-lg-2 text-center d-none d-lg-block">
+                    <a href="#" class="footer-icon" data-toggle="smooth-scroll" data-target="#page-start-anchor">
+                        <i class="material-icons">arrow_upward</i>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-5 text-center text-md-right">
+                    <ul class="footer-menu">
+                        <li><a href="#">聯絡我們</a></li>
+                        <li><a href="#">^_^</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
-</footer>
+
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
