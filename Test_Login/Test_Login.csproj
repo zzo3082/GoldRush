@@ -211,6 +211,7 @@
     <Compile Include="Models\stocks.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\stockTech.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

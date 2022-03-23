@@ -14,6 +14,11 @@ namespace GoldRush.Controllers
     {
         private LabEntities db = new LabEntities();
 
+        
+
+        
+
+
         // GET: stocks
         public ActionResult Index()
         {
@@ -191,10 +196,16 @@ namespace GoldRush.Controllers
         }
 
         [HttpPost]
-        public ActionResult StockMarketIndex( string[] factor1)
+        public ActionResult StockMarketIndex( string tech1)
         {
-            ViewBag.factor1 = string.Join(", ", factor1);
-            return View();
+
+            ViewBag.tech1 = tech1;
+            ViewBag.date1 = "20220210";
+            var stock = db.stockPrice.Where(x => x.stockID == "2330").OrderBy(x => x.stockDate).ToList();
+
+            List<StockKDJ> kdj = StockFunction.ComputationKDJ(9, 3, 3, stock);
+            List<StockMACD> macd = StockFunction.ComputationMACD(12, 26, 9, stock);
+            return View(stock);
         }
     }
 }
