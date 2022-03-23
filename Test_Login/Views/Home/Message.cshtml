@@ -7,13 +7,19 @@
 
 <style>
     .msg {
-        border: 5px solid #1C6EA4;
+        border: 5px solid #007bff;
         margin: 10px;
         padding: 5px;
     }
 
     .rpl {
-        border: 5px solid red;
+        border: 5px solid #77c8ab;
+        margin: 10px;
+        padding: 5px;
+    }
+
+    .torpl {
+        border: 5px solid #e48489;
         margin: 10px;
         padding: 5px;
     }
@@ -97,6 +103,7 @@
                 }
                 foreach (message article in articleList)
                 {
+                    //文章區塊
                     <div class="panel panel-primary msg">
                         <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
                         <div class="panel-body">
@@ -140,8 +147,9 @@
                                 <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID">回覆</button>
                             </div>
                             <br />
+                            @*文章區塊*@
 
-                            @*回覆在這*@
+                            @*回覆區塊*@
                             @foreach (message reply in messageList)
                             {
                                 if (reply.replyID == article.messageID)
@@ -189,12 +197,26 @@
                                                 }
                                                 <br />
                                                 <button class="btn btnRelpy btn-secondary " data-messageID="@reply.messageID">回覆</button>
+                                                @foreach (var replyToReply in messageList)
+                                                {
+                                                    if (replyToReply.replyID == reply.messageID)
+                                                    {
+                                                        <div class="panel panel-info torpl">
+                                                            <div class="panel-heading">@replyToReply.UserName<span class="pull-right">@replyToReply.initDate</span></div>
+                                                            <div class="panel-body">
+                                                                @replyToReply.main
+                                                                <br />
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 }
                             }
-                            @*回覆結束*@
+                            @*回覆區塊*@
                         </div>
                     </div>
                 }
@@ -282,6 +304,7 @@
     }
 
 
+    @*<script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>*@
 
     <!-- 新增貼文 -->
     <div id="newsModal" class="modal fade" role="dialog">
@@ -380,7 +403,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-primary">回覆</button>
+                            <button type="submit" class="btn btn-outline-success ">回覆</button>
                         </div>
 
                     </form>
@@ -391,7 +414,8 @@
     </div>
     <!-- 回覆貼文 -->
 </div>
-
+@*<script>CKEDITOR.replace("mainBox");</script>*@
+@*<script>CKEDITOR.replace("UserIdbox");</script>*@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script src="~/Content/vendor.css"></script>
