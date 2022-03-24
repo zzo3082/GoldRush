@@ -22,6 +22,7 @@
 </head>
 <body>
 
+    <div id="page-start-anchor"></div>
     <section class="header header-fixed-xl">
         <div class="header-top-line bg-blue">
             @*上方Navbar(綠色)欄位*@
@@ -159,10 +160,10 @@
 
 
     @RenderBody()
- 
+
     @*footer*@
 
-    <section class="footer bg-secondary" style=" width: 100%; position:relative; bottom:0; top:50%" >
+    <section class="footer bg-secondary" style=" width: 100%; position:relative; bottom:0; top:50%">
         <div class="container py-19 py-sm-23 py-lg-25">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-5 mb-14 mb-md-0">
@@ -181,14 +182,19 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-12 col-lg-2 text-center d-none d-lg-block">
-                    <a href="#" class="footer-icon" data-toggle="smooth-scroll" data-target="#page-start-anchor">
+                    <a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">
                         <i class="material-icons">arrow_upward</i>
+
                     </a>
                 </div>
+
+
                 <div class="col-12 col-md-6 col-lg-5 text-center text-md-right">
                     <ul class="footer-menu">
-                        <li><a href="#">聯絡我們</a></li>
+                        <li><a href="#" data-toggle="smooth-scroll">聯絡我們</a></li>
                         <li><a href="#">^_^</a></li>
                     </ul>
                 </div>
