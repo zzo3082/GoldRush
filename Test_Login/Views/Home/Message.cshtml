@@ -8,13 +8,16 @@
 <style>
     .msg {
         border: 5px solid #007bff;
+        border-radius: 21px;
         margin: 10px;
-        padding: 5px;
+        padding: 10px;
     }
 
     .msginfo {
         height: 50px;
+        border-radius: 21px;
         margin: 20px;
+        padding: 10px;
     }
 
     #thinking {
@@ -25,13 +28,15 @@
     .rpl {
         border: 5px solid #77c8ab;
         margin: 10px;
-        padding: 5px;
+        border-radius: 21px;
+        padding: 10px;
     }
 
     .torpl {
         border: 5px solid #e48489;
         margin: 10px;
-        padding: 5px;
+        border-radius: 21px;
+        padding: 10px;
     }
 
     /*Toggle Switch*/
@@ -98,7 +103,7 @@
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
+<div class="container center" >
     @if (Request.IsAuthenticated)
     {
         <h2>討論區 有登入 @User.Identity.GetUserName()<span class="pull-right"><button id="newItem" class="btn btn-success btn-sm">發文</button></span></h2>
@@ -441,7 +446,7 @@
                                    readonly />
                         </div>
 
-                        <div class="msginfo">
+                        <div class="msginfo" id="hashtagBox">
                             <span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span>
                             <button id="hashtag" type="button" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
                                 <i class="material-icons" aria-hidden="true">search </i>
@@ -593,7 +598,6 @@
         alert("未登入 請先登入!");
     }
 
-
     function heartChange(cb) {
         //console.log(cb.dataset.UserName);
         var message = {
@@ -639,7 +643,7 @@
                 document.getElementById(`heart+${message.messageID}`).dataset.heart = e.heart;
                 document.getElementById(`heartCnt+${message.messageID}`).dataset.heart = e.heart;
             })
-
+            
         } else {
             // 取消讚
             message.messageID = cb.dataset.messageid;
@@ -720,7 +724,11 @@
     }
 
     $("#hashtag").click(function () {
-        $("#hashtagBox").html('<button type="button" class="btn btn-outline-dark " id="hashtag">#2306</button>');
+        $("#hashtagBox").html('<button type="button" class="btn btn-outline-dark" name="hashtag" id="hashtaged" data-hashtag="2603">2603</button>');
+    })
+
+    $("#hashtaged").click(function () {
+        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span>< button id = "hashtag" type = "button" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button ><input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />');
     })
 
 </script>
