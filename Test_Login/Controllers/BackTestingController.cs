@@ -23,7 +23,7 @@ namespace Test_Login.Controllers
         int total_cost = 0;         // 總付出成本
         [HttpPost]
         //定期定股Action
-        public ActionResult BackTesting001(string stockID, string day, string totalUnit)
+        public JsonResult BackTesting001(string stockID, string day, string totalUnit)
         {
             int stock_number = int.Parse(totalUnit);       // 統計一共持有幾股, 值暫定為每個月固定股數
             if (int.Parse(day) < 10 && day.Length < 2) { day = $"0{day}"; }  // 日期(日) 當<10 在十位數補上"0"
@@ -80,9 +80,19 @@ namespace Test_Login.Controllers
             ViewBag.total_cost = total_cost;            // 總成本
             ViewBag.nowTotalVal = nowTotalVal;          // 當前市值
             ViewBag.profit_and_loss = profit_and_loss;  // 盈虧
-            ViewBag.percentage = percentage;            // 盈虧百分比
-
-            return View();
+            ViewBag.percentage = percentage * 100;      // 盈虧百分比
+            var result = new
+            {
+                stockName = stockName,
+                stockID = stockID,
+                day = day,
+                count = totalUnit,
+                total_cost = total_cost,
+                nowTotalVal = nowTotalVal,
+                profit_and_loss = profit_and_loss,
+                percentage = percentage * 100
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // 定期定額Action
@@ -147,9 +157,11 @@ namespace Test_Login.Controllers
             ViewBag.total_cost2 = total_cost;            // 總成本
             ViewBag.nowTotalVal2 = nowTotalVal;          // 當前市值
             ViewBag.profit_and_loss2 = profit_and_loss;  // 盈虧
-            ViewBag.percentage2 = percentage;            // 盈虧百分比
+            ViewBag.percentage2 = percentage*100;            // 盈虧百分比
+            
             return View("BackTesting001");
         }
+
 
     }
 

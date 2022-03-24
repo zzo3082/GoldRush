@@ -65,28 +65,59 @@ namespace GoldRush.Controllers
             switch (str)
             {
                 case "成交爆大量":
-                    foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    //foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    //{
+                    //    var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                    //    try
+                    //    {
+                    //        if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
+                    //        {
+                    //            stockArray = stockArray + s + " ";
+                    //        }
+                    //    }
+                    //    catch
+                    //    {
+                    //    }
+                    //}
+                    foreach(string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
                     {
-                        var dbs = db.stockPrice.Where(x => x.stockID == s).ToList();
+                        var dbs = db.stockPrice.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList();
                         try
                         {
-                            if (float.Parse(dbs.Where(x => x.stockDate == "20210409").Select(x => x.endPrice).ToList()[0]) > 900)
+                            if (dbs[0].numOfSharesTrade > dbs.GetRange(1, 5).Select(x => x.numOfSharesTrade).Average())
                             {
-                                stockArray = stockArray + s + " ";
+                                stockArray += s + ", ";
                             }
                         }
                         catch
                         {
+
                         }
+                        
                     }
+                    
                     stockArray += ", 2303";
                     stockArray += ", 2330";
                     break;
                 case "四海遊龍":
+                    var db2 = db.stockPrice.Where(x => x.stockID == "2330").OrderByDescending(x=>x.stockDate).ToList();
+                    double sma5 = db2.GetRange(1, 5).Select(x => Convert.ToDouble(x.endPrice)).Average();
+                    double sma10 = db2.GetRange(1, 10).Select(x => Convert.ToDouble(x.endPrice)).Average();
+                    double sma20 = db2.GetRange(1, 20).Select(x => Convert.ToDouble(x.endPrice)).Average();
+                    double sma60 = db2.GetRange(1, 60).Select(x => Convert.ToDouble(x.endPrice)).Average();
+                    double[] sma = new double[] { sma5, sma10, sma20, sma60 };
+
+                    if (double.Parse(db2[0].endPrice) > sma.Max())
+                    {
+                        stockArray += ", 2330";
+                    }
                     stockArray += ", 0050";
                     stockArray += ", 2603";
                     break;
                 case "強勢股票":
+                    // Convert.ToDouble??
+                    var dbs_Top10 = db.stockPrice.Where(x => x.stockDate == "20220210").Select(x => Convert.ToDouble(x.endPrice) - Convert.ToDouble(x.openPrice)).OrderByDescending(x => x).ToList();
+
                     stockArray += ", 2609";
                     stockArray += ", 2409";
                     break;

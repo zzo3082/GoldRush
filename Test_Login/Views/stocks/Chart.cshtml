@@ -23,6 +23,7 @@
         display: none !important;
     }
 
+
 </style>
 
 <body>
@@ -30,7 +31,7 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本面</a>
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本資料</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">KD/MACD</a>
@@ -50,17 +51,51 @@
             <div id="container_bands"></div>
         </div>
     </div>
-
-    <div id="info">
-        <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
-        <a href="https://statementdog.com/analysis/3704">財報狗</a>
-        <a href="https://tw.stock.yahoo.com/quote/3704">YAHOO</a>
-        <a href="https://histock.tw/stock/3704#price">HISTOCK</a>
-        <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
-        <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
-
-
+    <br /><hr /><br />
+    <div class="row">
+        <div class="table-responsive col-md-6">
+            <div id="info">
+                <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
+                <a href="https://statementdog.com/analysis/3704">財報狗</a>
+                <a href="https://tw.stock.yahoo.com/quote/3704">YAHOO</a>
+                <a href="https://histock.tw/stock/3704#price">HISTOCK</a>
+                <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
+                <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">名稱</th>
+                        <th scope="col">資料</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>上市櫃</td>
+                        <td>上櫃</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive col-md-6">
+            <h6>財報比率</h6>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">名稱</th>
+                        <th scope="col">資料</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>上市櫃</td>
+                        <td>上櫃</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 
 </body>
 
@@ -117,10 +152,10 @@
         var series = chart.plot(0).candlestick(mapping).zIndex(10);
         series.name("@ViewBag.id");
 
-        series.risingStroke("#660000");
-        series.risingFill("#990033");
-        series.fallingStroke("#336666");
-        series.fallingFill("#339999");
+        series.risingStroke("#C20000");
+        series.risingFill("#C20000");
+        series.fallingStroke("#00C200");
+        series.fallingFill("#00C200");
 
         // set the series for SMA
         var sma5 = chart.plot(0).sma(mapping_sma, 5).series();
@@ -130,7 +165,7 @@
         sma20.stroke('#ff6d00');
 
         var sma60 = chart.plot(0).sma(mapping_sma, 60).series();
-        sma60.stroke('#F0781F');
+        sma60.stroke('#00BDBD');
 
         // set the series for histogram
 
@@ -145,10 +180,10 @@
         series_hist.yScale(customScale);
 
         series_hist.name("成交量");
-        series_hist.risingStroke("#660000");
-        series_hist.risingFill("#990033");
-        series_hist.fallingStroke("#336666");
-        series_hist.fallingFill("#339999");
+        series_hist.risingStroke("#C20000");
+        series_hist.risingFill("#C20000");
+        series_hist.fallingStroke("#00C200");
+        series_hist.fallingFill("#00C200");
 
         // chart.title('@ViewBag.id');
         chart.container('container');
