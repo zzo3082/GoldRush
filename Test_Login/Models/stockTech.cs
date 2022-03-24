@@ -116,7 +116,41 @@ namespace Test_Login.Models
             return result;
         }
 
+        public static List<StockEMA> ComputationEMA(List<stockPrice> stockList, int period)
+        {
+            List<StockEMA> result = new List<StockEMA>();
+            double multiplier = (2.0 / (period + 1));
+            double initialSMA = stockList.Select(x => double.Parse(x.endPrice)).Take(period).Average();
+            result.Add(new StockEMA
+            {
+                stockDate = stockList[period - 1].stockDate,
+                ema = initialSMA
+            });
+            for(int i = period; i < stockList.Count; i++)
+            {
+                var emaValue = (Convert.ToDouble(stockList[i].endPrice) - result.Last().ema) * multiplier + result.Last().ema;
+                result.Add(new StockEMA
+                {
+                    stockDate = stockList[i].stockDate,
+                    ema =emaValue
+                });
+            }
+            return result;
+        }
 
+        public static List<StockSMA> ComputationSMA(List<stockPrice> StockList, int period)
+        {
+            List<StockSMA> result = new List<StockSMA>();
+            for(int i = 0; i < StockList.Count - period; i++)
+            {
+                result.Add(new StockSMA
+                {
+                    stockDate = StockList[i + period - 1].stockDate,
+                    sma = StockList.GetRange(i, period).Select(x => Convert.ToDouble(x.endPrice)).Average()
+                });
+            }
+            return result;
+        }
     }
     public class StockKDJ
     {
@@ -144,5 +178,17 @@ namespace Test_Login.Models
         public double DifValue { get; set; }
         public double DeaValue { get; set; }
         public double MacdValue { get; set; }
+    }
+
+    public class StockSMA
+    {
+        public string stockDate { get; set; }
+        public double sma { get; set; }
+    }
+
+    public class StockEMA
+    {
+        public string stockDate { get; set; }
+        public double ema { get; set; }
     }
 }
