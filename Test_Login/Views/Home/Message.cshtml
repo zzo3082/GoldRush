@@ -35,8 +35,9 @@
         cursor: pointer;
         width: 40px;
         height: 20px;
+        top: 12px;
         background: grey;
-        display: block;
+        display: inline-block;
         border-radius: 10px;
         position: relative;
     }
@@ -107,10 +108,11 @@
                     <div class="panel panel-primary msg">
                         <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
                         <div class="panel-body">
-
+                            @*文章內文*@
                             @article.main
                             <br />
-                            <div>
+                            <div class="panel-footer">
+                                @*文章使用者有沒有案過讚*@
                                 @if (article.wholike.Contains(@User.Identity.GetUserName()))
                                 {
                                     @*Toggle Switch*@
@@ -127,6 +129,8 @@
                                     <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
                                     @*Toggle Switch*@
                                 }
+                                @*文章使用者有沒有案過讚*@
+                                @*文章使用者有沒有案過噓*@
                                 @if (article.whohate.Contains(@User.Identity.GetUserName()))
                                 {
                                     @*Toggle Switch *@
@@ -143,6 +147,7 @@
                                     <span id="dislikeCnt+@article.messageID" data-dislike="@article.dislike" data-messageID="@article.messageID">噓 @article.dislike</span>
                                     @*Toggle Switch*@
                                 }
+                                @*文章使用者有沒有案過噓*@
                                 <br />
                                 <button class="btn btnRelpy btn-secondary " data-messageID="@article.messageID">回覆</button>
                             </div>
@@ -163,6 +168,7 @@
                                             @*<button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
                                                 <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>*@
                                             <div>
+                                                @*回覆使用者有沒有案過讚*@
                                                 @if (reply.wholike.Contains(@User.Identity.GetUserName()))
                                                 {
                                                     @*Toggle Switch*@
@@ -179,6 +185,8 @@
                                                     <span id="heartCnt+@reply.messageID" data-heart="@reply.heart" data-messageID="@reply.messageID">推 @reply.heart</span>
                                                     @*Toggle Switch*@
                                                 }
+                                                @*回覆使用者有沒有案過讚*@
+                                                @*回覆使用者有沒有案過噓*@
                                                 @if (reply.whohate.Contains(@User.Identity.GetUserName()))
                                                 {
                                                     @*Toggle Switch *@
@@ -195,6 +203,7 @@
                                                     <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
                                                     @*Toggle Switch*@
                                                 }
+                                                @*回覆使用者有沒有案過噓*@
                                                 <br />
                                                 <button class="btn btnRelpy btn-secondary " data-messageID="@reply.messageID">回覆</button>
                                                 @foreach (var replyToReply in messageList)
@@ -207,6 +216,42 @@
                                                                 @replyToReply.main
                                                                 <br />
                                                             </div>
+                                                            @*回覆使用者有沒有案過讚*@
+                                                            @if (replyToReply.wholike.Contains(@User.Identity.GetUserName()))
+                                                            {
+                                                                @*Toggle Switch*@
+                                                                <input type="checkbox" class="switch switchHeart" id="heart+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID" onchange="heartChange(this)" checked />
+                                                                <label for="heart+@replyToReply.messageID"></label>
+                                                                <span id="heartCnt+@replyToReply.messageID" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID">推 @replyToReply.heart</span>
+                                                                @*Toggle Switch*@
+                                                            }
+                                                            else
+                                                            {
+                                                                @*Toggle Switch*@
+                                                                <input type="checkbox" class="switch switchHeart" id="heart+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID" onchange="heartChange(this)" />
+                                                                <label for="heart+@replyToReply.messageID"></label>
+                                                                <span id="heartCnt+@replyToReply.messageID" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID">推 @replyToReply.heart</span>
+                                                                @*Toggle Switch*@
+                                                            }
+                                                            @*回覆使用者有沒有案過讚*@
+                                                            @*回覆使用者有沒有案過噓*@
+                                                            @if (replyToReply.whohate.Contains(@User.Identity.GetUserName()))
+                                                            {
+                                                                @*Toggle Switch *@
+                                                                <input type="checkbox" class="switch switchDislike" id="dislike+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID" onchange="dislikeChange(this)" checked />
+                                                                <label for="dislike+@replyToReply.messageID"></label>
+                                                                <span id="dislikeCnt+@replyToReply.messageID" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID">噓 @replyToReply.dislike</span>
+                                                                @*Toggle Switch *@
+                                                            }
+                                                            else
+                                                            {
+                                                                @*Toggle Switch*@
+                                                                <input type="checkbox" class="switch switchDislike" id="dislike+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID" onchange="dislikeChange(this)" />
+                                                                <label for="dislike+@replyToReply.messageID"></label>
+                                                                <span id="dislikeCnt+@replyToReply.messageID" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID">噓 @replyToReply.dislike</span>
+                                                                @*Toggle Switch*@
+                                                            }
+                                                            @*回覆使用者有沒有案過噓*@
                                                         </div>
                                                     }
 
@@ -290,8 +335,35 @@
                                             <label for="dislike+@reply.messageID"></label>
                                             <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
                                             @*Toggle Switch*@
+                                            <br />
+                                            <button class="btn btnRelpy btn-secondary " data-messageID="@reply.messageID">回覆</button>
+                                            @foreach (var replyToReply in messageList)
+                                            {
+                                                if (replyToReply.replyID == reply.messageID)
+                                                {
+                                                    <div class="panel panel-info torpl">
+                                                        <div class="panel-heading">@replyToReply.UserName<span class="pull-right">@replyToReply.initDate</span></div>
+                                                        <div class="panel-body">
+                                                            @replyToReply.main
+                                                            <br />
+                                                        </div>
+                                                        @*Toggle Switch*@
+                                                        <input type="checkbox" class="switch switchHeart" id="heart+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID" onchange="heartChange(this)" />
+                                                        <label for="heart+@replyToReply.messageID"></label>
+                                                        <span id="heartCnt+@replyToReply.messageID" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID">推 @replyToReply.heart</span>
+                                                        @*Toggle Switch*@
+                                                        @*Toggle Switch*@
+                                                        <input type="checkbox" class="switch switchDislike" id="dislike+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID" onchange="dislikeChange(this)" />
+                                                        <label for="dislike+@replyToReply.messageID"></label>
+                                                        <span id="dislikeCnt+@replyToReply.messageID" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID">噓 @replyToReply.dislike</span>
+                                                        @*Toggle Switch*@
+                                                    </div>
+                                                }
+
+                                            }
                                         </div>
                                     </div>
+
                                 }
                             }
                             @*回覆結束*@
@@ -487,7 +559,27 @@
         if (cb.checked) {
             // 案讚
             //console.log(cb.dataset.heart);
-            //console.log(cb.dataset.messageid);
+            //console.log(`dislike+${cb.dataset.messageid}`);
+            // 案讚且噓是亮的 => 噓改暗的 數字-1
+            var cbHate = document.getElementById(`dislike+${cb.dataset.messageid}`);
+            if (cbHate.checked == true) {
+                cbHate.checked = false;
+                // 取消噓
+                message.messageID = cbHate.dataset.messageid;
+                message.dislike = cbHate.dataset.dislike;
+                //console.log(message.UserName);
+                $.ajax({
+                    type: "post",
+                    url: "/Home/APIDislikeCancel",
+                    data: message
+                }).then(function (e) {
+                    document.getElementById(`dislikeCnt+${message.messageID}`).innerHTML = `噓 ${e.dislike}`;
+                    document.getElementById(`dislike+${message.messageID}`).dataset.dislike = e.dislike;
+                    document.getElementById(`dislikeCnt+${message.messageID}`).dataset.dislike = e.dislike;
+                })
+            }
+            //console.log(cbHate.checked);
+
             message.messageID = cb.dataset.messageid;
             message.heart = cb.dataset.heart;
             console.log(message.UserName);
@@ -529,9 +621,27 @@
             UserId: name
         }
         if (cb.checked) {
-            // 案讚
+            // 案噓
             //console.log(cb.dataset.heart);
             //console.log(cb.dataset.messageid);
+            // 案噓且讚是亮的 => 讚改暗的 數字-1
+            var cbLike = document.getElementById(`heart+${cb.dataset.messageid}`);
+            if (cbLike.checked == true) {
+                cbLike.checked = false;
+                // 取消讚
+                message.messageID = cbLike.dataset.messageid;
+                message.heart = cbLike.dataset.heart;
+                //console.log(message.UserName);
+                $.ajax({
+                    type: "post",
+                    url: "/Home/APILikeCancel",
+                    data: message
+                }).then(function (e) {
+                    document.getElementById(`heartCnt+${message.messageID}`).innerHTML = `推 ${e.heart}`;
+                    document.getElementById(`heart+${message.messageID}`).dataset.heart = e.heart;
+                    document.getElementById(`heartCnt+${message.messageID}`).dataset.heart = e.heart;
+                })
+            }
             message.messageID = cb.dataset.messageid;
             message.dislike = cb.dataset.dislike;
             console.log(message.UserName);
@@ -546,7 +656,7 @@
             })
 
         } else {
-            // 取消讚
+            // 取消噓
             message.messageID = cb.dataset.messageid;
             message.dislike = cb.dataset.dislike;
             //console.log(message.UserName);
