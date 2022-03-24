@@ -39,6 +39,13 @@
         text-align: center;
     }
 
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
     .table td {
         text-align: center;
     }
@@ -151,15 +158,37 @@
                 <thead>
                     <tr>
                         <th>股票名稱</th>
-                        <th colspan="5" style="text-align:center;">今日資訊</th>
+                        <th colspan="6" style="text-align:center">今日資訊</th>
+                        <th colspan="4" style="text-align:center">基本資料</th>
+                        <th colspan="4" style="text-align:center">每股盈餘</th>
+                        <th colspan="4" style="text-align:center">近一季獲利指標</th>
                     </tr>
                     <tr>
                         <th scope="col">股票代號</th>
+
                         <th scope="col">收盤價</th>
                         <th scope="col">漲跌</th>
                         <th scope="col">漲跌%</th>
                         <th scope="col">成交量</th>
                         <th scope="col">本益比</th>
+                        <th scope="col">股價淨值比</th>
+
+                        <th scope="col">上市櫃</th>
+                        <th scope="col"> 股票代號</th>
+                        <th scope="col">產業</th>
+                        <th scope="col">股本(億)</th>
+
+                        <th scope="col">今年目前</th>
+                        <th scope="col">近一年</th>
+                        <th scope="col">近一季</th>
+                        <th scope="col">近四季</th>
+
+                        <th scope="col">毛利率(%)</th>
+                        <th scope="col">營業收益率(%)</th>
+                        <th scope="col">稅前純益率(&)</th>
+                        <th scope="col">稅後純益率(%)</th>
+
+
                     </tr>
                 </thead>
                 <tbody>
@@ -173,13 +202,16 @@
                                     <input class="stockName btn btn-outline-info" type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
                                     <input class="stockName btn btn-outline-info" type="button"  value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
-                                <td>@Html.Encode(item.endPrice)</td>
-                                @*<td>@Html.Encode(item.upDowmPrice)</td>
-                                    @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
-                                @*<td>@ratio </td>*@
-                                <td>@Html.Encode(item.numOfSharesTrade)</td>
-                                @*<td>@Html.Encode(item.PER)</td>*@
-                            </tr>
+                                <td>@item.endPrice</td>
+                                @{ decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);}
+                                <td>@upDown</td>
+                                @{ decimal upDownPercent = decimal.Round((upDown / decimal.Parse(item.endPrice)), 2);}
+                                <td>@upDownPercent </td>
+                                @{ int num = (int)item.numOfSharesTrade;
+                                    string result = num.ToString("N0");}
+                                <td>@result</td>
+
+                          </tr>
                         }
                     }
 
