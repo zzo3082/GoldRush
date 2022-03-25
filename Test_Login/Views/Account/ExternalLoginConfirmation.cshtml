@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "註冊";
 }
-<h2>@ViewBag.Title.</h2>
+<h2 class="">@ViewBag.Title.</h2>
 <h3>關聯您的 @ViewBag.LoginProvider 帳戶。</h3>
 
 @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
