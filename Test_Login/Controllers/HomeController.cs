@@ -39,17 +39,28 @@ namespace Test_Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, int heart = 0, int messageID = 0)
+        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, string hashtagBox, int heart = 0, int messageID = 0)
         {
             messageManager messageManager = new messageManager();
             if (UserNameBox != null)
             {
-                message message = new message()
+                message message = new message() ;
+                if (hashtagBox != null)
                 {
-                    UserId = UserIdbox,
-                    UserName = UserNameBox,
-                    main = mainBox
-                };
+                    message.UserId = UserIdbox;
+                    message.UserName = UserNameBox;
+                    message.main = mainBox;
+                    message.hashtagID = hashtagBox;
+                }
+                else
+                {
+                    message.UserId = UserIdbox;
+                    message.UserName = UserNameBox;
+                    message.main = mainBox;
+                    message.hashtagID = "-1";
+                }
+                
+                
                 messageManager.CreateMessage(message);
                 List<message> messageList = messageManager.GetMessages();
                 ViewBag.messageList = messageList;
