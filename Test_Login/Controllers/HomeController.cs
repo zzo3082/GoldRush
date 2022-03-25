@@ -39,7 +39,7 @@ namespace Test_Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, int heart = 0, int messageID = 0)
+        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, string hashtagBox, int heart = 0, int messageID = 0)
         {
             messageManager messageManager = new messageManager();
             if (UserNameBox != null)
