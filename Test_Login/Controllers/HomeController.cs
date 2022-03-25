@@ -44,12 +44,23 @@ namespace Test_Login.Controllers
             messageManager messageManager = new messageManager();
             if (UserNameBox != null)
             {
-                message message = new message()
+                message message = new message() ;
+                if (hashtagBox != null)
                 {
-                    UserId = UserIdbox,
-                    UserName = UserNameBox,
-                    main = mainBox
-                };
+                    message.UserId = UserIdbox;
+                    message.UserName = UserNameBox;
+                    message.main = mainBox;
+                    message.hashtagID = hashtagBox;
+                }
+                else
+                {
+                    message.UserId = UserIdbox;
+                    message.UserName = UserNameBox;
+                    message.main = mainBox;
+                    message.hashtagID = "-1";
+                }
+                
+                
                 messageManager.CreateMessage(message);
                 List<message> messageList = messageManager.GetMessages();
                 ViewBag.messageList = messageList;

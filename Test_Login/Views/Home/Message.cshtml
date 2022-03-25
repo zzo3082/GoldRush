@@ -13,19 +13,27 @@
         padding: 10px;
     }
 
+    #newItem {
+        font-size: 30px;
+        width: 150px;
+        height: 50px;
+    }
+
     .msginfo {
         height: 50px;
         border-radius: 21px;
         margin: 20px;
         padding: 10px;
     }
-    #hashtagBox{
-        margin:10px;
-        padding:0px;
-        height:60px;
+
+    #hashtagBox {
+        margin: 10px;
+        padding: 0px;
+        height: 60px;
     }
-    #hashtag > i{
-        top:5px;
+
+    #hashtag > i {
+        top: 5px;
     }
 
     #thinking {
@@ -51,14 +59,20 @@
         position: relative;
         display: inline-block;
         height: 30px;
-        
         vertical-align: middle;
     }
 
-        .btnRelpy p {
-            line-height:0px;
-            vertical-align: middle;
-        }
+    .myTag {
+        height: 30px;
+        width: 88px;
+        text-align: justify-all;
+        line-height: 0px;
+    }
+
+    .btnRelpy p {
+        line-height: 0px;
+        vertical-align: middle;
+    }
     /*Toggle Switch*/
     input[type=checkbox] {
         height: 0;
@@ -86,7 +100,8 @@
 <div class="container center">
     @if (Request.IsAuthenticated)
     {
-        <h2>討論區 有登入 @User.Identity.GetUserName() @User.Identity.GetUserId()<span class="pull-right"><button id="newItem" class="btn btn-success btn-sm">發文</button></span></h2>
+        // 有登入 @User.Identity.GetUserName()
+        <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
         <button id="btnName" data-UserName="@User.Identity.GetUserName() " hidden></button>
         @*發文在這*@
         <div class="panel-group">
@@ -102,12 +117,17 @@
                     //文章區塊
                     <div class="panel panel-primary msg">
                         @*文章頭*@
-                        <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
+                        <div class="panel-heading">@article.UserName <span class="pull-right">@article.initDate</span></div>
                         @*文章頭*@
                         <hr />
                         <div class="panel-body">
                             <div class="panel-content">
                                 @*文章內文*@
+                                @if (@article.hashtagID != "-1  ")
+                                {
+                                    <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
+                                    <br /><br />
+                                }
                                 @article.main
                                 <br />
                             </div>
@@ -365,7 +385,8 @@
     }
     else
     {
-        <h2>討論區 沒登入 @User.Identity.GetUserName() <span class="pull-right"><button id="newItem" class="btn btn-success btn-sm" onclick="login()"> @Html.ActionLink("發文", "Login", "Account")</button></span></h2>
+        //  沒登入 @User.Identity.GetUserName()
+        <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm" onclick="login()"> @Html.ActionLink("發文", "Login", "Account")</button></span></h2>
         @*發文在這*@
         <div class="panel-group">
             @foreach (message message in messageList)
@@ -380,29 +401,44 @@
                     <div class="panel panel-primary msg">
 
                         <div class="panel-heading">@article.UserName<span class="pull-right">@article.initDate</span></div>
-
+                        <hr />
                         <div class="panel-body">
                             <div class="panel-content">
+                                @if (@article.hashtagID != "-1  ")
+                                {
+                                    <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
+                                    <br /><br />
+                                }
                                 @article.main
                                 <br />
                             </div>
                             <div class="panel-footer">
                                 @*Toggle Switch*@
-                                <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="heartChange(this)" />
+                                <input type="checkbox" class="switch switchHeart" id="heart+@article.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@article.heart" data-messageID="@article.messageID" onchange="login()" />
                                 <label for="heart+@article.messageID">
-
-                                    @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
+                                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                        <g id="like+@article.messageID" class="style-scope yt-icon">
+                                            <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z" class="style-scope yt-icon">
+                                            </path>
+                                        </g>
+                                    </svg>
                                 </label>
                                 <span id="heartCnt+@article.messageID" data-heart="@article.heart" data-messageID="@article.messageID">推 @article.heart</span>
                                 @*Toggle Switch*@
                                 @*Toggle Switch*@
                                 <input type="checkbox" class="switch switchDislike" id="dislike+@article.messageID" />
                                 <label for="dislike+@article.messageID">
-                                    @*<span class="switch-txt" turnOn="讚" turnOff="取消"></span>*@
+                                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                        <g id="hate+@article.messageID" class="style-scope yt-icon">
+                                            <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z" class="style-scope yt-icon">
+                                            </path>
+                                        </g>
+                                    </svg>
                                 </label>
                                 <span>噓 @article.dislike</span>
                                 @*Toggle Switch*@
-                                <button class="btn btnRelpy btn-outline-dark pull-right " data-messageID="@article.messageID" onclick="login()">@Html.ActionLink("回覆", "Login", "Account")</button>
+                                <a href="/Account/Login"><span class="btn btn-outline-dark pull-right myTag">回覆</span></a>
+
                             </div>
                             <br />
 
@@ -415,6 +451,7 @@
 
                                 <div class="panel panel-info rpl">
                                     <div class="panel-heading">@reply.UserName<span class="pull-right">@reply.initDate</span></div>
+                                    <hr />
                                     <div class="panel-body">
                                         <div class="panel-content">
                                             @reply.main
@@ -423,16 +460,29 @@
                                         <div class="panel-footer">
                                             @*Toggle Switch*@
                                             <input type="checkbox" class="switch switchHeart" id="heart+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@reply.heart" data-messageID="@reply.messageID" onchange="heartChange(this)" />
-                                            <label for="heart+@reply.messageID"></label>
+                                            <label for="heart+@reply.messageID">
+                                                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                                    <g id="like+@reply.messageID" class="style-scope yt-icon">
+                                                        <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z" class="style-scope yt-icon">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </label>
                                             <span id="heartCnt+@reply.messageID" data-heart="@reply.heart" data-messageID="@reply.messageID">推 @reply.heart</span>
                                             @*Toggle Switch*@
                                             @*Toggle Switch*@
                                             <input type="checkbox" class="switch switchDislike" id="dislike+@reply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@reply.dislike" data-messageID="@reply.messageID" onchange="dislikeChange(this)" />
-                                            <label for="dislike+@reply.messageID"></label>
+                                            <label for="dislike+@reply.messageID">
+                                                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                                    <g id="hate+@reply.messageID" class="style-scope yt-icon">
+                                                        <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z" class="style-scope yt-icon">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </label>
                                             <span id="dislikeCnt+@reply.messageID" data-dislike="@reply.dislike" data-messageID="@reply.messageID">噓 @reply.dislike</span>
                                             @*Toggle Switch*@
-                                            <br />
-                                            <button class="btn btnRelpy btn-outline-dark pull-right " data-messageID="@reply.messageID">回覆</button>
+                                            <a href="/Account/Login"><span class="btn btn-outline-dark pull-right myTag">回覆</span></a>
                                         </div>
                                         @*<button class="btntest btnHeart+@reply.messageID btn btn-success" id="heart+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-heart="@reply.heart" alt="Add Password">推 @reply.heart</button>
                                             <button class="btntest btnDislike+@reply.messageID btn btn-danger" id="dislike+@reply.messageID" AutoPostBack="true" data-messageID="@reply.messageID" data-dislike="@reply.dislike" alt="Add Password">噓 @reply.dislike</button>*@
@@ -443,6 +493,7 @@
                                         {
                                             <div class="panel panel-info torpl">
                                                 <div class="panel-heading">@replyToReply.UserName<span class="pull-right">@replyToReply.initDate</span></div>
+                                                <hr />
                                                 <div class="panel-body">
                                                     <div class="panel-content">
                                                         @replyToReply.main
@@ -451,12 +502,26 @@
                                                     <div class="panel-footer">
                                                         @*Toggle Switch*@
                                                         <input type="checkbox" class="switch switchHeart" id="heart+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID" onchange="heartChange(this)" />
-                                                        <label for="heart+@replyToReply.messageID"></label>
+                                                        <label for="heart+@replyToReply.messageID">
+                                                            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                                                <g id="like+@replyToReply.messageID" class="style-scope yt-icon">
+                                                                    <path d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z" class="style-scope yt-icon">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </label>
                                                         <span id="heartCnt+@replyToReply.messageID" data-heart="@replyToReply.heart" data-messageID="@replyToReply.messageID">推 @replyToReply.heart</span>
                                                         @*Toggle Switch*@
                                                         @*Toggle Switch*@
                                                         <input type="checkbox" class="switch switchDislike" id="dislike+@replyToReply.messageID" data-UserName="@User.Identity.GetUserName()" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID" onchange="dislikeChange(this)" />
-                                                        <label for="dislike+@replyToReply.messageID"></label>
+                                                        <label for="dislike+@replyToReply.messageID">
+                                                            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 20px; height: 20px;">
+                                                                <g id="hate+@replyToReply.messageID" class="style-scope yt-icon">
+                                                                    <path d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z" class="style-scope yt-icon">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </label>
                                                         <span id="dislikeCnt+@replyToReply.messageID" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID">噓 @replyToReply.dislike</span>
                                                         @*Toggle Switch*@
                                                     </div>
@@ -511,7 +576,7 @@
                             <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
                                 <i class="material-icons" aria-hidden="true">search </i>
                             </button>
-                            <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false"  value="" />
+                            <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
                             @*<button type="button" class="btn btn-outline-dark pull-right" id="hashtag">#標個股</button>*@
                         </div>
 
@@ -524,18 +589,13 @@
                                    name="UserIdbox"
                                    value="@User.Identity.GetUserName()"
                                    hidden>
-                            @*<input type="text"
-                                   name="hashtagBox"
-                                   id="hashtagBoxid"
-                                   value="2603"
-                                   hidden>*@
                             <textarea class="form-control"
                                       name="mainBox"
                                       id="exampleFormControlTextarea1"
                                       placeholder="在想些什麼呢?"
                                       rows="3"></textarea>
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                             <button type="submit" class="btn btn-primary">發文</button>
@@ -804,7 +864,7 @@
         var stockid = $("#hashtagStock").val();
         $("#UserIdbox").after(`<input type="text" name = "hashtagBox" id = "hashtagBoxid" value = "${stockid}" hidden >`);
         //$("#hashtagBoxid").val(stockid);
-       // alert(stockid);
+        // alert(stockid);
         $("#hashtagBox").html(`<button type="button" class="btn btn-outline-dark" onclick="cancelHashtag()" width="40px" id="hashtaged" data-hashtag="${stockid}" value="${stockid}">${stockid}</button>`);
         //console.log($("#hashtagBoxid").val());
     }

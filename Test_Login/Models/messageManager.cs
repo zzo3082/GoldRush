@@ -21,24 +21,51 @@ namespace Test_Login.Models
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
-                while (reader.Read())
+                try
                 {
-                    message message = new message()
+                    while (reader.Read())
                     {
-                        messageID = reader.GetInt32(reader.GetOrdinal("messageID")),
-                        UserName = reader.GetString(reader.GetOrdinal("UserName")),
-                        UserId = reader.GetString(reader.GetOrdinal("UserId")),
-                        main = reader.GetString(reader.GetOrdinal("main")),
-                        wholike = reader.GetString(reader.GetOrdinal("wholike")),
-                        whohate = reader.GetString(reader.GetOrdinal("whohate")),
-                        replyID = reader.GetInt32(reader.GetOrdinal("replyID")),
-                        heart = reader.GetInt32(reader.GetOrdinal("heart")),
-                        dislike = reader.GetInt32(reader.GetOrdinal("dislike")),
-                        initDate = reader.GetDateTime(reader.GetOrdinal("initDate"))
-                    };
-                    // 每讀到一行 將資料加到 messageList 內
-                    messageList.Add(message);
+                        message message = new message()
+                        {
+                            messageID = reader.GetInt32(reader.GetOrdinal("messageID")),
+                            UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                            UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                            main = reader.GetString(reader.GetOrdinal("main")),
+                            wholike = reader.GetString(reader.GetOrdinal("wholike")),
+                            whohate = reader.GetString(reader.GetOrdinal("whohate")),
+                            replyID = reader.GetInt32(reader.GetOrdinal("replyID")),
+                            hashtagID = reader.GetString(reader.GetOrdinal("hashtagID")),
+                            heart = reader.GetInt32(reader.GetOrdinal("heart")),
+                            dislike = reader.GetInt32(reader.GetOrdinal("dislike")),
+                            initDate = reader.GetDateTime(reader.GetOrdinal("initDate"))
+                        };
+                        // 每讀到一行 將資料加到 messageList 內
+                        messageList.Add(message);
+                    }
                 }
+                catch (Exception)
+                {
+                    while (reader.Read())
+                    {
+                        message message = new message()
+                        {
+                            messageID = reader.GetInt32(reader.GetOrdinal("messageID")),
+                            UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                            UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                            main = reader.GetString(reader.GetOrdinal("main")),
+                            wholike = reader.GetString(reader.GetOrdinal("wholike")),
+                            whohate = reader.GetString(reader.GetOrdinal("whohate")),
+                            replyID = reader.GetInt32(reader.GetOrdinal("replyID")),
+                            heart = reader.GetInt32(reader.GetOrdinal("heart")),
+                            dislike = reader.GetInt32(reader.GetOrdinal("dislike")),
+                            initDate = reader.GetDateTime(reader.GetOrdinal("initDate"))
+                        };
+                        // 每讀到一行 將資料加到 messageList 內
+                        messageList.Add(message);
+                    }
+
+                }
+               
             }
             else // 若沒有資料
             {
@@ -52,10 +79,18 @@ namespace Test_Login.Models
         public void CreateMessage(message message)
         {
             SqlConnection conn = new SqlConnection(ConnStr);
-            SqlCommand cmd = new SqlCommand(
-                //insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate,  initDate) values ('小名', 'xiaomin', '早安', 0, 0, 0, '', '' ,  GETDATE())
-                "insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0, 0, 0, '' ,'', GETDATE())",
-                conn);
+            SqlCommand cmd = new SqlCommand { };
+            //if (message.hashtagID == null)
+            //{
+            //    //insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate,  initDate) values ('小名', 'xiaomin', '早安', 0, 0, 0, '', '' ,  GETDATE())
+            //    cmd.CommandText = "insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0, 0, 0, '' ,'', GETDATE())";
+            //}
+            //else
+            //{
+                cmd.CommandText = "insert  into Mymessage (UserName, UserId, main, replyID,hashtagID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0,@hashtagID ,0, 0, '' ,'', GETDATE())";
+           // }
+            cmd.Connection = conn;
+            cmd.Parameters.Add(new SqlParameter("hashtagID", message.hashtagID));
             cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
             cmd.Parameters.Add(new SqlParameter("UserId", message.UserId));
             cmd.Parameters.Add(new SqlParameter("main", message.main));
