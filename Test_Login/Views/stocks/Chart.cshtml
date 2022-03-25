@@ -8,13 +8,14 @@
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-stock.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
-<script src="https://cdn.anychart.com/csv-data/csco-daily.js"></script>
+@*<script src="https://cdn.anychart.com/csv-data/csco-daily.js"></script>*@
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-annotations.min.js"></script>
 <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
 <style type="text/css">
     #container, #container_kdj, #container_bands {
-        height:800px;
-        width:100%;
+        height: 800px;
+        width: 100%;
         margin: 0;
         padding: 0;
     }
@@ -22,8 +23,6 @@
     .anychart-credits-text, .anychart-credits-logo {
         display: none !important;
     }
-
-
 </style>
 
 <body>
@@ -42,17 +41,40 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <select id="typeSelect" onclick="create()">
+                <option value="default" selected disabled>Annotation Type</option>
+                <option value="andrews-pitchfork">Andrews' Pitchfork</option>
+                <option value="ellipse">Ellipse</option>
+                <option value="fibonacci-arc">Fibonacci Arc</option>
+                <option value="fibonacci-fan">Fibonacci Fan</option>
+                <option value="fibonacci-retracement">Fibonacci Retracement</option>
+                <option value="fibonacci-timezones">Fibonacci Time Zones</option>
+                <option value="horizontal-line">Horizontal Line</option>
+                <option value="infinite-line">Infinite Line</option>
+                <option value="line">Line Segment</option>
+                <option value="marker">Marker</option>
+                <option value="ray">Ray</option>
+                <option value="rectangle">Rectangle</option>
+                <option value="trend-channel">Trend Channel</option>
+                <option value="triangle">Triangle</option>
+                <option value="vertical-line">Vertical Line</option>
+            </select>
+            <button onclick="removeAll()">Remove All</button>
+            <button onclick="removeSelected()">Remove Selected</button>
+            <button onclick="chart.contextMenu().show(-1, 290)">Settings</button>
             <div id="container"></div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <button onclick="chart2.contextMenu().show(0, 290)">Settings</button>
             <div id="container_kdj"></div>
         </div>
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <button onclick="chart3.contextMenu().show(0, 290)">Settings</button>
             <div id="container_bands"></div>
         </div>
     </div>
     <br /><hr /><br />
-    <div class="row">
+    <div class="row" style="width:100%;">
         <div class="table-responsive col-md-6">
             <div id="info">
                 <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
@@ -62,7 +84,7 @@
                 <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
                 <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
             </div>
-            <table class="table table-hover">
+            <table class="table table-hover"  >
                 <thead>
                     <tr>
                         <th scope="col">名稱</th>
@@ -77,7 +99,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="table-responsive col-md-6">
+        <div class="table-responsive col-md"   >
             <h6>財報比率</h6>
             <table class="table table-hover">
                 <thead>
@@ -95,7 +117,7 @@
             </table>
         </div>
     </div>
-    
+
 
 </body>
 
@@ -129,69 +151,64 @@
         );
     }
 
-    anychart.onDocumentReady(function () {
+    // set the data
+    table = anychart.data.table('x');
+    table.addData(stockData);
 
-        // set the data
-        table = anychart.data.table('x');
-        table.addData(stockData);
+    // map the data for candlestick plot
+    mapping = table.mapAs({ 'open': "o", 'high': "h", 'low': "l", 'close': "c" });
 
-        // map the data for candlestick plot
-        mapping = table.mapAs({ 'open': "o", 'high': "h", 'low': "l", 'close': "c" });
+    // for SMA
+    mapping_sma = table.mapAs({ 'x': "x", 'value': "l" });
+    // for histogram
+    mappping_volume = table.mapAs({ 'x': "x", 'value': "v" });
 
-        // for SMA
-        mapping_sma = table.mapAs({ 'x': "x", 'value': "l" });
-        // for histogram
-        mappping_volume = table.mapAs({ 'x': "x", 'value': "v" });
-
-        // [chart] in
-        var chart = anychart.stock();
-        chart.padding(10, 10, 10, 50);
+    // [chart] in
+    var chart = anychart.stock();
+    chart.padding(10, 10, 10, 50);
 
 
-        // set the series for candlestick plot
-        var series = chart.plot(0).candlestick(mapping).zIndex(10);
-        series.name("@ViewBag.id");
+    // set the series for candlestick plot
+    var series = chart.plot(0).candlestick(mapping).zIndex(10);
+    series.name("@ViewBag.id");
 
-        series.risingStroke("#C20000");
-        series.risingFill("#C20000");
-        series.fallingStroke("#00C200");
-        series.fallingFill("#00C200");
+    series.risingStroke("#C20000");
+    series.risingFill("#C20000");
+    series.fallingStroke("#00C200");
+    series.fallingFill("#00C200");
 
-        // set the series for SMA
-        var sma5 = chart.plot(0).sma(mapping_sma, 5).series();
-        sma5.stroke('#bf360c');
+    // set the series for SMA
+    var sma5 = chart.plot(0).sma(mapping_sma, 5).series();
+    sma5.stroke('#bf360c');
 
-        var sma20 = chart.plot(0).sma(mapping_sma, 20).series();
-        sma20.stroke('#ff6d00');
+    var sma20 = chart.plot(0).sma(mapping_sma, 20).series();
+    sma20.stroke('#ff6d00');
 
-        var sma60 = chart.plot(0).sma(mapping_sma, 60).series();
-        sma60.stroke('#00BDBD');
+    var sma60 = chart.plot(0).sma(mapping_sma, 60).series();
+    sma60.stroke('#00BDBD');
 
-        // set the series for histogram
+    // set the series for histogram
+    var series_hist = chart.plot(0).column(mappping_volume);
 
-        var series_hist = chart.plot(0).column(mappping_volume);
+    // set volume series settings
+    series_hist.zIndex(100).maxHeight('20%').bottom(0);
 
-        // set volume series settings
-        series_hist.zIndex(100).maxHeight('20%').bottom(0);
+    // create a logarithmic scale
+    var customScale = anychart.scales.log();
+    // sets y-scale
+    series_hist.yScale(customScale);
 
-        // create a logarithmic scale
-        var customScale = anychart.scales.log();
-        // sets y-scale
-        series_hist.yScale(customScale);
+    series_hist.name("成交量");
+    series_hist.risingStroke("#C20000");
+    series_hist.risingFill("#C20000", 0.6);
+    series_hist.fallingStroke("#00C200");
+    series_hist.fallingFill("#00C200", 0.6);
 
-        series_hist.name("成交量");
-        series_hist.risingStroke("#C20000");
-        series_hist.risingFill("#C20000");
-        series_hist.fallingStroke("#00C200");
-        series_hist.fallingFill("#00C200");
-
-        // chart.title('@ViewBag.id');
-        chart.container('container');
-
-        chart.draw();
-        // select the latest 20 points just like the last month data
-        chart.selectRange('points', 20, true);
-    });
+    // chart.title('@ViewBag.id');
+    chart.container('container');
+    chart.draw();
+    // select the latest 20 points just like the last month data
+    chart.selectRange('points', 20, true);
 
     // set the data
     dataTable = anychart.data.table();
@@ -283,5 +300,32 @@
     chart3.container('container_bands');
     chart3.draw();
 
+    // create annotations
+    function create() {
+        var select = document.getElementById("typeSelect");
+        console.log(select.value);
+        chart.annotations().startDrawing(select.value);
+    }
+
+    // remove all annotations
+    function removeAll() {
+        chart.annotations().removeAllAnnotations();
+    }
+
+    // remove the last annotation
+    function removeLast() {
+        // get the number of annotations
+        var annotationsCount = chart.annotations().getAnnotationsCount();
+        // remove the last annotation
+        chart.annotations().removeAnnotationAt(annotationsCount - 1);
+    }
+
+    // remove the selected annotation
+    function removeSelected() {
+        // get the selected annotation
+        var selectedAnnotation = chart.annotations().getSelectedAnnotation();
+        // remove the selected annotation
+        chart.annotations().removeAnnotation(selectedAnnotation);
+    }
 
 </script>
