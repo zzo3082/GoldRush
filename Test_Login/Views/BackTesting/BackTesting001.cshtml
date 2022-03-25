@@ -1,44 +1,58 @@
-﻿
+﻿<script src="/Scripts/jquery-3.4.1.js"></script>
 @{
     ViewBag.Title = "BackTesting001";
 }
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
     #nav-tabContent {
-        border: 11px solid rgba(71,164,85,0.25);
+        border: 8px solid /*rgba(71,164,85,0.25)*/;
         border-radius: 40px 40px 40px 40px;
         margin: 15px;
         padding: 15px;
+        border-color:violet;
     }
+
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
         color: #495057;
         background-color: white;
         border-color: rgba(71,164,85,0.25);
         color: green;
     }
+
     .nav-tabs .nav-link {
         border: 5px solid transparent;
     }
-    .nav-link{
-        color:black
+    .nav-link {
+        color: black
+    }
+    #submit1, #submit2 {
+        width: 200px;
+        height: 45px;
+        margin-top:20px
+    }
+    table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    table td{
+        text-align:left
     }
 </style>
-<div class="container " style="width:450px">
-    <nav>
-        <div class="nav nav-tabs container" id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-backTest001-tab" data-toggle="tab" href="#nav-backTest001" role="tab" aria-controls="nav-backTest001" aria-selected="true">定期定額</a>
-            <a class="nav-link " id="nav-backTest002-tab" data-toggle="tab" href="#nav-backTest002" role="tab" aria-controls="nav-backTest002" aria-selected="false">定期定股</a>
-        </div>
-    </nav>
+<div class="container text-center" style="width:600px">
+    <div class="radio-buttons-group mb-7" onchange="ttt()" id="tttt">
+        <button class="btn btn-light" id="btn1" data-value="all">定期定額</button>
+        <button class="btn btn-light" id="btn2" data-value="breakfast">定期定股</button>
+    </div>
+
     @* 定期定額 *@
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active " id="nav-backTest001" role="tabpanel" aria-labelledby="nav-backTest001-tab">
+    <div class="tab-content " id="nav-tabContent">
+        <div id="nav-backTest001" role="tabpanel" class="text-center">
             <h2>定期定額</h2>
-            <table>
+            <table class="">
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1"/>
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" />
                     </td>
                 </tr>
                 <tr>
@@ -54,34 +68,34 @@
                     </td>
                 </tr>
             </table>
-            <button type="button" name="name1" id="submit1">送出</button>
+            <button class="btn btn-outline-info" type="button"id="submit1">送出</button>
             <br /><br /><br />
         </div>
 
         @* 定期定股 *@
-        <div class="tab-pane fade" id="nav-backTest002" role="tabpanel" aria-labelledby="nav-backTest002-tab">
+        <div id="nav-backTest002" style="display:none">
             <h2>定期定股</h2>
             <table>
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2"/>
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2" />
                     </td>
                 </tr>
                 <tr>
                     <td>幾號投入</td>
                     <td>
-                        <input type="text" name="day" placeholder="填入日期" id="day2"/>
+                        <input type="text" name="day" placeholder="填入日期" id="day2" />
                     </td>
                 </tr>
                 <tr>
                     <td>固定買幾股</td>
                     <td>
-                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2"/>
+                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" />
                     </td>
                 </tr>
             </table>
-            <button type="button" id="submit2">送出</button>
+            <button class="btn btn-outline-success" type="button" id="submit2">送出</button>
             <br /><br /><br />
         </div>
 
@@ -117,8 +131,21 @@
     </div>
 </div>
 
-@*visibility:hidden*@
-<script src="/Scripts/jquery-3.4.1.js"></script>
+<script>
+    //console.log(typeof ($('#btn1').attr('class')))
+    function ttt() {
+        if ($('#btn1').attr('class').includes("selected")) {
+            console.log("BTN1 selected")
+            $("#nav-backTest001").css("display", "block")
+            $("#nav-backTest002").css("display", "none")
+        }
+        if ($('#btn2').attr('class').includes("selected")) {
+            console.log("BTN2 selected")
+            $("#nav-backTest001").css("display", "none")
+            $("#nav-backTest002").css("display", "block")
+        }
+    }
+</script>
 <script>
     $('#submit2').click(function () {
         console.log('定期定股')
