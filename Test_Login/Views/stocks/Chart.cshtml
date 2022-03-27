@@ -8,18 +8,27 @@
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-stock.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+        crossorigin="anonymous"></script>
 @*<script src="https://cdn.anychart.com/csv-data/csco-daily.js"></script>*@
 <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-annotations.min.js"></script>
 <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
 <style type="text/css">
-    #container, #container_kdj, #container_bands {
-        height: 800px;
-        width: 100%;
+    #chartjs{
+        width:100%;
+        height:100%;
         margin: 0;
         padding: 0;
     }
-
+    .list-group {
+        max-height: 300px;
+        margin-bottom: 10px;
+    }
+    .list-group-item{
+        margin:0;
+    }
     .anychart-credits-text, .anychart-credits-logo {
         display: none !important;
     }
@@ -28,52 +37,352 @@
 <body>
     <h2>@ViewBag.id</h2>
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本資料</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">KD/MACD</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">通道</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <select id="typeSelect" onclick="create()">
-                <option value="default" selected disabled>Annotation Type</option>
-                <option value="andrews-pitchfork">Andrews' Pitchfork</option>
-                <option value="ellipse">Ellipse</option>
-                <option value="fibonacci-arc">Fibonacci Arc</option>
-                <option value="fibonacci-fan">Fibonacci Fan</option>
-                <option value="fibonacci-retracement">Fibonacci Retracement</option>
-                <option value="fibonacci-timezones">Fibonacci Time Zones</option>
-                <option value="horizontal-line">Horizontal Line</option>
-                <option value="infinite-line">Infinite Line</option>
-                <option value="line">Line Segment</option>
-                <option value="marker">Marker</option>
-                <option value="ray">Ray</option>
-                <option value="rectangle">Rectangle</option>
-                <option value="trend-channel">Trend Channel</option>
-                <option value="triangle">Triangle</option>
-                <option value="vertical-line">Vertical Line</option>
-            </select>
-            <button onclick="removeAll()">Remove All</button>
-            <button onclick="removeSelected()">Remove Selected</button>
-            <button onclick="chart.contextMenu().show(-1, 290)">Settings</button>
-            <button id="testBtn" onclick="test()">Test</button>
-            <div id="container"></div>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <button onclick="chart2.contextMenu().show(0, 290)">Settings</button>
-            <div id="container_kdj"></div>
-        </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <button onclick="chart3.contextMenu().show(0, 290)">Settings</button>
-            <div id="container_bands"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h6>主圖指標</h6>
+                <div class="list-group overflow-auto">
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="" onchange="vol()" id="volume1">
+                        成交量(Volume)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        移動平均線(MA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        Arnald Legoux移動平均線
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        布林通道
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        錢德克羅停損
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        唐奇安通到(DC)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        雙指數移動平均線(DEMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        EMA交叉
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        船體移動平均線(HMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        一目均衡表
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        肯特納通道(KC)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        最小平方移動平均線(LSMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        線性回歸曲線
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        移動搓揉線
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        MA與EMA交叉
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        McGinley動態指標
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        移動平均線通道(MAC)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        指數移動平均線(EMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        加權移動平均線(WMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        拋物線轉向指標(SAR)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        樞軸點
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        平滑移動平均線(SMMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        三指數移動平均線(Triple SMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        成交量加權平均價(VWAP)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        成交量加權移動平均線(VWMA)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        威廉鱷魚線
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        威廉分型指標
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        轉折指標(ZigZag)
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        超級趨勢
+                    </label>
+
+                </div>
+                <h6>副圖指標</h6>
+                <div class="list-group overflow-auto">
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        成交量(Volume)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        隨機震盪指標(KD)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        指數平滑異同移動平均線(MACD)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        相對強弱指標(RSI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        振動升降指標(ASI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        價格漲落線(AD)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        阿隆指標
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        平均定向指數
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        真實波動幅度均值(ATR)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        動量震盪指標(AO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        均勢指標
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        布林通道%B
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        布林通道帶寬
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        蔡金資金流量(CMF)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        蔡金震盪指標(CHO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        錢德動量震盪指標(CMO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        波動區域
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        波動指數
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        順勢指標(CCI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        康納相對強弱指標(CRSI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        估波曲線
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        相關係數
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        區間震盪指標(DPO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        動向指標(DMI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        簡易波動指標(EOM)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        艾達爾強力指數(EFI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        費雪變換
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        歷史波動率
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        克林格成交量擺動指標
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        應用確定指標
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        梅斯線
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        動量指標(MOM)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        淨量
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        能量潮指標(OBV)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        價格通道(PC)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        價格震盪指標(PPO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        價量趨勢(PVT)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        變動率指標(ROC)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        相對能量指數(RVGI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        相對波動率指數(RVI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        遍歷性指標(SMIIO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        隨機相對震盪指標(KD RSI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        三重平滑均線
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        真實強弱指數(TSI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        終極震盪指標(UO)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        成交量擺動指標(Volume Oscilator)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        漩渦指標(VI)
+                    </label>
+                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
+                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        威廉指標
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <select id="typeSelect" onclick="create()">
+                    <option value="default" selected disabled>Annotation Type</option>
+                    <option value="andrews-pitchfork">Andrews' Pitchfork</option>
+                    <option value="ellipse">Ellipse</option>
+                    <option value="fibonacci-arc">Fibonacci Arc</option>
+                    <option value="fibonacci-fan">Fibonacci Fan</option>
+                    <option value="fibonacci-retracement">Fibonacci Retracement</option>
+                    <option value="fibonacci-timezones">Fibonacci Time Zones</option>
+                    <option value="horizontal-line">Horizontal Line</option>
+                    <option value="infinite-line">Infinite Line</option>
+                    <option value="line">Line Segment</option>
+                    <option value="marker">Marker</option>
+                    <option value="ray">Ray</option>
+                    <option value="rectangle">Rectangle</option>
+                    <option value="trend-channel">Trend Channel</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="vertical-line">Vertical Line</option>
+                </select>
+                <button onclick="removeAll()">Remove All</button>
+                <button onclick="removeSelected()">Remove Selected</button>
+                <button onclick="chart.contextMenu().show(-1, 290)">Settings</button>
+                <div id="chartjs"></div>
+            </div>
         </div>
     </div>
+    
     <br /><hr /><br />
     <div class="row" style="width:100%;">
         <div class="table-responsive col-md-6">
@@ -85,7 +394,7 @@
                 <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
                 <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
             </div>
-            <table class="table table-hover"  >
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">名稱</th>
@@ -100,7 +409,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="table-responsive col-md"   >
+        <div class="table-responsive col-md">
             <h6>財報比率</h6>
             <table class="table table-hover">
                 <thead>
@@ -124,22 +433,22 @@
 
 <script type="text/javascript">
     var model = @Html.Raw(Json.Encode(Model));
+    //var stockData = [];
+    //for (let i = 0; i < model.length; i++) {
+    //    var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
+    //    stockData.push({
+    //        x: new Date(date),
+    //        o: Number(model[i].openPrice),
+    //        h: Number(model[i].highPrice),
+    //        l: Number(model[i].lowPrice),
+    //        c: Number(model[i].endPrice),
+    //        v: Number(model[i].numOfTrade)
+    //    });
+    //}
     var stockData = [];
     for (let i = 0; i < model.length; i++) {
         var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
-        stockData.push({
-            x: new Date(date),
-            o: Number(model[i].openPrice),
-            h: Number(model[i].highPrice),
-            l: Number(model[i].lowPrice),
-            c: Number(model[i].endPrice),
-            v: Number(model[i].numOfTrade)
-        });
-    }
-    var stockDataKDJ = [];
-    for (let i = 0; i < model.length; i++) {
-        var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
-        stockDataKDJ.push(
+        stockData.push(
             [
             new Date(date),
             Number(model[i].openPrice),
@@ -152,16 +461,22 @@
     }
 
     // set the data
-    table = anychart.data.table('x');
+    var table = anychart.data.table();
     table.addData(stockData);
 
     // map the data for candlestick plot
-    mapping = table.mapAs({ 'open': "o", 'high': "h", 'low': "l", 'close': "c" });
+    mapping = table.mapAs();
+    mapping.addField('date', 0);
+    mapping.addField('open', 1);
+    mapping.addField('high', 2);
+    mapping.addField('low', 3);
+    mapping.addField('close', 4);
+    mapping.addField('volume', 5);
 
-    // for SMA
-    mapping_sma = table.mapAs({ 'x': "x", 'value': "l" });
-    // for histogram
-    mappping_volume = table.mapAs({ 'x': "x", 'value': "v" });
+    //// for SMA
+    //mapping_sma = table.mapAs({ 'x': "x", 'value': "l" });
+    //// for histogram
+    //mappping_volume = table.mapAs({ 'x': "x", 'value': "v" });
 
     // [chart] in
     var chart = anychart.stock();
@@ -178,28 +493,29 @@
     series.fallingFill("#00C200");
 
     // set the series for SMA
-    var sma5 = plot.sma(mapping_sma, 5).series();
+    var sma5 = plot.sma(mapping, 5).series();
     sma5.stroke('#bf360c');
 
-    var sma20 = plot.sma(mapping_sma, 20).series();
+    var sma20 = plot.sma(mapping, 20).series();
     sma20.stroke('#ff6d00');
 
-    var sma60 = plot.sma(mapping_sma, 60).series();
+    var sma60 = plot.sma(mapping, 60).series();
     sma60.stroke('#00BDBD');
 
     // chart.title('@ViewBag.id');
-    chart.container('container');
+    chart.container('chartjs');
     chart.draw();
     // select the latest 20 points just like the last month data
     chart.selectRange('points', 20, true);
 
-    let i = 0
-    function test() {
-        if (i == 0) {
-            i = 1;
+    function vol() {
+        if ($('#volume1').is(":checked")) {
+            console.log('123');
             // set the series for histogram
-            var series_hist = plot.column(mappping_volume);
-            series_hist.id("hist");
+            mapping_col = table.mapAs();
+            mapping_col.addField('value', 5);
+            var series_hist = plot.column(mapping_col);
+            series_hist.id("col");
             // set volume series settings
             series_hist.zIndex(100).maxHeight('20%').bottom(0);
 
@@ -213,108 +529,105 @@
             series_hist.risingFill("#C20000", 0.6);
             series_hist.fallingStroke("#00C200");
             series_hist.fallingFill("#00C200", 0.6);
-            // chart.title('@ViewBag.id');
-            chart.container('container');
-            chart.draw();
         } else {
-            i = 0;
-            plot.removeSeries("hist");
+            console.log('456');
+            plot.removeSeries("col");
         }
-
     }
 
 
-    // set the data
-    dataTable = anychart.data.table();
-    dataTable.addData(stockDataKDJ);
+    //// set the data
+    //dataTable = anychart.data.table();
+    //dataTable.addData(stockDataKDJ);
 
-    // mapping
-    var mapping2 = dataTable.mapAs();
-    //mapping2.addField("x", 0);
-    mapping2.addField("open", 1, "first");
-    mapping2.addField("high", 2, "max");
-    mapping2.addField("low", 3, "min");
-    mapping2.addField("close", 4, "last");
-    mapping2.addField("value", 4, "close");
-    mapping2.addField("volume", 5);
-    // create stock chart
-    var chart2 = anychart.stock();
-    // create plots on the chart
-    var plotKDJ = chart2.plot(0);
+    //// mapping
+    //var mapping2 = dataTable.mapAs();
+    ////mapping2.addField("x", 0);
+    //mapping2.addField("open", 1, "first");
+    //mapping2.addField("high", 2, "max");
+    //mapping2.addField("low", 3, "min");
+    //mapping2.addField("close", 4, "last");
+    //mapping2.addField("value", 4, "close");
+    //mapping2.addField("volume", 5);
+    //// create stock chart
+    //var chart2 = anychart.stock();
+    //// create plots on the chart
+    //var plotKDJ = chart2.plot(0);
 
-    // create first KDJ indicator of default series type
-    var kdj_1 = plotKDJ.kdj(mapping2, 10, "EMA", 10, "SMA", 20);
-    kdj_1.kSeries().stroke("#bf360c");
-    kdj_1.dSeries().stroke("#02660c");
-    kdj_1.jSeries().stroke("#0228b2");
+    //// create first KDJ indicator of default series type
+    //var kdj_1 = plotKDJ.kdj(mapping2, 10, "EMA", 10, "SMA", 20);
+    //kdj_1.kSeries().stroke("#bf360c");
+    //kdj_1.dSeries().stroke("#02660c");
+    //kdj_1.jSeries().stroke("#0228b2");
 
-    // create MACD plot
-    var plotMACD = chart2.plot(1);
+    //// create MACD plot
+    //var plotMACD = chart2.plot(1);
 
-    macd_default = plotMACD.macd(mapping2, 12, 26, 9);
+    //macd_default = plotMACD.macd(mapping2, 12, 26, 9);
 
-    macd_default.histogramSeries().normal().fill('red', 0.3).stroke('red');
-    macd_default.histogramSeries().normal().negativeFill('green', 0.3).negativeStroke('green');
+    //macd_default.histogramSeries().normal().fill('red', 0.3).stroke('red');
+    //macd_default.histogramSeries().normal().negativeFill('green', 0.3).negativeStroke('green');
 
-    // create PSY plot
-    var plotPSY = chart2.plot(2);
-    psy12 = plotPSY.psy(mapping2, 12).series();
-    psy12.stroke("0.5 gray");
-    psy12.fill("#ffd54f");
+    //// create PSY plot
+    //var plotPSY = chart2.plot(2);
+    //psy12 = plotPSY.psy(mapping2, 12).series();
+    //psy12.stroke("0.5 gray");
+    //psy12.fill("#ffd54f");
 
-    psy24 = plotPSY.psy(mapping2, 26).series();
-    psy24.stroke("0.5 lightGray");
-    psy24.fill("#ff6d00");
+    //psy24 = plotPSY.psy(mapping2, 26).series();
+    //psy24.stroke("0.5 lightGray");
+    //psy24.fill("#ff6d00");
 
-    //// create OBV plot
-    var plotOBV = chart2.plot(3);
-    var obv = plotOBV.obv(mapping2);
+    ////// create OBV plot
+    //var plotOBV = chart2.plot(3);
+    //var obv = plotOBV.obv(mapping2);
 
-    chart2.scroller().line(mapping2);
+    //chart2.scroller().line(mapping2);
 
-    chart2.selectRange('2022-01-01', '2022-03-01');
+    //chart2.selectRange('2022-01-01', '2022-03-01');
 
-    // set container id for the chart
-    chart2.container("container_kdj");
-    // initiate chart drawing
-    chart2.draw();
+    //// set container id for the chart
+    //chart2.container("container_kdj");
+    //// initiate chart drawing
+    //chart2.draw();
 
-    // mapping3
-    var mapping3 = dataTable.mapAs({
-        'open': 1,
-        'high': 2,
-        'low': 3,
-        'close': 4,
-        'value': { column: 4, type: 'close' }
-    });
+    //// mapping3
+    //var mapping3 = dataTable.mapAs({
+    //    'open': 1,
+    //    'high': 2,
+    //    'low': 3,
+    //    'close': 4,
+    //    'value': { column: 4, type: 'close' }
+    //});
 
-    // bands
-    var chart3 = anychart.stock();
-
-
-    // Bollinger Bands
-    plotBB = chart3.plot(0);
-    var candle = plotBB.candlestick(mapping3);
-    var bbands = plotBB.bbands(mapping3, 10, 3, "spline", "spline", "spline");
-
-    // color the series
-    bbands.upperSeries().stroke('#bf360c');
-    bbands.middleSeries().stroke('#ff6600');
-    bbands.lowerSeries().stroke('#bf360c');
-    bbands.rangeSeries().fill('#ffd54f 0.2');
-
-    // Keltner
-    plotKC = chart3.plot(1);
-    var candle2 = plotKC.candlestick(mapping3);
-    var keltnerChannels = plotKC.keltnerChannels(mapping3);
+    //// bands
+    //var chart3 = anychart.stock();
 
 
-    chart3.scroller().line(mapping3);
-    chart3.selectRange('2022-01-01', '2022-03-01');
-    chart3.container('container_bands');
-    chart3.draw();
+    //// Bollinger Bands
+    //plotBB = chart3.plot(0);
+    //var candle = plotBB.candlestick(mapping3);
+    //var bbands = plotBB.bbands(mapping3, 10, 3, "spline", "spline", "spline");
+
+    //// color the series
+    //bbands.upperSeries().stroke('#bf360c');
+    //bbands.middleSeries().stroke('#ff6600');
+    //bbands.lowerSeries().stroke('#bf360c');
+    //bbands.rangeSeries().fill('#ffd54f 0.2');
+
+    //// Keltner
+    //plotKC = chart3.plot(1);
+    //var candle2 = plotKC.candlestick(mapping3);
+    //var keltnerChannels = plotKC.keltnerChannels(mapping3);
+
+
+    //chart3.scroller().line(mapping3);
+    //chart3.selectRange('2022-01-01', '2022-03-01');
+    //chart3.container('container_bands');
+    //chart3.draw();
 
     // create annotations
+
     function create() {
         var select = document.getElementById("typeSelect");
         console.log(select.value);
