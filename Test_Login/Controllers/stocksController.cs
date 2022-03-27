@@ -81,10 +81,10 @@ namespace GoldRush.Controllers
                     //}
                     foreach(string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
                     {
-                        var dbs = db.stockPrice.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList();
+                        var dbs = db.stockPrice.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).Take(6).ToList();
                         try
                         {
-                            if (dbs[0].numOfSharesTrade > dbs.GetRange(1, 5).Select(x => x.numOfSharesTrade).Average())
+                            if (dbs[0].numOfSharesTrade > dbs.GetRange(1, 5).Select(x => x.numOfSharesTrade).Sum())
                             {
                                 stockArray += s + ", ";
                             }
@@ -95,9 +95,6 @@ namespace GoldRush.Controllers
                         }
                         
                     }
-                    
-                    stockArray += ", 2303";
-                    stockArray += ", 2330";
                     break;
                 case "四海遊龍":
                     var db2 = db.stockPrice.Where(x => x.stockID == "2330").OrderByDescending(x=>x.stockDate).ToList();
@@ -116,7 +113,8 @@ namespace GoldRush.Controllers
                     break;
                 case "強勢股票":
                     // Convert.ToDouble??
-                    var dbs_Top10 = db.stockPrice.Where(x => x.stockDate == "20220210").Select(x => Convert.ToDouble(x.endPrice) - Convert.ToDouble(x.openPrice)).OrderByDescending(x => x).ToList();
+                    var db3 = db.stockPrice.Where(x => x.stockDate == "20220210").ToList();
+                    var dbs_Top10 = db3.Select(x => new { date = x.stockID, value = (Convert.ToDouble(x.endPrice) - Convert.ToDouble(x.openPrice))}).OrderByDescending(x => x.value).ToList();
 
                     stockArray += ", 2609";
                     stockArray += ", 2409";

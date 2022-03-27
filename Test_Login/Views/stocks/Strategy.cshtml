@@ -158,7 +158,7 @@
                 <thead>
                     <tr>
                         <th>股票名稱</th>
-                        <th colspan="6" style="text-align:center">今日資訊</th>
+                        <th colspan="7" style="text-align:center">今日資訊</th>
                         <th colspan="4" style="text-align:center">基本資料</th>
                         <th colspan="4" style="text-align:center">每股盈餘</th>
                         <th colspan="4" style="text-align:center">近一季獲利指標</th>
@@ -166,6 +166,7 @@
                     <tr>
                         <th scope="col">股票代號</th>
 
+                        <th scope="col">日期</th>
                         <th scope="col">收盤價</th>
                         <th scope="col">漲跌</th>
                         <th scope="col">漲跌%</th>
@@ -196,12 +197,13 @@
                         foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
                         {
                             // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s && x.stockDate == "20210104").ToList()[0];
+                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x =>x.stockDate).ToList()[0];
                             <tr>
                                 <td class="">
                                     <input class="stockName btn btn-outline-info" type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
                                     <input class="stockName btn btn-outline-info" type="button"  value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
+                                <td>@item.stockDate</td>
                                 <td>@item.endPrice</td>
                                 @{ decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);}
                                 <td>@upDown</td>
@@ -225,17 +227,5 @@
 
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-<br />
-<br />
-<br />
-
 <br />
 <br />

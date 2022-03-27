@@ -62,6 +62,7 @@
             <button onclick="removeAll()">Remove All</button>
             <button onclick="removeSelected()">Remove Selected</button>
             <button onclick="chart.contextMenu().show(-1, 290)">Settings</button>
+            <button id="testBtn" onclick="test()">Test</button>
             <div id="container"></div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -135,7 +136,6 @@
             v: Number(model[i].numOfTrade)
         });
     }
-    console.log(stockData)
     var stockDataKDJ = [];
     for (let i = 0; i < model.length; i++) {
         var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
@@ -167,9 +167,9 @@
     var chart = anychart.stock();
     chart.padding(10, 10, 10, 50);
 
-
+    var plot = chart.plot(0);
     // set the series for candlestick plot
-    var series = chart.plot(0).candlestick(mapping).zIndex(10);
+    var series = plot.candlestick(mapping).zIndex(10);
     series.name("@ViewBag.id");
 
     series.risingStroke("#C20000");
@@ -178,37 +178,51 @@
     series.fallingFill("#00C200");
 
     // set the series for SMA
-    var sma5 = chart.plot(0).sma(mapping_sma, 5).series();
+    var sma5 = plot.sma(mapping_sma, 5).series();
     sma5.stroke('#bf360c');
 
-    var sma20 = chart.plot(0).sma(mapping_sma, 20).series();
+    var sma20 = plot.sma(mapping_sma, 20).series();
     sma20.stroke('#ff6d00');
 
-    var sma60 = chart.plot(0).sma(mapping_sma, 60).series();
+    var sma60 = plot.sma(mapping_sma, 60).series();
     sma60.stroke('#00BDBD');
-
-    // set the series for histogram
-    var series_hist = chart.plot(0).column(mappping_volume);
-
-    // set volume series settings
-    series_hist.zIndex(100).maxHeight('20%').bottom(0);
-
-    // create a logarithmic scale
-    var customScale = anychart.scales.log();
-    // sets y-scale
-    series_hist.yScale(customScale);
-
-    series_hist.name("成交量");
-    series_hist.risingStroke("#C20000");
-    series_hist.risingFill("#C20000", 0.6);
-    series_hist.fallingStroke("#00C200");
-    series_hist.fallingFill("#00C200", 0.6);
 
     // chart.title('@ViewBag.id');
     chart.container('container');
     chart.draw();
     // select the latest 20 points just like the last month data
     chart.selectRange('points', 20, true);
+
+    let i = 0
+    function test() {
+        if (i == 0) {
+            i = 1;
+            // set the series for histogram
+            var series_hist = plot.column(mappping_volume);
+            series_hist.id("hist");
+            // set volume series settings
+            series_hist.zIndex(100).maxHeight('20%').bottom(0);
+
+            // create a logarithmic scale
+            var customScale = anychart.scales.log();
+
+            // sets y-scale
+            series_hist.yScale(customScale);
+            series_hist.name("成交量");
+            series_hist.risingStroke("#C20000");
+            series_hist.risingFill("#C20000", 0.6);
+            series_hist.fallingStroke("#00C200");
+            series_hist.fallingFill("#00C200", 0.6);
+            // chart.title('@ViewBag.id');
+            chart.container('container');
+            chart.draw();
+        } else {
+            i = 0;
+            plot.removeSeries("hist");
+        }
+
+    }
+
 
     // set the data
     dataTable = anychart.data.table();
