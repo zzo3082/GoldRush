@@ -43,122 +43,25 @@
                 <h6>主圖指標</h6>
                 <div class="list-group overflow-auto">
                     <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" onchange="vol()" id="volume1">
+                        <input class="form-check-input me-1" type="checkbox" onchange="drawCol()" id="btnCol">
                         成交量(Volume)
                     </label>
                     <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
+                        <input class="form-check-input me-1" type="checkbox" onchange="drawSMA()" id="btnSMA">
                         移動平均線(MA)
                     </label>
                     <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        Arnald Legoux移動平均線
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        布林通道
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        錢德克羅停損
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        唐奇安通到(DC)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        雙指數移動平均線(DEMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        EMA交叉
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        船體移動平均線(HMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        一目均衡表
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        肯特納通道(KC)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        最小平方移動平均線(LSMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        線性回歸曲線
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        移動搓揉線
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        MA與EMA交叉
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        McGinley動態指標
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        移動平均線通道(MAC)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
+                        <input class="form-check-input me-1" type="checkbox" onchange="drawEMA()" id="btnEMA">
                         指數移動平均線(EMA)
                     </label>
                     <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        加權移動平均線(WMA)
+                        <input class="form-check-input me-1" type="checkbox" onchange="drawBBands()" id="btnBBands">
+                        布林通道
                     </label>
                     <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        拋物線轉向指標(SAR)
+                        <input class="form-check-input me-1" type="checkbox" onchange="drawKC()" id="btnKC">
+                        肯特納通道(KC)
                     </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        樞軸點
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        平滑移動平均線(SMMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        三指數移動平均線(Triple SMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        成交量加權平均價(VWAP)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        成交量加權移動平均線(VWMA)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        威廉鱷魚線
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        威廉分型指標
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        轉折指標(ZigZag)
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        超級趨勢
-                    </label>
-
                 </div>
                 <h6>副圖指標</h6>
                 <div class="list-group overflow-auto">
@@ -171,184 +74,24 @@
                         指數平滑異同移動平均線(MACD)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawRSI()" id="btnRSI" style="display:none" />
                         相對強弱指標(RSI)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        振動升降指標(ASI)
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawADL()" id="btnADL" style="display:none" />
+                        累積/分配線(ADL)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        價格漲落線(AD)
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawAroon()" id="btnAroon" style="display:none" />
+                        阿隆指標(Aroon)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        阿隆指標
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        平均定向指數
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawATR()" id="btnATR" style="display:none" />
                         真實波動幅度均值(ATR)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawAO()" id="btnAO" style="display:none" />
                         動量震盪指標(AO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        均勢指標
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        布林通道%B
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        布林通道帶寬
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        蔡金資金流量(CMF)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        蔡金震盪指標(CHO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        錢德動量震盪指標(CMO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        波動區域
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        波動指數
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        順勢指標(CCI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        康納相對強弱指標(CRSI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        估波曲線
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        相關係數
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        區間震盪指標(DPO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        動向指標(DMI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        簡易波動指標(EOM)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        艾達爾強力指數(EFI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        費雪變換
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        歷史波動率
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        克林格成交量擺動指標
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        應用確定指標
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        梅斯線
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        動量指標(MOM)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        淨量
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        能量潮指標(OBV)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        價格通道(PC)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        價格震盪指標(PPO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        價量趨勢(PVT)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        變動率指標(ROC)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        相對能量指數(RVGI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        相對波動率指數(RVI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        遍歷性指標(SMIIO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        隨機相對震盪指標(KD RSI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        三重平滑均線
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        真實強弱指數(TSI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        終極震盪指標(UO)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        成交量擺動指標(Volume Oscilator)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        漩渦指標(VI)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        威廉指標
                     </label>
                 </div>
             </div>
@@ -429,18 +172,6 @@
 
 <script type="text/javascript">
     var model = @Html.Raw(Json.Encode(Model));
-    //var stockData = [];
-    //for (let i = 0; i < model.length; i++) {
-    //    var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
-    //    stockData.push({
-    //        x: new Date(date),
-    //        o: Number(model[i].openPrice),
-    //        h: Number(model[i].highPrice),
-    //        l: Number(model[i].lowPrice),
-    //        c: Number(model[i].endPrice),
-    //        v: Number(model[i].numOfTrade)
-    //    });
-    //}
     var stockData = [];
     for (let i = 0; i < model.length; i++) {
         var date = model[i].stockDate.substring(0, 4) + "-" + model[i].stockDate.substring(4, 6) + "-" + model[i].stockDate.substring(6, 8);
@@ -488,15 +219,7 @@
     series.fallingStroke("#00C200");
     series.fallingFill("#00C200");
 
-    // set the series for SMA
-    var sma5 = plot.sma(mapping, 5).series();
-    sma5.stroke('#bf360c');
-
-    var sma20 = plot.sma(mapping, 20).series();
-    sma20.stroke('#ff6d00');
-
-    var sma60 = plot.sma(mapping, 60).series();
-    sma60.stroke('#00BDBD');
+    
 
     chart.splitters().normal().stroke({
         color: 'red',
@@ -512,10 +235,10 @@
         opacity: 0.9
     });
 
-    chart.splitters().preview().fill({
-        color: 'green',
-        opacity: 0.5
-    });
+    //chart.splitters().preview().fill({
+    //    color: 'green',
+    //    opacity: 0.5
+    //});
 
     // set plot.height won't work
     // plot.maxHeight('80%');
@@ -525,8 +248,9 @@
     // select the latest 20 points just like the last month data
     chart.selectRange('points', 20, true);
 
-    function vol() {
-        if ($('#volume1').is(":checked")) {
+    // 主圖指標
+    function drawCol() {
+        if ($('#btnCol').is(":checked")) {
             console.log('123');
             // set the series for histogram
             mapping_col = table.mapAs();
@@ -552,6 +276,79 @@
         }
     }
 
+    function drawSMA() {
+        if ($('#btnSMA').is(":checked")) {
+            // set the series for SMA
+            var sma5 = plot.sma(mapping, 5).series();
+            sma5.id("sma5");
+            sma5.stroke('#bf360c');
+
+            var sma20 = plot.sma(mapping, 20).series();
+            sma20.id("sma20");
+            sma20.stroke('#ff6d00');
+
+            var sma60 = plot.sma(mapping, 60).series();
+            sma60.id("sma60");
+            sma60.stroke('#00BDBD');
+        } else {
+            plot.removeSeries("sma5");
+            plot.removeSeries("sma20");
+            plot.removeSeries("sma60");
+        }
+    }
+
+    function drawEMA() {
+        if ($('#btnEMA').is(":checked")) {
+            // set the series for EMA
+            var ema5 = plot.ema(mapping, 5).series();
+            ema5.id("ema5");
+            ema5.stroke('#bf360c');
+
+            var ema20 = plot.ema(mapping, 20).series();
+            ema20.id("ema20");
+            ema20.stroke('#ff6d00');
+
+            var ema60 = plot.ema(mapping, 60).series();
+            ema60.id("ema60");
+            ema60.stroke('#00BDBD');
+        } else {
+            plot.removeSeries("ema5");
+            plot.removeSeries("ema20");
+            plot.removeSeries("ema60");
+        }
+    }
+
+    function drawBBands() {
+        if ($('#btnBBands').is(":checked")) {
+            bbands = plot.bbands(mapping);
+        } else {
+            var id = bbands.lowerSeries().id();
+            plot.removeSeries(id);
+
+            id = bbands.upperSeries().id();
+            plot.removeSeries(id);
+
+            id = bbands.middleSeries().id();
+            plot.removeSeries(id);
+
+            id = bbands.rangeSeries().id();
+            plot.removeSeries(id);
+        }
+    }
+
+    function drawKC() {
+        if ($('#btnKC').is(":checked")) {
+            kc = plot.keltnerChannels(mapping);
+        } else {
+            var id = kc.maSeries().id();
+            plot.removeSeries(id);
+
+            id = kc.rangeSeries().id();
+            plot.removeSeries(id);
+        }
+    }
+
+    // 副圖指標
     var plotIndex = 0;
 
     function drawKD() {
@@ -561,7 +358,6 @@
             plotKDJ = chart.plot(plotIndex);
             // create first KDJ indicator of default series type
             var kdj = plotKDJ.kdj(mapping, 10, "EMA", 10, "SMA", 20);
-            // kdj.id("kdj")
             kdj.kSeries().stroke("#bf360c");
             kdj.dSeries().stroke("#02660c");
             kdj.jSeries().stroke("#0228b2");
@@ -588,9 +384,85 @@
             plotMACD.enabled(false);
         }
     }
-    //// set the data
-    //dataTable = anychart.data.table();
-    //dataTable.addData(stockDataKDJ);
+
+    function drawRSI() {
+        if ($('#btnRSI').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotRSI = chart.plot(plotIndex);
+            rsi = plotRSI.rsi(mapping, 14).series();
+            rsi.stroke("#bf360c");
+        } else {
+            plotIndex--;
+            plotRSI.removeAllSeries();
+            plotRSI.enabled(false);
+        }
+    }
+
+    function drawADL() {
+        if ($('#btnADL').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotADL = chart.plot(plotIndex);
+            adl = plotADL.adl(mapping).series();
+        } else {
+            plotIndex--;
+            plotADL.removeAllSeries();
+            plotADL.enabled(false);
+        }
+    }
+
+    function drawAroon() {
+        if ($('#btnAroon').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotAroon = chart.plot(plotIndex);
+            aroon = plotAroon.aroon(mapping, 25);
+        } else {
+            plotIndex--;
+            plotAroon.removeAllSeries();
+            plotAroon.enabled(false);
+        }
+    }
+
+    function drawATR() {
+        if ($('#btnATR').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotATR = chart.plot(plotIndex);
+            atr = plotATR.atr(mapping, 14).series();
+        } else {
+            plotIndex--;
+            plotATR.removeAllSeries();
+            plotATR.enabled(false);
+        }
+    }
+
+    function drawAO() {
+        if ($('#btnAO').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotAO = chart.plot(plotIndex);
+            ao = plotAO.ao(mapping, 5, 34).series();
+        } else {
+            plotIndex--;
+            plotAO.removeAllSeries();
+            plotAO.enabled(false);
+        }
+    }
+    // function template
+    //function draw() {
+    //    if ($('#btnA').is(":checked")) {
+    //        plotIndex++;
+    //        chart.plot(plotIndex).enabled(true);
+    //        plotA = chart.plot(plotIndex);
+    //        A = plotA;
+    //    } else {
+    //        plotIndex--;
+    //        plotA.removeAllSeries();
+    //        plotA.enabled(false);
+    //    }
+    //}
 
     //// mapping
     //var mapping2 = dataTable.mapAs();
@@ -661,7 +533,6 @@
     //chart3.draw();
 
     // create annotations
-
     function create() {
         var select = document.getElementById("typeSelect");
         console.log(select.value);
@@ -688,5 +559,4 @@
         // remove the selected annotation
         chart.annotations().removeAnnotation(selectedAnnotation);
     }
-
 </script>
