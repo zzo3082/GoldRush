@@ -16,82 +16,109 @@
 <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
 <style type="text/css">
-    #chartjs{
-        width:100%;
-        height:100%;
+    #chartjs {
+        width: 100%;
+        height: 100%;
         margin: 0;
         padding: 0;
     }
+
     .list-group {
-        max-height: 300px;
         margin-bottom: 10px;
     }
-    .list-group-item{
-        margin:0;
+
+    .list-group-item {
+        margin: 0;
     }
+
     .anychart-credits-text, .anychart-credits-logo {
         display: none !important;
+    }
+
+     Hiding the checkbox, but allowing it to be focused 
+    .badgebox {
+        opacity: 0;
+    }
+
+    .badgebox + .badge {
+        /* Move the check mark away when unchecked*/        
+        text-indent: -999999px;
+        /* Makes the badge's width stay the same checked and unchecked*/        
+        width: 27px;
+    }
+
+    /*.badgebox:focus + .badge {*/
+        /* Set something to make the badge looks focused */
+        /* This really depends on the application, in my case it was: */
+        /* Adding a light border */
+        /*box-shadow: inset 0px 0px 5px;*/
+        /* Taking the difference out of the padding */
+    /*}*/
+
+    .badgebox:checked + .badge {
+        /*Move the check mark back when checked*/ 
+        text-indent: 0;
     }
 </style>
 
 <body>
-    <h2>@ViewBag.id</h2>
 
     <div class="container">
+        <h2>@ViewBag.id</h2>
         <div class="row">
             <div class="col-md-3">
                 <h6>主圖指標</h6>
-                <div class="list-group overflow-auto">
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" onchange="drawCol()" id="btnCol">
-                        成交量(Volume)
+                <div class="list-group">
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawCol()" id="btnCol" style="display:none">
+                        成交量(Volume)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" onchange="drawSMA()" id="btnSMA">
-                        移動平均線(MA)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawSMA()" id="btnSMA" style="display:none">
+                        移動平均線(MA)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" onchange="drawEMA()" id="btnEMA">
-                        指數移動平均線(EMA)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawEMA()" id="btnEMA" style="display:none">
+                        指數移動平均線(EMA)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" onchange="drawBBands()" id="btnBBands">
-                        布林通道
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawBBands()" id="btnBBands" style="display:none">
+                        布林通道<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" onchange="drawKC()" id="btnKC">
-                        肯特納通道(KC)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKC()" id="btnKC" style="display:none">
+                        肯特納通道(KC)<span class="badge">&check;</span>
                     </label>
                 </div>
                 <h6>副圖指標</h6>
-                <div class="list-group overflow-auto">
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawKD()" id="btnKD" style="display:none" />
-                        隨機震盪指標(KD)
+                <div class="list-group">
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKD()" id="btnKD" style="display:none" />
+                        隨機震盪指標(KD)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawMACD()" id="btnMACD" style="display:none" />
-                        指數平滑異同移動平均線(MACD)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawMACD()" id="btnMACD" style="display:none" />
+                        指數平滑異同移動平均線(MACD)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawRSI()" id="btnRSI" style="display:none" />
-                        相對強弱指標(RSI)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawRSI()" id="btnRSI" style="display:none" />
+                        相對強弱指標(RSI)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawADL()" id="btnADL" style="display:none" />
-                        累積/分配線(ADL)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawADL()" id="btnADL" style="display:none" />
+                        累積/分配線(ADL)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawAroon()" id="btnAroon" style="display:none" />
-                        阿隆指標(Aroon)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAroon()" id="btnAroon" style="display:none" />
+                        阿隆指標(Aroon)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawATR()" id="btnATR" style="display:none" />
-                        真實波動幅度均值(ATR)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawATR()" id="btnATR" style="display:none" />
+                        真實波動幅度均值(ATR)<span class="badge">&check;</span>
                     </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawAO()" id="btnAO" style="display:none" />
-                        動量震盪指標(AO)
+                    <label class="list-group-item list-group-item-action btn">
+                        <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAO()" id="btnAO" style="display:none" />
+                        動量震盪指標(AO)<span class="badge">&check;</span>
                     </label>
                 </div>
             </div>
@@ -121,7 +148,7 @@
             </div>
         </div>
     </div>
-    
+
     <br /><hr /><br />
     <div class="row" style="width:100%;">
         <div class="table-responsive col-md-6">
@@ -219,7 +246,7 @@
     series.fallingStroke("#00C200");
     series.fallingFill("#00C200");
 
-    
+
 
     chart.splitters().normal().stroke({
         color: 'red',
