@@ -242,10 +242,12 @@
     <Content Include="fonts\font-awesome\webfonts\fa-regular-400.svg" />
     <Content Include="fonts\font-awesome\webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\backgroundImage-2.jpg" />
+    <Content Include="img\backgroundImage-3.jpg" />
+    <Content Include="img\backgroundImage-3.png" />
     <Content Include="img\haveMoney.jpg" />
     <Content Include="img\investment-pattaya.jpg" />
     <Content Include="img\LOgo.png" />
-    <Content Include="img\logo3.png" />
     <Content Include="img\stock-vector-abstract.jpg" />
     <Content Include="img\stock-vector.jpg" />
     <Content Include="img\TotheMoon.jpg" />
