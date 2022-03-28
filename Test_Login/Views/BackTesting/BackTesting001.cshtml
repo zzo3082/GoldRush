@@ -2,14 +2,15 @@
 @{
     ViewBag.Title = "BackTesting001";
 }
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+@*https://html-css-js.com/css/generator/box-shadow/*@
+@*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">*@
+<link rel="stylesheet" href="~/Content/vendor.css">
+<link rel="stylesheet" href="~/Content/style.css">
 <style>
     #nav-tabContent {
-        border: 8px solid /*rgba(71,164,85,0.25)*/;
+        top: 10px;
         border-radius: 40px 40px 40px 40px;
-        margin: 15px;
-        padding: 15px;
-        border-color:violet;
+        box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%)
     }
 
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -22,53 +23,59 @@
     .nav-tabs .nav-link {
         border: 5px solid transparent;
     }
+
     .nav-link {
         color: black
     }
+
     #submit1, #submit2 {
         width: 200px;
         height: 45px;
-        margin-top:20px
+        margin-top: 20px
     }
+
     table {
         margin-left: auto;
         margin-right: auto;
     }
-    table td{
-        text-align:left
-    }
+
+        table td {
+            text-align: left
+        }
 </style>
-<div class="container text-center" style="width:600px">
+<div class="container  text-center" style="width:600px">
+    <div class=""></div>
     <div class="radio-buttons-group mb-7" onchange="ttt()" id="tttt">
         <button class="btn btn-light" id="btn1" data-value="all">定期定額</button>
         <button class="btn btn-light" id="btn2" data-value="breakfast">定期定股</button>
     </div>
 
     @* 定期定額 *@
-    <div class="tab-content " id="nav-tabContent">
-        <div id="nav-backTest001" role="tabpanel" class="text-center">
+    <div class=""></div>
+    <div class="tab-content  " id="nav-tabContent" style="background-color:antiquewhite;">
+        <div id="nav-backTest001" role="tabpanel" class="text-center ">
             <h2>定期定額</h2>
             <table class="">
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" />
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>幾號投入</td>
                     <td>
-                        <input type="text" name="day" placeholder="填入日期" id="day1" />
+                        <input type="text" name="day" placeholder="填入日期" id="day1" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>固定投入多少錢</td>
                     <td>
-                        <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" />
+                        <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" class="form-control form-control-sm" />
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-outline-info" type="button"id="submit1">送出</button>
+            <button class="btn btn-outline-info" type="button" id="submit1">送出</button>
             <br /><br /><br />
         </div>
 
@@ -79,19 +86,19 @@
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2" />
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>幾號投入</td>
                     <td>
-                        <input type="text" name="day" placeholder="填入日期" id="day2" />
+                        <input type="text" name="day" placeholder="填入日期" id="day2" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>固定買幾股</td>
                     <td>
-                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" />
+                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" class="form-control form-control-sm" />
                     </td>
                 </tr>
             </table>
