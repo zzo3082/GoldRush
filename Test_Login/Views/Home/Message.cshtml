@@ -139,7 +139,7 @@
         display: none;
         position: absolute;
         background-color: #f9f9f9;
-        min-width: 160px;
+        min-width: 68px;
         overflow: auto;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     }
@@ -176,7 +176,7 @@
         <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
         <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
-        <div class="panel-group " >
+        <div class="panel-group ">
             @foreach (message message in messageList)
             {
                 List<message> articleList = new List<message>();
@@ -200,7 +200,7 @@
                                     <button onclick="myDelete(this)" data-messageID="@article.messageID">刪除</button>
                                 </div>
                                 <div id="myDropdown2+@article.messageID" class="dropdown-content">
-                                    <button>檢舉</button>
+                                    <button onclick="report(this)" id="report+@article.messageID">檢舉</button>
                                 </div>
                             </div>
                             @*編輯紐*@
@@ -308,7 +308,7 @@
                                                     <button onclick="myDelete(this)" data-messageID="@reply.messageID">刪除</button>
                                                 </div>
                                                 <div id="myDropdown2+@reply.messageID" class="dropdown-content">
-                                                    <button>檢舉</button>
+                                                    <button onclick="report(this)">檢舉</button>
                                                 </div>
                                             </div>
                                             @*編輯紐*@<span class="pull-right">@reply.initDate</span>
@@ -407,7 +407,7 @@
                                                                     <button onclick="myDelete(this)" data-messageID="@replyToReply.messageID">刪除</button>
                                                                 </div>
                                                                 <div id="myDropdown2+@replyToReply.messageID" class="dropdown-content">
-                                                                    <button>檢舉</button>
+                                                                    <button onclick="report(this)">檢舉</button>
                                                                 </div>
                                                             </div>
                                                             @*編輯紐*@<span class="pull-right">@replyToReply.initDate</span>
@@ -791,12 +791,12 @@
         </div>
     </div>
     <!-- 回覆貼文 -->
-    <!-- 修改貼文 -->
+    <!-- 編輯貼文 -->
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">修改</h5>
+                    <h5 class="modal-title">編輯</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -837,7 +837,93 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-outline-success ">修改</button>
+                            <button type="submit" class="btn btn-outline-success ">編輯</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 編輯貼文 -->
+    <!-- 檢舉貼文 -->
+    <div id="reportModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">檢舉</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Home/Report">
+                        <div>
+                            <input type="text" id="ReportmessageID" name="messageID" value="0" hidden />
+                        </div>
+                        <div class="form-group">
+                            @*<label for="UserNameBox">*@
+                            <span class="glyphicon glyphicon-bullhorn"></span>
+                            檢舉使用者名稱
+                            @*</label>*@
+                            <input type="text"
+                                   name="UserNameBox"
+                                   class="form-control"
+                                   placeholder="檢舉使用者名稱"
+                                   value="@User.Identity.GetUserName()"
+                                   readonly />
+                        </div>
+
+                        <div class="form-group">
+                            @*<label for="mainBox">*@
+                            <span class="glyphicon glyphicon-time"></span>
+                            檢舉原因
+                            @*</label>*@
+                            <input type="text"
+                                   name="UserIdbox"
+                                   value="@User.Identity.GetUserName()"
+                                   hidden>
+                            <textarea class="form-control"
+                                      name="mainBox"
+                                      id="reportResult"
+                                      value=""
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-outline-success Report">檢舉</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 編輯貼文 -->
+    <!-- 檢舉貼文 -->
+    <div id="MyReportModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">檢舉</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Home/Report">
+                        <div>
+                            <input type="text" id="ReportmessageID" name="messageID" value="0" hidden />
+                        </div>
+                        <div class="form-group">
+                            <span>感謝您的回饋，我們會再審視這則訊息，<br />如果我們認為該內容確實違反《社群規範》，就會將其移除。</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-outline-success btnOK">確認</button>
                         </div>
 
                     </form>
@@ -869,6 +955,18 @@
         $("#editMain").val(this.dataset.main);
         $("#editModal").modal({ backdrop: "static" });
     })
+    $(".Report").click(function () {
+        $("#reportResult").val("");
+        $("#reportModal").modal('hide');
+        $("#MyReportModal").modal({ backdrop: "static" });
+    })
+    $(".btnOK").click(function () {
+        $("#MyReportModal").modal('hide');
+    })
+    function report() {
+        $("#reportModal").modal({ backdrop: "static" });
+
+    }
 
     $(".btntest").click(function () {
         var message = {
@@ -1061,6 +1159,7 @@
 
     function cancelHashtag() {
         $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span> <button id = "hashtag" type = "button" onclick="confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button > <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />');
+        $("#hashtagBoxid").remove();
     }
 
     function drop(btn) {

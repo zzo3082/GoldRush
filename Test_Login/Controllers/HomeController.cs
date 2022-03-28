@@ -120,7 +120,6 @@ namespace Test_Login.Controllers
         }
 
 
-
         // 當按讚post到這裡 從ajax收到一個message
         [HttpPost]
         public JsonResult APILike(message message)
