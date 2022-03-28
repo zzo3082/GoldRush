@@ -10,14 +10,19 @@
         background-color: #f7f7f7;
     }
     .msg {
-/*        border: 2px solid #007bff;
+        /*        border: 2px solid #007bff;
         border-radius: 21px;*/
         margin: 10px;
         padding: 10px;
+/*        -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 4px 7px 7px 1px rgba(138,138,138,0);
+        box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 4px 7px 7px 1px rgba(138,138,138,0);*/
+        box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -o-box-shadow: 1px 1px 9px 1px #A6A6A6;
     }
     .div_shadow {
-        -webkit-box-shadow: 2px 7px 15px 6px rgba(0,0,0,0.77);
-        box-shadow: 2px 7px 15px 6px rgba(0,0,0,0.77);
+        box-shadow: 0 10px 30px -15px rgb(0 0 0 / 75%);
     }
     #newItem {
         font-size: 30px;
@@ -48,17 +53,25 @@
     }
 
     .rpl {
-/*        border: 2px solid #77c8ab;*/
+        /*        border: 2px solid #77c8ab;*/
         margin: 10px;
-        border-radius: 21px;
+        /*        border-radius: 21px;*/
         padding: 10px;
+        box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -o-box-shadow: 1px 1px 9px 1px #A6A6A6;
     }
 
     .torpl {
-/*        border: 2px solid #e48489;*/
+        /*        border: 2px solid #e48489;*/
         margin: 10px;
-        border-radius: 21px;
+        /*border-radius: 21px;*/
         padding: 10px;
+        /*box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        -o-box-shadow: 1px 1px 9px 1px #A6A6A6;*/
     }
 
     .btnRelpy {
@@ -163,7 +176,7 @@
         <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
         <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
-        <div class="panel-group ">
+        <div class="panel-group " >
             @foreach (message message in messageList)
             {
                 List<message> articleList = new List<message>();
@@ -174,7 +187,7 @@
                 foreach (message article in articleList)
                 {
                     //文章區塊
-                    <div class="panel panel-primary msg div_shadow" id="@article.messageID">
+                    <div class="panel panel-primary msg" id="@article.messageID">
                         @*文章頭*@
                         <div class="panel-heading">
                             @article.UserName
