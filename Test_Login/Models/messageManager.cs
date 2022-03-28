@@ -63,9 +63,7 @@ namespace Test_Login.Models
                         // 每讀到一行 將資料加到 messageList 內
                         messageList.Add(message);
                     }
-
                 }
-               
             }
             else // 若沒有資料
             {
@@ -88,9 +86,9 @@ namespace Test_Login.Models
             //else
             //{
                 cmd.CommandText = "insert  into Mymessage (UserName, UserId, main, replyID,hashtagID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0,@hashtagID ,0, 0, '' ,'', GETDATE())";
-           // }
+                cmd.Parameters.Add(new SqlParameter("hashtagID", message.hashtagID));
+            //}
             cmd.Connection = conn;
-            cmd.Parameters.Add(new SqlParameter("hashtagID", message.hashtagID));
             cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
             cmd.Parameters.Add(new SqlParameter("UserId", message.UserId));
             cmd.Parameters.Add(new SqlParameter("main", message.main));
@@ -105,7 +103,7 @@ namespace Test_Login.Models
             SqlConnection conn = new SqlConnection(ConnStr);
             SqlCommand cmd = new SqlCommand(
                 //insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate,  initDate) values ('小名', 'xiaomin', '早安', 0, 0, 0, '', '' ,  GETDATE())
-                "insert  into Mymessage (UserName, UserId, main, replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, @replyID, 0, 0, '', '' ,GETDATE())",
+                "insert  into Mymessage (UserName, UserId, main,hashtagID ,replyID, heart, dislike, wholike, whohate, initDate) values (@UserName, @UserId, @main, 0, @replyID, 0, 0, '', '' ,GETDATE())",
                 conn);
             cmd.Parameters.Add(new SqlParameter("UserName", message.UserName));
             cmd.Parameters.Add(new SqlParameter("UserId", message.UserId));
@@ -116,19 +114,29 @@ namespace Test_Login.Models
             conn.Close();
         }
 
-        //// 案讚
-        //public void Like(message message)
-        //{
-        //    SqlConnection conn = new SqlConnection(ConnStr);
-        //    SqlCommand cmd = new SqlCommand(
-        //        "update Mymessage set heart = @heart where messageID = @messageID",
-        //        conn);
-        //    cmd.Parameters.Add(new SqlParameter("heart", message.heart +1));
-        //    cmd.Parameters.Add(new SqlParameter("messageID", message.messageID));
-        //    conn.Open();
-        //    cmd.ExecuteNonQuery();
-        //    conn.Close();
-        //}
+        public void EditMessage(message message)
+        {
+            SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmd = new SqlCommand(
+                $"update Mymessage set main = @main where messageID = {message.messageID}",
+                conn);
+            cmd.Parameters.Add(new SqlParameter("main", message.main));
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public int DeleteMessage(message message)
+        {
+            SqlConnection conn = new SqlConnection(ConnStr);
+            SqlCommand cmd = new SqlCommand(
+                $"delete from Mymessage where messageID = {message.messageID} ",
+                conn);
+             conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            return 0;
+        }
 
         // 案讚 ajax版
         public int LikeAjax(message message)

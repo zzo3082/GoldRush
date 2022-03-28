@@ -6,13 +6,19 @@
 }
 
 <style>
+    body {
+        background-color: #f7f7f7;
+    }
     .msg {
-        border: 2px solid #007bff;
-        border-radius: 21px;
+/*        border: 2px solid #007bff;
+        border-radius: 21px;*/
         margin: 10px;
         padding: 10px;
     }
-
+    .div_shadow {
+        -webkit-box-shadow: 2px 7px 15px 6px rgba(0,0,0,0.77);
+        box-shadow: 2px 7px 15px 6px rgba(0,0,0,0.77);
+    }
     #newItem {
         font-size: 30px;
         width: 150px;
@@ -42,14 +48,14 @@
     }
 
     .rpl {
-        border: 2px solid #77c8ab;
+/*        border: 2px solid #77c8ab;*/
         margin: 10px;
         border-radius: 21px;
         padding: 10px;
     }
 
     .torpl {
-        border: 2px solid #e48489;
+/*        border: 2px solid #e48489;*/
         margin: 10px;
         border-radius: 21px;
         padding: 10px;
@@ -94,6 +100,59 @@
         height: 1px;
         border: none;
     }
+
+    /*Dropdown*/
+    .dropbtn {
+        /*background-color: #4CAF50;*/
+        color: white;
+        padding: 0px;
+        width: 20px;
+        height: 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #3e8e41;
+        }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
+        .dropdown-content button {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown a:hover {
+        background-color: #f1f1f1
+    }
+
+    .show {
+        display: block;
+    }
+
+    .none {
+        display: none;
+    }
+    /*Dropdown*/
+    label img {
+        top: -10px;
+    }
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -102,9 +161,9 @@
     {
         // 有登入 @User.Identity.GetUserName()
         <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
-        <button id="btnName" data-UserName="@User.Identity.GetUserName() " hidden></button>
+        <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
-        <div class="panel-group">
+        <div class="panel-group ">
             @foreach (message message in messageList)
             {
                 List<message> articleList = new List<message>();
@@ -115,15 +174,32 @@
                 foreach (message article in articleList)
                 {
                     //文章區塊
-                    <div class="panel panel-primary msg">
+                    <div class="panel panel-primary msg div_shadow" id="@article.messageID">
                         @*文章頭*@
-                        <div class="panel-heading">@article.UserName <span class="pull-right">@article.initDate</span></div>
+                        <div class="panel-heading">
+                            @article.UserName
+                            @*編輯紐*@
+                            <div class="dropdown">
+                                <label for="op+@article.messageID"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></label>
+                                <button class="dropbtn" id="op+@article.messageID" hidden onclick="drop(this)" data-messageID="@article.messageID" data-UserName="@article.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
+                                <div id="myDropdown+@article.messageID" class="dropdown-content">
+                                    <button onclick="edit(this)" class="btnEdit" data-messageID="@article.messageID" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
+                                    <button onclick="myDelete(this)" data-messageID="@article.messageID">刪除</button>
+                                </div>
+                                <div id="myDropdown2+@article.messageID" class="dropdown-content">
+                                    <button>檢舉</button>
+                                </div>
+                            </div>
+                            @*編輯紐*@
+                            <span class="pull-right">@article.initDate</span>
+                        </div>
                         @*文章頭*@
                         <hr />
                         <div class="panel-body">
                             <div class="panel-content">
                                 @*文章內文*@
-                                @if (@article.hashtagID != "-1  ")
+
+                                @if (@article.hashtagID.ToString() != "0   ")
                                 {
                                     <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
@@ -206,15 +282,30 @@
                             {
                                 if (reply.replyID == article.messageID)
                                 {
-
-                                    <div class="panel panel-info rpl">
+                                    <div class="panel panel-info rpl" id="@reply.messageID">
                                         @*回覆頭*@
-                                        <div class="panel-heading">@reply.UserName<span class="pull-right">@reply.initDate</span></div>
+                                        <div class="panel-heading">
+                                            @reply.UserName
+                                            @*編輯紐*@
+                                            <div class="dropdown">
+                                                <label for="op+@reply.messageID"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></label>
+                                                <button class="dropbtn" id="op+@reply.messageID" hidden onclick="drop(this)" data-messageID="@reply.messageID" data-UserName="@reply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
+                                                <div id="myDropdown+@reply.messageID" class="dropdown-content">
+                                                    <button onclick="edit(this)" class="btnEdit" data-messageID="@reply.messageID" data-UserName="@reply.UserName" data-main="@reply.main">編輯</button>
+                                                    <button onclick="myDelete(this)" data-messageID="@reply.messageID">刪除</button>
+                                                </div>
+                                                <div id="myDropdown2+@reply.messageID" class="dropdown-content">
+                                                    <button>檢舉</button>
+                                                </div>
+                                            </div>
+                                            @*編輯紐*@<span class="pull-right">@reply.initDate</span>
+                                        </div>
                                         @*回覆頭*@
                                         <hr />
                                         <div class="panel-body">
                                             @*回覆內文*@
                                             <div class="panel-content">
+
                                                 @reply.main
                                                 <br />
                                             </div>
@@ -291,8 +382,23 @@
                                             {
                                                 if (replyToReply.replyID == reply.messageID)
                                                 {
-                                                    <div class="panel panel-info torpl">
-                                                        <div class="panel-heading">@replyToReply.UserName<span class="pull-right">@replyToReply.initDate</span></div>
+                                                    <div class="panel panel-info torpl" id="@replyToReply.messageID">
+                                                        <div class="panel-heading">
+                                                            @replyToReply.UserName
+                                                            @*編輯紐*@
+                                                            <div class="dropdown">
+                                                                <label for="op+@replyToReply.messageID"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></label>
+                                                                <button class="dropbtn" id="op+@replyToReply.messageID" hidden onclick="drop(this)" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
+                                                                <div id="myDropdown+@replyToReply.messageID" class="dropdown-content">
+                                                                    <button onclick="edit(this)" class="btnEdit" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" data-main="@replyToReply.main">編輯</button>
+                                                                    <button onclick="myDelete(this)" data-messageID="@replyToReply.messageID">刪除</button>
+                                                                </div>
+                                                                <div id="myDropdown2+@replyToReply.messageID" class="dropdown-content">
+                                                                    <button>檢舉</button>
+                                                                </div>
+                                                            </div>
+                                                            @*編輯紐*@<span class="pull-right">@replyToReply.initDate</span>
+                                                        </div>
                                                         <hr />
                                                         <div class="panel-body">
                                                             <div class="panel-content">
@@ -589,6 +695,11 @@
                                    name="UserIdbox"
                                    value="@User.Identity.GetUserName()"
                                    hidden>
+                            @*<input type="text"
+                                name="hashtagBox"
+                                id="hashtagBoxID"
+                                value=""
+                                hidden />*@
                             <textarea class="form-control"
                                       name="mainBox"
                                       id="exampleFormControlTextarea1"
@@ -645,6 +756,10 @@
                                    name="UserIdbox"
                                    value="@User.Identity.GetUserName()"
                                    hidden>
+                            <input type="text"
+                                   name="hashtagBox"
+                                   value="0"
+                                   hidden>
                             <textarea class="form-control"
                                       name="mainBox"
                                       id="exampleFormControlTextarea1"
@@ -663,12 +778,69 @@
         </div>
     </div>
     <!-- 回覆貼文 -->
+    <!-- 修改貼文 -->
+    <div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Home/Edit">
+                        <div>
+                            <input type="text" id="EditmessageID" name="messageID" value="0" hidden />
+                        </div>
+                        <div class="form-group">
+                            @*<label for="UserNameBox">*@
+                            <span class="glyphicon glyphicon-bullhorn"></span>
+                            使用者名稱
+                            @*</label>*@
+                            <input type="text"
+                                   name="UserNameBox"
+                                   class="form-control"
+                                   placeholder="使用者名稱"
+                                   value="@User.Identity.GetUserName()"
+                                   readonly />
+                        </div>
+
+                        <div class="form-group">
+                            @*<label for="mainBox">*@
+                            <span class="glyphicon glyphicon-time"></span>
+                            原始內容
+                            @*</label>*@
+                            <input type="text"
+                                   name="UserIdbox"
+                                   value="@User.Identity.GetUserName()"
+                                   hidden>
+                            <textarea class="form-control"
+                                      name="mainBox"
+                                      id="editMain"
+                                      value=""
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-outline-success ">修改</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 修改貼文 -->
 </div>
 @*<script>CKEDITOR.replace("mainBox");</script>*@
 @*<script>CKEDITOR.replace("UserIdbox");</script>*@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script src="~/Content/vendor.css"></script>
+
 <script>
     let name = document.getElementById('btnName').dataset.username
     $("#newItem").click(function () {
@@ -678,6 +850,11 @@
     $(".btnRelpy").click(function () {
         $("#messageID").val(this.dataset.messageid);
         $("#replyModal").modal({ backdrop: "static" });
+    })
+    $(".btnEdit").click(function () {
+        $("#EditmessageID").val(this.dataset.messageid);
+        $("#editMain").val(this.dataset.main);
+        $("#editModal").modal({ backdrop: "static" });
     })
 
     $(".btntest").click(function () {
@@ -872,5 +1049,42 @@
     function cancelHashtag() {
         $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span> <button id = "hashtag" type = "button" onclick="confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button > <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />');
     }
+
+    function drop(btn) {
+        //alert("ok");
+        if (btn.dataset.username == name) {
+            document.getElementById(`myDropdown+${btn.dataset.messageid}`).classList.toggle("show");
+        } else {
+            document.getElementById(`myDropdown2+${btn.dataset.messageid}`).classList.toggle("show");
+        }
+        //document.getElementById(`${btn.dataset.messageid}`).classList.toggle("none")
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    function myDelete(btn) {
+        var message = { messageID: btn.dataset.messageid }
+        console.log(btn.dataset.messageid);
+        $.ajax({
+            type: "post",
+            url: "/Home/Delete",
+            data: message
+        }).then(function (e) {
+            document.getElementById(`${btn.dataset.messageid}`).classList.toggle("none")
+        })
+    }
+
 
 </script>

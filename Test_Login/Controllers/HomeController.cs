@@ -44,7 +44,7 @@ namespace Test_Login.Controllers
             messageManager messageManager = new messageManager();
             if (UserNameBox != null)
             {
-                message message = new message() ;
+                message message = new message();
                 if (hashtagBox != null)
                 {
                     message.UserId = UserIdbox;
@@ -57,10 +57,9 @@ namespace Test_Login.Controllers
                     message.UserId = UserIdbox;
                     message.UserName = UserNameBox;
                     message.main = mainBox;
-                    message.hashtagID = "-1";
+                    message.hashtagID = "0";
                 }
-                
-                
+
                 messageManager.CreateMessage(message);
                 List<message> messageList = messageManager.GetMessages();
                 ViewBag.messageList = messageList;
@@ -81,7 +80,7 @@ namespace Test_Login.Controllers
 
         }
         [HttpPost]
-        public ActionResult Reply(string UserNameBox, string UserIdbox, string mainBox, int messageID)
+        public ActionResult Reply(string UserNameBox, string UserIdbox, string mainBox, int messageID, int hashtagBox=0)
         {
             messageManager messageManager = new messageManager();
             message message = new message()
@@ -97,35 +96,30 @@ namespace Test_Login.Controllers
             return Redirect("Message");
         }
 
-        //[HttpPost]
-        //public ActionResult Like(int heart, int messageID)
-        //{
-        //    messageManager messageManager = new messageManager();
-        //    message message = new message()
-        //    {
-        //        messageID = messageID,
-        //        heart = heart
-        //    };
-        //   // messageManager.Like(message);
-        //    List<message> messageList = messageManager.GetMessages();
-        //    ViewBag.messageList = messageList;
-        //    return View("Message");
-        //}
+        [HttpPost]
+        public JsonResult Delete(message message)
+        {             
+            messageManager messageManager = new messageManager();
+            int result = messageManager.DeleteMessage(message);
+            return Json(result);
+        }
 
-        //[HttpPost]
-        //public ActionResult Dislike(int dislike, int messageID)
-        //{
-        //    messageManager messageManager = new messageManager();
-        //    message message = new message()
-        //    {
-        //        messageID = messageID,
-        //        dislike = dislike
-        //    };
-        //    //messageManager.Dislike(message);
-        //    List<message> messageList = messageManager.GetMessages();
-        //    ViewBag.messageList = messageList;
-        //    return View("Message");
-        //}
+        [HttpPost]
+        public ActionResult Edit(string UserNameBox, string UserIdbox, string mainBox, int messageID)
+        {
+            messageManager messageManager = new messageManager();
+            message message = new message()
+            {
+                messageID = messageID,
+                main = mainBox
+            };
+            messageManager.EditMessage(message);
+            List<message> messageList = messageManager.GetMessages();
+            ViewBag.messageList = messageList;
+            return Redirect("Message");
+        }
+
+
 
         // 當按讚post到這裡 從ajax收到一個message
         [HttpPost]
