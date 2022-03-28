@@ -7,6 +7,9 @@
     .stockCustomize {
         text-align: center;
     }
+    .card-body input[type=text]{
+        width:50px;
+    }
 </style>
 
 
@@ -298,16 +301,97 @@
             <div class="card">
                 <div class="card-header" id="tech_headingOne">
                     <h2 class="mb-0">
-                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#tech_collapseOne" aria-expanded="true" aria-controls="tech_collapseOne">
+                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseOne" aria-expanded="true" aria-controls="tech_collapseOne">
                             KDJ
                         </button>
                     </h2>
                 </div>
 
-                <div id="tech_collapseOne" class=" collapse show alert-danger" aria-labelledby="tech_headingOne" data-parent="#accordionExample">
+                <div id="tech_collapseOne" class=" collapse" aria-labelledby="tech_headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         @*[form] in*@
-
+                        <div class="stockCustomize">
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            連續
+                            <input type="text" />
+                            天
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            前
+                            <input type="text" />
+                            天
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <input type="text" />以上
+                        </div><hr />
+                        <div class="stockCustomize">
+                            最近<input type="text" />天KD
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -315,7 +399,7 @@
             <div class="card">
                 <div class="card-header" id="tech_headingTwo">
                     <h2 class="mb-0">
-                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#tech_collapseTwo" aria-expanded="false" aria-controls="tech_collapseTwo">
+                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseTwo" aria-expanded="false" aria-controls="tech_collapseTwo">
                             MACD
                         </button>
                     </h2>
@@ -323,7 +407,49 @@
                 <div id="tech_collapseTwo" class="collapse" aria-labelledby="tech_headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                         @*[checkbox] [form] in*@
-
+                        <div class="stockCustomize">
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            前<input type="text" />天的
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            MACD近<input type="text" />天都
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            近<input type="text" />天MACD發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            MACD發生
+                            <select>
+                                <option>綠柱變紅柱</option>
+                                <option>紅柱變綠柱</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                            介於<input type="text" />至<input type="text" />之間
+                        </div>
                     </div>
                 </div>
             </div>
@@ -331,7 +457,7 @@
             <div class="card">
                 <div class="card-header" id="tech_headingThree">
                     <h2 class="mb-0">
-                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#tech_collapseThree" aria-expanded="false" aria-controls="tech_collapseThree">
+                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseThree" aria-expanded="false" aria-controls="tech_collapseThree">
                             均線
                         </button>
                     </h2>
@@ -339,7 +465,54 @@
                 <div id="tech_collapseThree" class="collapse" aria-labelledby="tech_headingThree" data-parent="#accordionExample">
                     <div class="card-body">
                         @*[form] in*@
-
+                        <div class="stockCustomize">
+                            連續<input type="text" />天股價都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div><hr />
+                        <div class="stockCustomize">
+                            最近<input type="text" />天內的股價有
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            今日股價
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>5</option>
+                                <option>20</option>
+                                <option>60</option>
+                                <option>100</option>
+                            </select>
+                            日均線的<input type="text" />%
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            近<input type="text" />天<input type="text" />日均線和<input type="text" />日均線有發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            近<input type="text" />天<input type="text" />日均線的斜率
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />%
+                        </div>
                     </div>
                 </div>
             </div>
@@ -355,6 +528,13 @@
                 <div id="tech_collapseFour" class="collapse" aria-labelledby="tech_headingFour" data-parent="#accordionExample">
                     <div class="card-body">
                         @*[form] in*@
+                        <div class="stockCustomize">
+                            連續<input type="text" />日為
+                            <select>
+                                <option>紅K線</option>
+                                <option>黑K線</option>
+                            </select>
+                        </div>
 
                     </div>
                 </div>
@@ -372,91 +552,42 @@
                 <div id="tech_collapseFive" class="collapse" aria-labelledby="tech_headingFive" data-parent="#accordionExample">
                     <div class="card-body">
                         @*[form] in*@
-
-                    </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingSix">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseSix" aria-expanded="false" aria-controls="tech_collapseSix">
-                            @*[Title] in*@
-                            RSI、威廉指標
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseSix" class="collapse" aria-labelledby="tech_headingSix" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
-
-                    </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingSeven">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseSeven" aria-expanded="false" aria-controls="tech_collapseSeven">
-                            @*[Title] in*@
-                            股價、大盤
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseSeven" class="collapse" aria-labelledby="tech_headingSeven" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
-
-                    </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingEight">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseEight" aria-expanded="false" aria-controls="tech_collapseEight">
-                            @*[Title] in*@
-                            糾結線、布林通道、肯特納通道
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseEight" class="collapse" aria-labelledby="tech_headingEight" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
-
-                    </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingNine">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseNine" aria-expanded="false" aria-controls="tech_collapseNine">
-                            @*[Title] in*@
-                            PSY、乖離率、RS、樂活、CCI
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseNine" class="collapse" aria-labelledby="tech_headingNine" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
-
-                    </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingTen">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseTen" aria-expanded="false" aria-controls="tech_collapseTen">
-                            @*[Title] in*@
-                            SAR、OBV、DMI
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseTen" class="collapse" aria-labelledby="tech_headingTen" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
+                        <div class="stockCustomize">
+                            近<input type="text" />天都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均量
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            近<input type="text" />天有<input type="text" />天是
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            連續<input type="text" />天都是
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            今日成交量創<input type="text" />天新高
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="text" />天均量大於<input type="text" />張
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            今日成交量大於<input type="text" />天均量的<input type="text" />%
+                        </div>
 
                     </div>
                 </div>

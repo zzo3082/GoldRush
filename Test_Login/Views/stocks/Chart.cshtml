@@ -124,26 +124,26 @@
             </div>
             <div class="col-md-9">
                 <select id="typeSelect" onclick="create()">
-                    <option value="default" selected disabled>Annotation Type</option>
-                    <option value="andrews-pitchfork">Andrews' Pitchfork</option>
-                    <option value="ellipse">Ellipse</option>
-                    <option value="fibonacci-arc">Fibonacci Arc</option>
-                    <option value="fibonacci-fan">Fibonacci Fan</option>
-                    <option value="fibonacci-retracement">Fibonacci Retracement</option>
-                    <option value="fibonacci-timezones">Fibonacci Time Zones</option>
-                    <option value="horizontal-line">Horizontal Line</option>
-                    <option value="infinite-line">Infinite Line</option>
-                    <option value="line">Line Segment</option>
-                    <option value="marker">Marker</option>
-                    <option value="ray">Ray</option>
-                    <option value="rectangle">Rectangle</option>
-                    <option value="trend-channel">Trend Channel</option>
-                    <option value="triangle">Triangle</option>
-                    <option value="vertical-line">Vertical Line</option>
+                    <option value="default" selected disabled>工具</option>
+                    <option value="andrews-pitchfork">分叉線</option>
+                    <option value="horizontal-line">水平線</option>
+                    <option value="vertical-line">垂直線</option>
+                    <option value="infinite-line">線段（無限長）</option>
+                    <option value="line">線段</option>
+                    <option value="ray">放射線</option>
+                    <option value="marker">標記</option>
+                    <option value="rectangle">長方形</option>
+                    <option value="triangle">三角形</option>
+                    <option value="ellipse">橢圓</option>
+                    <option value="trend-channel">趨勢通道</option>
+                    <option value="fibonacci-arc">Fibonacci弧形</option>
+                    <option value="fibonacci-fan">Fibonacci扇形</option>
+                    <option value="fibonacci-retracement">Fibonacci回調線</option>
+                    <option value="fibonacci-timezones">Fibonacci時區</option>
                 </select>
-                <button onclick="removeAll()">Remove All</button>
-                <button onclick="removeSelected()">Remove Selected</button>
-                <button onclick="chart.contextMenu().show(-1, 290)">Settings</button>
+                <button class="btn btn-light" onclick="removeAll()">移除全部</button>
+                <button class="btn btn-light" onclick="removeSelected()">移除選定</button>
+                <button class="btn btn-light" onclick="chart.contextMenu().show(1100, 260)">設定</button>
                 <div id="chartjs"></div>
             </div>
         </div>
@@ -272,8 +272,8 @@
     // chart.title('@ViewBag.id');
     chart.container('chartjs');
     chart.draw();
-    // select the latest 20 points just like the last month data
-    chart.selectRange('points', 20, true);
+    // select the latest 40 points just like the last 2 month data
+    chart.selectRange('points', 40, true);
 
     // 主圖指標
     function drawCol() {
@@ -491,74 +491,6 @@
     //    }
     //}
 
-    //// mapping
-    //var mapping2 = dataTable.mapAs();
-    ////mapping2.addField("x", 0);
-    //mapping2.addField("open", 1, "first");
-    //mapping2.addField("high", 2, "max");
-    //mapping2.addField("low", 3, "min");
-    //mapping2.addField("close", 4, "last");
-    //mapping2.addField("value", 4, "close");
-    //mapping2.addField("volume", 5);
-
-    //// create PSY plot
-    //var plotPSY = chart2.plot(2);
-    //psy12 = plotPSY.psy(mapping2, 12).series();
-    //psy12.stroke("0.5 gray");
-    //psy12.fill("#ffd54f");
-
-    //psy24 = plotPSY.psy(mapping2, 26).series();
-    //psy24.stroke("0.5 lightGray");
-    //psy24.fill("#ff6d00");
-
-    ////// create OBV plot
-    //var plotOBV = chart2.plot(3);
-    //var obv = plotOBV.obv(mapping2);
-
-    //chart2.scroller().line(mapping2);
-
-    //chart2.selectRange('2022-01-01', '2022-03-01');
-
-    //// set container id for the chart
-    //chart2.container("container_kdj");
-    //// initiate chart drawing
-    //chart2.draw();
-
-    //// mapping3
-    //var mapping3 = dataTable.mapAs({
-    //    'open': 1,
-    //    'high': 2,
-    //    'low': 3,
-    //    'close': 4,
-    //    'value': { column: 4, type: 'close' }
-    //});
-
-    //// bands
-    //var chart3 = anychart.stock();
-
-
-    //// Bollinger Bands
-    //plotBB = chart3.plot(0);
-    //var candle = plotBB.candlestick(mapping3);
-    //var bbands = plotBB.bbands(mapping3, 10, 3, "spline", "spline", "spline");
-
-    //// color the series
-    //bbands.upperSeries().stroke('#bf360c');
-    //bbands.middleSeries().stroke('#ff6600');
-    //bbands.lowerSeries().stroke('#bf360c');
-    //bbands.rangeSeries().fill('#ffd54f 0.2');
-
-    //// Keltner
-    //plotKC = chart3.plot(1);
-    //var candle2 = plotKC.candlestick(mapping3);
-    //var keltnerChannels = plotKC.keltnerChannels(mapping3);
-
-
-    //chart3.scroller().line(mapping3);
-    //chart3.selectRange('2022-01-01', '2022-03-01');
-    //chart3.container('container_bands');
-    //chart3.draw();
-
     // create annotations
     function create() {
         var select = document.getElementById("typeSelect");
@@ -569,14 +501,6 @@
     // remove all annotations
     function removeAll() {
         chart.annotations().removeAllAnnotations();
-    }
-
-    // remove the last annotation
-    function removeLast() {
-        // get the number of annotations
-        var annotationsCount = chart.annotations().getAnnotationsCount();
-        // remove the last annotation
-        chart.annotations().removeAnnotationAt(annotationsCount - 1);
     }
 
     // remove the selected annotation
