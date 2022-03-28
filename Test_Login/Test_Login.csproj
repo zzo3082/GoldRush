@@ -244,7 +244,10 @@
     <Content Include="Global.asax" />
     <Content Include="img\haveMoney.jpg" />
     <Content Include="img\investment-pattaya.jpg" />
+    <Content Include="img\LOgo.png" />
     <Content Include="img\logo3.png" />
+    <Content Include="img\stock-vector-abstract.jpg" />
+    <Content Include="img\stock-vector.jpg" />
     <Content Include="img\TotheMoon.jpg" />
     <Content Include="Models\model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
