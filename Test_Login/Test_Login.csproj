@@ -264,6 +264,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\vendor.js" />
+    <Content Include="Views\BackTesting\BackTesting001.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -336,7 +337,6 @@
     <Content Include="Views\stocks\Index.cshtml" />
     <Content Include="Views\stocks\StockMarketIndex.cshtml" />
     <Content Include="Views\stocks\Strategy.cshtml" />
-    <Content Include="Views\BackTesting\BackTesting001.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

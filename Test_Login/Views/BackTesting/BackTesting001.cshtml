@@ -2,14 +2,15 @@
 @{
     ViewBag.Title = "BackTesting001";
 }
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+@*https://html-css-js.com/css/generator/box-shadow/*@
+@*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">*@
+<link rel="stylesheet" href="~/Content/vendor.css">
+<link rel="stylesheet" href="~/Content/style.css">
 <style>
     #nav-tabContent {
-        border: 8px solid /*rgba(71,164,85,0.25)*/;
+        top: 10px;
         border-radius: 40px 40px 40px 40px;
-        margin: 15px;
-        padding: 15px;
-        border-color:violet;
+        box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%)
     }
 
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -22,53 +23,58 @@
     .nav-tabs .nav-link {
         border: 5px solid transparent;
     }
+
     .nav-link {
         color: black
     }
+
     #submit1, #submit2 {
         width: 200px;
         height: 45px;
-        margin-top:20px
+        margin-top: 20px
     }
+
     table {
         margin-left: auto;
         margin-right: auto;
     }
-    table td{
-        text-align:left
-    }
+
+        table td {
+            text-align: left
+        }
 </style>
-<div class="container text-center" style="width:600px">
-    <div class="radio-buttons-group mb-7" onchange="ttt()" id="tttt">
+<div class="container  text-center" style="width:600px">
+    <div class=""></div>
+    <div class="radio-buttons-group mb-7" onchange="displayControl()">
         <button class="btn btn-light" id="btn1" data-value="all">定期定額</button>
         <button class="btn btn-light" id="btn2" data-value="breakfast">定期定股</button>
     </div>
 
     @* 定期定額 *@
-    <div class="tab-content " id="nav-tabContent">
-        <div id="nav-backTest001" role="tabpanel" class="text-center">
+    <div class="tab-content" id="nav-tabContent" style="background-color:antiquewhite;">
+        <div id="nav-backTest001" role="tabpanel" class="text-center ">
             <h2>定期定額</h2>
             <table class="">
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" />
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>幾號投入</td>
                     <td>
-                        <input type="text" name="day" placeholder="填入日期" id="day1" />
+                        <input type="text" name="day" placeholder="填入日期" id="day1" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>固定投入多少錢</td>
                     <td>
-                        <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" />
+                        <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" class="form-control form-control-sm" />
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-outline-info" type="button"id="submit1">送出</button>
+            <button class="btn btn-outline-info" type="button" id="submit1">送出</button>
             <br /><br /><br />
         </div>
 
@@ -79,76 +85,85 @@
                 <tr>
                     <td>股票標的</td>
                     <td>
-                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2" />
+                        <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID2" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>幾號投入</td>
                     <td>
-                        <input type="text" name="day" placeholder="填入日期" id="day2" />
+                        <input type="text" name="day" placeholder="填入日期" id="day2" class="form-control form-control-sm" />
                     </td>
                 </tr>
                 <tr>
                     <td>固定買幾股</td>
                     <td>
-                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" />
+                        <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" class="form-control form-control-sm" />
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-outline-success" type="button" id="submit2">送出</button>
+            <button class="btn btn-outline-info" type="button" id="submit2">送出</button>
             <br /><br /><br />
         </div>
+    </div>
 
-        <div id="result" style="display: none">
-            <h3>計算結果</h3>
-            <table id="resultTable">
-                <tr>
-                    <td>投資標的</td>
-                    <td id="result_1">股票代號 名稱</td>
-                </tr>
-                <tr>
-                    <td id="result_2">每月x號固定投入/每月x號固定買進x2</td>
-                    <td id="result_3">y新台幣/y2股</td>
-                </tr>
-                <tr>
-                    <td>總付出成本(新台幣)</td>
-                    <td id="result_4">總成本</td>
-                </tr>
-                <tr>
-                    <td>當前市值</td>
-                    <td id="result_5">市值</td>
-                </tr>
-                <tr>
-                    <td>未實現損益</td>
-                    <td id="result_6">未實現損益</td>
-                </tr>
-                <tr>
-                    <td>預估報酬率</td>
-                    <td id="result_7">百分比%</td>
-                </tr>
-            </table>
+    <div id="result" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>計算結果</h3>
+                </div>
+                <div class="modal-body">
+                    <table id="resultTable">
+                        <tr>
+                            <td>投資標的</td>
+                            <td id="result_1">股票代號 名稱</td>
+                        </tr>
+                        <tr>
+                            <td id="result_2">每月x號固定投入/每月x號固定買進x2</td>
+                            <td id="result_3">y新台幣/y2股</td>
+                        </tr>
+                        <tr>
+                            <td>總付出成本(新台幣)</td>
+                            <td id="result_4">總成本</td>
+                        </tr>
+                        <tr>
+                            <td>當前市值</td>
+                            <td id="result_5">市值</td>
+                        </tr>
+                        <tr>
+                            <td>未實現損益</td>
+                            <td id="result_6">未實現損益</td>
+                        </tr>
+                        <tr>
+                            <td>預估報酬率</td>
+                            <td id="result_7">百分比%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">確定</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     //console.log(typeof ($('#btn1').attr('class')))
-    function ttt() {
+    function displayControl() {
         if ($('#btn1').attr('class').includes("selected")) {
-            console.log("BTN1 selected")
+            //console.log("BTN1 selected")
             $("#nav-backTest001").css("display", "block")
             $("#nav-backTest002").css("display", "none")
         }
         if ($('#btn2').attr('class').includes("selected")) {
-            console.log("BTN2 selected")
+            //console.log("BTN2 selected")
             $("#nav-backTest001").css("display", "none")
             $("#nav-backTest002").css("display", "block")
         }
     }
-</script>
-<script>
     $('#submit2').click(function () {
-        console.log('定期定股')
+        //console.log('定期定股')
         var data = {
             stockID: $('#stockID2').val(),
             day: $('#day2').val(),
@@ -168,17 +183,17 @@
             $('#result_6').text(`${e.profit_and_loss}`);
             $('#result_7').text(`${e.percentage}%`);
             $("#result").css("display", "block");
+            $('#result').modal({ backdrop: "static" })
         })
+
     })
     $('#submit1').click(function () {
-        console.log('定期定額')
         var res1; var res2; var res3; var res4; var res5; var res6; var res7; var res8;
         var data = {
             stockID: $('#stockID1').val(),
             day: $('#day1').val(),
             totalUnit: $('#totalUnit1').val()
         }
-
         var result = $.ajax({
             async: "false",
             type: "post",
@@ -193,6 +208,8 @@
             $('#result_6').text(`${e.profit_and_loss}`);
             $('#result_7').text(`${e.percentage}%`);
             $("#result").css("display", "block");
+            $('#result').modal({ backdrop: "static" })
         })
+
     })
 </script>
