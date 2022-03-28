@@ -163,15 +163,11 @@
                 <h6>副圖指標</h6>
                 <div class="list-group overflow-auto">
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
-                        成交量(Volume)
-                    </label>
-                    <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawKD()" id="btnKD" style="display:none" />
                         隨機震盪指標(KD)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
-                        <input class="form-check-input me-1 btn-check" type="checkbox" value="" style="display:none" />
+                        <input class="form-check-input me-1 btn-check" type="checkbox" onchange="drawMACD()" id="btnMACD" style="display:none" />
                         指數平滑異同移動平均線(MACD)
                     </label>
                     <label class="list-group-item list-group-item-action btn btn-outline-secondary">
@@ -502,6 +498,27 @@
     var sma60 = plot.sma(mapping, 60).series();
     sma60.stroke('#00BDBD');
 
+    chart.splitters().normal().stroke({
+        color: 'red',
+        dash: '3 4',
+        thickness: 2,
+        opacity: 0.9,
+    });
+
+    chart.splitters().hovered().stroke({
+        color: 'blue',
+        dash: '3 4',
+        thickness: 2,
+        opacity: 0.9
+    });
+
+    chart.splitters().preview().fill({
+        color: 'green',
+        opacity: 0.5
+    });
+
+    // set plot.height won't work
+    // plot.maxHeight('80%');
     // chart.title('@ViewBag.id');
     chart.container('chartjs');
     chart.draw();
@@ -535,7 +552,42 @@
         }
     }
 
+    var plotIndex = 0;
 
+    function drawKD() {
+        if ($('#btnKD').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotKDJ = chart.plot(plotIndex);
+            // create first KDJ indicator of default series type
+            var kdj = plotKDJ.kdj(mapping, 10, "EMA", 10, "SMA", 20);
+            // kdj.id("kdj")
+            kdj.kSeries().stroke("#bf360c");
+            kdj.dSeries().stroke("#02660c");
+            kdj.jSeries().stroke("#0228b2");
+        } else {
+            console.log("456");
+            plotIndex--;
+            plotKDJ.removeAllSeries();
+            plotKDJ.enabled(false);
+
+        }
+    }
+
+    function drawMACD() {
+        if ($('#btnMACD').is(":checked")) {
+            plotIndex++;
+            chart.plot(plotIndex).enabled(true);
+            plotMACD = chart.plot(plotIndex);
+            macd = plotMACD.macd(mapping, 12, 26, 9);
+            macd.histogramSeries().normal().fill('red', 0.3).stroke('red');
+            macd.histogramSeries().normal().negativeFill('green', 0.3).negativeStroke('green');
+        } else {
+            plotIndex--;
+            plotMACD.removeAllSeries();
+            plotMACD.enabled(false);
+        }
+    }
     //// set the data
     //dataTable = anychart.data.table();
     //dataTable.addData(stockDataKDJ);
@@ -549,24 +601,6 @@
     //mapping2.addField("close", 4, "last");
     //mapping2.addField("value", 4, "close");
     //mapping2.addField("volume", 5);
-    //// create stock chart
-    //var chart2 = anychart.stock();
-    //// create plots on the chart
-    //var plotKDJ = chart2.plot(0);
-
-    //// create first KDJ indicator of default series type
-    //var kdj_1 = plotKDJ.kdj(mapping2, 10, "EMA", 10, "SMA", 20);
-    //kdj_1.kSeries().stroke("#bf360c");
-    //kdj_1.dSeries().stroke("#02660c");
-    //kdj_1.jSeries().stroke("#0228b2");
-
-    //// create MACD plot
-    //var plotMACD = chart2.plot(1);
-
-    //macd_default = plotMACD.macd(mapping2, 12, 26, 9);
-
-    //macd_default.histogramSeries().normal().fill('red', 0.3).stroke('red');
-    //macd_default.histogramSeries().normal().negativeFill('green', 0.3).negativeStroke('green');
 
     //// create PSY plot
     //var plotPSY = chart2.plot(2);
