@@ -8,10 +8,10 @@
 <br />
 <br />
 
-<div class=" container" style="" >
+<div class=" container"  >
     <div class="row justify-content-center">
         <div class="col-md-7 ">
-            <div class="flex-wrap row justify-content-center " style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 24%); height: 600px;">
+            <div class="flex-wrap row justify-content-center " style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%); height: 600px;">
                 <section id="loginForm" style="width:400px" class="">
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = " justify-content-center", role = "form" }))
                     {
@@ -51,7 +51,7 @@
                             </div>
                             <div class="text-uppercase justify-content-center ">
                                 <p class="justify-content-center">
-                                    @Html.ActionLink("以新使用者身分註冊", "Register", "Account", htmlAttributes: new { @class = "  text-black", @style = "width:200px" })
+                                    @Html.ActionLink("註冊新帳號", "Register", "Account", htmlAttributes: new { @class = "  text-black", @style = "width:200px" })
                                 </p>
                                 @*//只要您的密碼重設功能能夠進行帳戶確認，就啟用此項*@
                                 <p>
@@ -64,14 +64,14 @@
 
                         <div class="form-group text-center">
                             <div class="col-md-offset col-md">
-                                <input type="submit" value="登入" class="btn btn-outline-primary"  />
+                                <input type="submit" value="登入" class="btn btn-outline-primary"  style="width:400px" />
                             </div>
                         </div>
 
 
                     }
 
-                        <section id="socialLoginForm">
+                        <section id="socialLoginForm" class="">
                             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
                         </section>
 
