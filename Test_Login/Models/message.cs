@@ -13,6 +13,7 @@ namespace Test_Login.Models
         public string main { get; set; }
         public int replyID { get; set; }
         public string hashtagID { get; set; }
+        public byte[] photo { get; set; }
         public int heart { get; set; }
         public int dislike { get; set; }
         public string wholike { get; set; }

@@ -10,6 +10,11 @@
         background-color: #f7f7f7;
     }
 
+    .myPhoto {
+        /*height: 500px;*/
+        width: 60%;
+    }
+
     .msg {
         /*        border: 2px solid #007bff;
         border-radius: 21px;*/
@@ -54,11 +59,13 @@
         position: relative;
         top: 5px;
     }
-    .btnSearch{
-        position:relative;
-        display:inline-block;
-        top:8px;
+
+    .btnSearch {
+        position: relative;
+        display: inline-block;
+        top: 8px;
     }
+
     .rpl {
         /*        border: 2px solid #77c8ab;*/
         margin: 10px;
@@ -225,7 +232,16 @@
                                     <br /><br />
                                 }
                                 @article.main
+                                <br /><br />
+                                @{if (article.photo.Length > 10)
+                                    {
+                                        string base64 = Convert.ToBase64String(article.photo);
+                                        string imageDate = string.Format("data:image/gif;base64,{0}", base64);
+                                        <img class="myPhoto" src="@imageDate" />
+                                    }
+                                }
                                 <br />
+                                <hr />
                             </div>
                             <div class="panel-footer">
                                 @*文章使用者有沒有案過讚*@
@@ -530,13 +546,22 @@
                         <hr />
                         <div class="panel-body">
                             <div class="panel-content">
-                                @if (@article.hashtagID != "-1  ")
+                                @if (@article.hashtagID != "0   ")
                                 {
                                     <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
                                 }
                                 @article.main
+                                <br /><br />
+                                @{if (article.photo.Length > 10)
+                                    {
+                                        string base64 = Convert.ToBase64String(article.photo);
+                                        string imageDate = string.Format("data:image/gif;base64,{0}", base64);
+                                        <img class="myPhoto" src="@imageDate" />
+                                    }
+                                }
                                 <br />
+                                <hr />
                             </div>
                             <div class="panel-footer">
                                 @*Toggle Switch*@
@@ -650,10 +675,12 @@
                                                         </label>
                                                         <span id="dislikeCnt+@replyToReply.messageID" data-dislike="@replyToReply.dislike" data-messageID="@replyToReply.messageID">噓 @replyToReply.dislike</span>
                                                         @*Toggle Switch*@
+
                                                     </div>
                                                 </div>
 
                                             </div>
+
                                         }
 
                                     }
@@ -683,7 +710,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/Home/Message">
+                    <form method="post" action="/Home/Message" enctype="multipart/form-data">
                         <div class="form-group">
                             @*<label for="UserNameBox">*@
                             <span class="glyphicon glyphicon-bullhorn"></span>
@@ -705,7 +732,7 @@
                                 </button>
                                 <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
                             </div>
-                            
+
                             @*<button type="button" class="btn btn-outline-dark pull-right" id="hashtag">#標個股</button>*@
                         </div>
 
@@ -728,6 +755,7 @@
                                       id="exampleFormControlTextarea1"
                                       placeholder="在想些什麼呢?"
                                       rows="3"></textarea>
+                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBox" id="imageBox" />
                         </div>
 
                         <div class="modal-footer">

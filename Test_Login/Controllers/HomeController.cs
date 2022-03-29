@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,24 +41,36 @@ namespace Test_Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, string hashtagBox, int heart = 0, int messageID = 0)
+        public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, string hashtagBox, HttpPostedFileBase imageBox, int heart = 0, int messageID = 0)
         {
             messageManager messageManager = new messageManager();
             if (UserNameBox != null)
             {
                 message message = new message();
+                message.UserId = UserIdbox;
+                message.UserName = UserNameBox;
+                message.main = mainBox;
+                byte[] photoBytes;
+                if (imageBox != null && imageBox.ContentLength > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        imageBox.InputStream.CopyTo(ms);
+                        photoBytes = ms.GetBuffer();
+                        message.photo = photoBytes;
+                    }
+                }
+                else
+                {
+                    byte[] bytes = { 0 };
+                    message.photo = bytes;
+                }
                 if (hashtagBox != null)
                 {
-                    message.UserId = UserIdbox;
-                    message.UserName = UserNameBox;
-                    message.main = mainBox;
                     message.hashtagID = hashtagBox;
                 }
                 else
                 {
-                    message.UserId = UserIdbox;
-                    message.UserName = UserNameBox;
-                    message.main = mainBox;
                     message.hashtagID = "0";
                 }
 
@@ -80,7 +94,7 @@ namespace Test_Login.Controllers
 
         }
         [HttpPost]
-        public ActionResult Reply(string UserNameBox, string UserIdbox, string mainBox, int messageID, int hashtagBox=0)
+        public ActionResult Reply(string UserNameBox, string UserIdbox, string mainBox, int messageID, int hashtagBox = 0)
         {
             messageManager messageManager = new messageManager();
             message message = new message()
@@ -98,7 +112,7 @@ namespace Test_Login.Controllers
 
         [HttpPost]
         public JsonResult Delete(message message)
-        {             
+        {
             messageManager messageManager = new messageManager();
             int result = messageManager.DeleteMessage(message);
             return Json(result);
