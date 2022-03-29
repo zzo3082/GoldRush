@@ -231,7 +231,7 @@ namespace GoldRush.Controllers
         }
 
         [HttpPost]
-        public ActionResult StockMarketIndex( string tech1)
+        public ActionResult StockMarketIndex( string tech1, string test1, string test2)
         {
 
             ViewBag.tech1 = tech1;
@@ -243,7 +243,14 @@ namespace GoldRush.Controllers
             List<StockSMA> sma = StockFunction.ComputationSMA(stock, 9);
             List<StockSMA> sma20 = StockFunction.ComputationSMA(stock, 20);
             List<StockEMA> ema = StockFunction.ComputationEMA(stock, 9);
-            return View(stock);
+
+            var result = new
+            {
+                tech1 = tech1,
+                test1 = test1,
+                test2 = test2
+            };
+            return Json(result);
         }
     }
 }

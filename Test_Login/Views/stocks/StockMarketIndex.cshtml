@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "大盤走向";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+        crossorigin="anonymous"></script>
 <style type="text/css">
     .stockCustomize {
         text-align: center;
@@ -24,30 +27,36 @@
             <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordionExample">
                 <div class="card-body">
                     @*[form] in*@
-                        <select name="tech1">
-                            &nbsp
-                            <option>k</option>
-                            <option>d</option>
-                            <option>j</option>
-                            <option>macd快線</option>
-                            <option>macd慢線</option>
-                            <option>SMA(5)</option>
-                            <option>SMA(20)</option>
-                            <option>SMA(60)</option>
-                            <option>EMA(5)</option>
-                            <option>EMA(20)</option>
-                            <option>EMA(60)</option>
-                        </select>                    
+                    <select id="tech1">
+                        &nbsp
+                        <option>k</option>
+                        <option>d</option>
+                        <option>j</option>
+                        <option>macd快線</option>
+                        <option>macd慢線</option>
+                        <option>SMA(5)</option>
+                        <option>SMA(20)</option>
+                        <option>SMA(60)</option>
+                        <option>EMA(5)</option>
+                        <option>EMA(20)</option>
+                        <option>EMA(60)</option>
+                    </select>
+
+                    <input id="btn1" type="checkbox" onchange="submit1()" /><input type="text" id="test1" />
+                    <input id="btn2" type="checkbox" onchange="submit2()" /><input type="text" id="test2" />
                 </div>
             </div>
         </div>
     </div>
-    <input type="submit" />
+    @*<input type="submit" />*@
 </form>
 
 <h1>
     @ViewBag.tech1
 </h1>
+<p id="result1"></p>
+<p id="result2"></p>
+<p id="result3"></p>
 
 <div id="stockInfo">
     @{
@@ -96,3 +105,46 @@
 
     }
 </div>
+
+<script>
+    function submit1() {
+        if ($('#btn1').is(':checked')) {
+            console.log("123");
+            var data = {
+                tech1: $('#tech1').val(),
+                test1: $('#test1').val(),
+                test2: $('#test2').val()
+            }
+            $.ajax({
+                async: "false",
+                type: "post",
+                url: "/stocks/StockMarketIndex",
+                data: data
+            }).then(function (e) {
+                //$('#result1').text(`${e.tech1}`);
+                $('#result2').text(`${e.test1}`);
+                //    $('#result3').text(`${e.test2}`);
+            })
+        } else {
+            $('#result2').text("");
+        }
+    }
+
+    function submit2() {
+        if ($('#btn2').is(':checked')) {
+            var data = {
+                test2: $('#test2').val()
+            }
+            $.ajax({
+                async: "false",
+                type: "post",
+                url: "/stocks/StockMarketIndex",
+                data: data
+            }).then(function (e) {
+                $('#result3').text(`${e.test2}`);
+            })
+        } else {
+            $('#result3').text("");
+        }
+    }
+</script>
