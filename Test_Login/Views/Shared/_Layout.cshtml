@@ -24,7 +24,7 @@
 
     <div id="page-start-anchor"></div>
     <section class="header header-fixed-xl">
-        <div class="header-top-line bg-blue">
+        <div class="header-top-line bg-cyan">
             @*上方Navbar(綠色)欄位*@
             <div class="container">
                 <div class="row">
@@ -79,7 +79,7 @@
         <div class="header-main bg-white">
             <div class="container" style="max-width:1400px;">
                 <div class="row" style="max-width:1400px;">
-                    <nav class="navbar navbar-expand-lg navbar-light" id="header-navbar" s>
+                    <nav class="navbar navbar-expand-lg navbar-light" id="header-navbar" style="font-size:15px;">
                         @*Navbar(白色)*@
                         <a class="navbar-brand font-weight-bold" href="/Home/Index"><img src="~/img/LOgo.png" style="width: 200px;" /></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -88,7 +88,12 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div class="navbar-spacer"></div>
+                            <div class="navbar-spacer"></div>
                             <ul class="navbar-nav ml-auto">
+
+
+
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Strategy">
                                         挖掘股票
@@ -105,21 +110,21 @@
                                         定期定額(定股)
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
-                                        大盤走向
-                                    </a>
-                                </li>
                                 @*<li class="nav-item">
-                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
-                                            會員註冊
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
-                                            會員登入
-                                        </a>
-                                    </li>*@
+                <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
+                    大盤走向
+                </a>
+            </li>*@
+                                @*<li class="nav-item">
+                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                    會員註冊
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                    會員登入
+                </a>
+            </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
                                         討論區
@@ -128,12 +133,13 @@
                                 </li>
                             </ul>
                             <div class="navbar-spacer"></div>
-                            <a class="btn btn-outline-danger text-uppercase" href="/stocks/Strategy" data-toggle="none" target="">
+                            <a class="btn btn-outline-warning text-uppercase" href="/stocks/Strategy" data-toggle="none" target="">
                                 開始發掘
                             </a>
 
                             <div class="navbar-spacer"></div>
                             <div class="navbar-spacer"></div>
+
                             @{
                                 try
                                 {
