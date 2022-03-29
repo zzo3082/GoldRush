@@ -9,21 +9,24 @@
     body {
         background-color: #f7f7f7;
     }
+
     .msg {
         /*        border: 2px solid #007bff;
         border-radius: 21px;*/
         margin: 10px;
         padding: 10px;
-/*        -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 4px 7px 7px 1px rgba(138,138,138,0);
+        /*        -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 4px 7px 7px 1px rgba(138,138,138,0);
         box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 4px 7px 7px 1px rgba(138,138,138,0);*/
         box-shadow: 1px 1px 9px 1px #A6A6A6;
         -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
         -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
         -o-box-shadow: 1px 1px 9px 1px #A6A6A6;
     }
+
     .div_shadow {
         box-shadow: 0 10px 30px -15px rgb(0 0 0 / 75%);
     }
+
     #newItem {
         font-size: 30px;
         width: 150px;
@@ -51,7 +54,11 @@
         position: relative;
         top: 5px;
     }
-
+    .btnSearch{
+        position:relative;
+        display:inline-block;
+        top:8px;
+    }
     .rpl {
         /*        border: 2px solid #77c8ab;*/
         margin: 10px;
@@ -692,10 +699,13 @@
 
                         <div class="msginfo" id="hashtagBox">
                             <span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span>
-                            <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
-                                <i class="material-icons" aria-hidden="true">search </i>
-                            </button>
-                            <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                            <div class="btnSearch pull-right">
+                                <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
+                                    <i class="material-icons" aria-hidden="true">search </i>
+                                </button>
+                                <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                            </div>
+                            
                             @*<button type="button" class="btn btn-outline-dark pull-right" id="hashtag">#標個股</button>*@
                         </div>
 
@@ -1150,15 +1160,21 @@
     function confirmHashtag() {
 
         var stockid = $("#hashtagStock").val();
-        $("#UserIdbox").after(`<input type="text" name = "hashtagBox" id = "hashtagBoxid" value = "${stockid}" hidden >`);
-        //$("#hashtagBoxid").val(stockid);
-        // alert(stockid);
-        $("#hashtagBox").html(`<button type="button" class="btn btn-outline-dark" onclick="cancelHashtag()" width="40px" id="hashtaged" data-hashtag="${stockid}" value="${stockid}">${stockid}</button>`);
-        //console.log($("#hashtagBoxid").val());
+        if (stockid == "") {
+            //alert("請輸入股票代號")
+            $("#thinking").text("請輸入股票代號!!!!!!");
+            $("#thinking").addClass("btn btn-outline-danger");
+        } else {
+            $("#UserIdbox").after(`<input type="text" name = "hashtagBox" id = "hashtagBoxid" value = "${stockid}" hidden >`);
+            //$("#hashtagBoxid").val(stockid);
+            // alert(stockid);
+            $("#hashtagBox").html(`<button type="button" class="btn btn-outline-dark" onclick="cancelHashtag()" width="40px" id="hashtaged" data-hashtag="${stockid}" value="${stockid}">${stockid}</button>`);
+            //console.log($("#hashtagBoxid").val());
+        }
     }
 
     function cancelHashtag() {
-        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span> <button id = "hashtag" type = "button" onclick="confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button > <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />');
+        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span><div class="btnSearch pull-right"><button id = "hashtag" type = "button" onclick = "confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button ><input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" /></div >');
         $("#hashtagBoxid").remove();
     }
 

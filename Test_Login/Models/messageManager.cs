@@ -16,7 +16,7 @@ namespace Test_Login.Models
         {
             List<message> messageList = new List<message>();
             SqlConnection conn = new SqlConnection(ConnStr);
-            SqlCommand cmd = new SqlCommand("select * from Mymessage", conn);
+            SqlCommand cmd = new SqlCommand("select * from Mymessage order by initDate desc", conn);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
