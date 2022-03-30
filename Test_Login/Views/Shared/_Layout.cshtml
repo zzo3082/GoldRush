@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/Content/style.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="~/assets/custom.css">
-
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <style>
         html, body {
             height: 100%;
@@ -111,20 +111,20 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
-                    大盤走向
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
+                                            大盤走向
+                                        </a>
+                                    </li>*@
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
-                    會員註冊
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
-                    會員登入
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                                            會員註冊
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                                            會員登入
+                                        </a>
+                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
                                         討論區
@@ -168,6 +168,11 @@
     @RenderBody()
 
     @*footer*@
+    <df-messenger intent="WELCOME"
+                  chat-title="GoldRushBot"
+                  agent-id="c7e2956c-5b2c-424f-b914-590a1b66ce19"
+                  language-code="zh-tw">
+    </df-messenger>
 
     <section class="footer bg-secondary" style=" width: 100%; position:relative; bottom:0; top:30%">
         <div class="container py-19 py-sm-23 py-lg-25">
