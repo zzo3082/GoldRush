@@ -35,8 +35,9 @@
     }
 
     .stockName {
-        width: 100px;
+        width: 120px;
         text-align: center;
+        margin-bottom:5px;
     }
 
     table {
@@ -200,7 +201,7 @@
                             var item = Model.Where(x => x.stockID == s).OrderByDescending(x =>x.stockDate).ToList()[0];
                             <tr>
                                 <td class="">
-                                    <input class="stockName btn btn-outline-info" type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
+                                    <input class="stockName btn btn-outline-info"  type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
                                     <input class="stockName btn btn-outline-info" type="button"  value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
                                 <td>@item.stockDate</td>
