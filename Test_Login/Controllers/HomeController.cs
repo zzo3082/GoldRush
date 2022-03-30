@@ -19,7 +19,7 @@ namespace Test_Login.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            int i = 0;
             return View();
         }
 
