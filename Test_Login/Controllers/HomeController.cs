@@ -26,7 +26,16 @@ namespace Test_Login.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            int i = 0;
+            int a = 0;
+            int b = 0;
+            int c = 0;
+            int n = 0;
+            int w = 0;
+            int t = 0;
+            int q = 0;
+            int o = 0;
+            int j = 0;
             return View();
         }
 
