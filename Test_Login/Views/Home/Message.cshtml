@@ -79,9 +79,9 @@
 
     .torpl {
         /*        border: 2px solid #e48489;*/
-        margin: 10px;
+        margin: 20px;
         /*border-radius: 21px;*/
-        padding: 10px;
+        padding: 20px;
         /*box-shadow: 1px 1px 9px 1px #A6A6A6;
         -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
         -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
@@ -755,7 +755,8 @@
                                       id="exampleFormControlTextarea1"
                                       placeholder="在想些什麼呢?"
                                       rows="3"></textarea>
-                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBox" id="imageBox" />
+                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBox" id="imageBox" onchange="setPreview(this)" />
+                            <img id="preview" src="#" />
                         </div>
 
                         <div class="modal-footer">
@@ -1046,6 +1047,22 @@
 
     })
 
+    $('#preview').hide();
+    function setPreview(input) {
+        $('#preview').show(); // 設定顯示圖片
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#preview')
+                    .attr('src', e.target.result)
+                    .maxHeight(150) // 設定圖片最大高度
+
+                    .maxWidth(200); // 設定圖片最大寬度
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
     function login() {
         alert("未登入 請先登入!");
     }
