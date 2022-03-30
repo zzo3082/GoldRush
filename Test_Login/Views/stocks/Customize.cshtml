@@ -10,6 +10,9 @@
     .card-body input[type=text]{
         width:50px;
     }
+    #stockInfo {
+        text-align: center;
+    }
 </style>
 
 
@@ -22,9 +25,6 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">技術面</a>
         </li>
-        @*<li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">籌碼面</a>
-            </li>*@
     </ul>
 
 
@@ -311,34 +311,36 @@
                     <div class="card-body">
                         @*[form] in*@
                         <div class="stockCustomize">
-                            <select>
+                            <input type="checkbox" id="btnKDJ1" onchange="kdj1()" />
+                            <select id="kdj1_kdj1">
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
                             </select>
                             連續
-                            <input type="text" />
+                            <input type="text" id="kdj1_day1" />
                             天
-                            <select>
+                            <select id="kdj1_dir1">
                                 <option>大於</option>
                                 <option>小於</option>
                             </select>
-                            <input type="text" />
+                            <input type="text" id="kdj1_value1" />
                         </div><hr />
                         <div class="stockCustomize">
-                            <select>
+                            <input type="checkbox" id="btnKDJ2" onchange="kdj2()" />
+                            <select id="kdj2_kdj1">
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
                             </select>
-                            <select>
+                            <select id="kdj2_dir1">
                                 <option>大於</option>
                                 <option>小於</option>
                             </select>
                             前
-                            <input type="text" />
+                            <input type="text" id="kdj2_day1" />
                             天
-                            <select>
+                            <select kdj2_kdj2>
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
@@ -593,332 +595,55 @@
                 </div>
             </div>
         </div>
-
-        @*籌碼面*@
-        <!--<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseOne" aria-expanded="true" aria-controls="chip_collapseOne">
-                    融資、融券
-                </button>
-            </h2>
-        </div>
-
-        <div id="chip_collapseOne" class=" collapse show alert-danger" aria-labelledby="chip_headingOne" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingTwo">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseTwo" aria-expanded="false" aria-controls="chip_collapseTwo">
-                    三大法人
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseTwo" class="collapse" aria-labelledby="chip_headingTwo" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[checkbox] [form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingThree">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseThree" aria-expanded="false" aria-controls="chip_collapseThree">
-                    主力、中實戶、券商
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseThree" class="collapse" aria-labelledby="chip_headingThree" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingFour">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseFour" aria-expanded="false" aria-controls="chip_collapseFour">
-                    大戶、散戶＜多方＞
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseFour" class="collapse" aria-labelledby="chip_headingFour" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingFive">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseFive" aria-expanded="false" aria-controls="chip_collapseFive">-->
-        @*[Title] in*@
-        <!--大戶、散戶＜空方＞
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseFive" class="collapse" aria-labelledby="chip_headingFive" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingSix">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseSix" aria-expanded="false" aria-controls="chip_collapseSix">-->
-        @*[Title] in*@
-        <!--買賣家數差、籌碼集中度、周轉率、券資比
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseSix" class="collapse" aria-labelledby="chip_headingSix" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingSeven">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseSeven" aria-expanded="false" aria-controls="chip_collapseSeven">-->
-        @*[Title] in*@
-        <!--八大官股、當沖率、董監事
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseSeven" class="collapse" aria-labelledby="chip_headingSeven" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-
     </div>
 </div>
-</div>
 
+<div class="container" id="stockDiv"></div>
 
-<!--<div class="accordion" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    基本面
-                </button>
-            </h2>
-        </div>
-
-        <div id="collapseOne" class=" collapse show alert-danger" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">-->
-@*[form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" value="@(ViewBag.minValue ?? string.Empty)" />
-                    到<input type="text" name="maxValue" value="@(ViewBag.maxValue ?? string.Empty)" />
-                    <button type="submit">送出</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingTwo">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                技術面
-            </button>
-        </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[checkbox] [form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingThree">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                籌碼面
-            </button>
-        </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingFour">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                測試區
-            </button>
-        </h2>
-    </div>
-    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[form] in*@
-<!--<label>
-                    <input type="checkbox" name="factor1" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor2" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor3" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor4" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-<div id="stockInfo">
-    @{
-        if (Model != null)
-        {
-
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>股票名稱</th>
-                        <th colspan="5" style="text-align:center;">今日資訊</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">股票代號</th>
-                        <th scope="col">收盤價</th>
-                        <th scope="col">漲跌</th>
-                        <th scope="col">漲跌%</th>
-                        <th scope="col">成交量</th>
-                        <th scope="col">本益比</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
-                        {
-                            // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s && x.stockDate == ViewBag.date1).ToList()[0];
-                            <tr>
-                                <td>
-                                    <input class="stockName" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
-                                    <input class="stockName" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
-                                </td>
-                                <td>@Html.Encode(item.endPrice)</td>
-                                @*<td>@Html.Encode(item.upDowmPrice)</td>
-                                    @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
-                                @*<td>@ratio </td>*@
-                                <td>@Html.Encode(item.numOfSharesTrade)</td>
-                                @*<td>@Html.Encode(item.PER)</td>*@
-                            </tr>
-                        }
-                    }
-
-                </tbody>
-            </table>
+<script>
+    function kdj1() {
+        var data = {
+            kdj1: $("#btnKDJ1").is(":checked"),
+            kdj2: $("#btnKDJ2").is(":checked"),
+            kdj1_kdj1: $("#kdj1_kdj1 :selected").text(),
+            kdj1_day1: $("#kdj1_day1").val(),
+            kdj1_dir1: $("#kdj1_dir1 :selected").text(),
+            kdj1_value1: $("#kdj1_value1").val(),
+            storedKDJ1: $("#storedKDJ1").text(),
+            storedKDJ2: $("#storedKDJ2").text(),
+            StockArray: $("#storedStockArray").text()
         }
-
+        $.ajax({
+            async: "false",
+            type: "post",
+            url: "/stocks/StockResult",
+            data: data,
+            success: function (data) {
+                $("#stockDiv").html(data);
+            }
+        });
     }
-</div>
+
+    function kdj2() {
+        var data = {
+            kdj1: $("#btnKDJ1").is(":checked"),
+            kdj2: $("#btnKDJ2").is(":checked"),
+            kdj2_kdj1: $("#kdj2_kdj1 :selected").text(),
+            kdj2_dir1: $("#kdj2_dir1 :selected").text(),
+            kdj2_day1: $("#kdj2_day1").val(),
+            kdj2_kdj2: $("#kdj2_kdj2 :selected").text(),
+            storedKDJ1: $("#storedKDJ1").text(),
+            storedKDJ2: $("#storedKDJ2").text(),
+            StockArray: $("#storedStockArray").text()
+        }
+        $.ajax({
+            async: "false",
+            type: "post",
+            url: "/stocks/StockResult",
+            data: data,
+            success: function (data) {
+                $("#stockDiv").html(data);
+            }
+        });
+    }
+</script>

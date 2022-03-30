@@ -191,4 +191,15 @@ namespace Test_Login.Models
         public string stockDate { get; set; }
         public double ema { get; set; }
     }
+
+    public class StoredKDJ
+    {
+        public string KDJ1 { get; set; }
+        public string KDJ2 { get; set; }
+        //public string KDJ3 { get; set; }
+        //public string KDJ4 { get; set; }
+        //public string KDJ5 { get; set; }
+        //public string KDJ6 { get; set; }
+        public string StockArray { get; set; }
+    }
 }

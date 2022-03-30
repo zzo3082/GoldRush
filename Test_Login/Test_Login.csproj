@@ -339,6 +339,7 @@
     <Content Include="Views\stocks\Index.cshtml" />
     <Content Include="Views\stocks\StockMarketIndex.cshtml" />
     <Content Include="Views\stocks\Strategy.cshtml" />
+    <Content Include="Views\stocks\StockResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

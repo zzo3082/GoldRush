@@ -225,6 +225,48 @@ namespace GoldRush.Controllers
             }
         }
 
+        [HttpPost]
+        public PartialViewResult StockResult(string storedKDJ1, string storedKDJ2, string StockArray,
+                                             string kdj1, string kdj1_kdj1, string kdj1_day1, string kdj1_dir1, string kdj1_value1,
+                                             string kdj2, string kdj2_kdj1, string kdj2_dir1, string kdj2_day1, string kdj2_kdj2)
+        {
+            string stockCustomize = StockArray;
+            // kdj1 strategy checked then calculate the corresponding stockID
+            string resultKDJ1 = storedKDJ1;
+            if(kdj1 == "true")
+            {
+                resultKDJ1 = "2330";
+                stockCustomize += resultKDJ1 + " ";
+            }
+            else if(storedKDJ1 != "")
+            {
+                stockCustomize = stockCustomize.Replace(storedKDJ1, "");
+            }
+
+            // kdj2 strategy checked then calculate the corresponding stockID
+            string resultKDJ2 = storedKDJ2;
+            if (kdj2 == "true")
+            {
+                resultKDJ2 = "0050";
+                stockCustomize += resultKDJ2 + " ";
+            }
+            else if(storedKDJ2 != "")
+            {
+                stockCustomize = stockCustomize.Replace(storedKDJ2, "");
+            }
+
+            StoredKDJ result = new StoredKDJ
+            {
+                KDJ1 = resultKDJ1,
+                KDJ2 = resultKDJ2,
+                StockArray = stockCustomize
+            };
+            ViewBag.result = result;
+
+            // string.split by " " then get the intersection
+            return PartialView(db.stockPrice.Where(x => stockCustomize.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
+        }
+
         public ActionResult StockMarketIndex()
         {
             return View();
@@ -244,6 +286,9 @@ namespace GoldRush.Controllers
             List<StockSMA> sma20 = StockFunction.ComputationSMA(stock, 20);
             List<StockEMA> ema = StockFunction.ComputationEMA(stock, 9);
 
+            ViewBag.test1 = test1;
+            ViewBag.test2 = test2;
+
             var result = new
             {
                 tech1 = tech1,
@@ -252,5 +297,8 @@ namespace GoldRush.Controllers
             };
             return Json(result);
         }
+
+        
+
     }
 }
