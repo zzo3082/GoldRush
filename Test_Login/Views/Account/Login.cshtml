@@ -27,7 +27,7 @@
                         </div>
 
                         <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new { @class = "text-blue" })
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email, new { @class = "control-label" })
 
@@ -64,16 +64,16 @@
 
                         <div class="form-group text-center">
                             <div class="col-md-offset col-md">
-                                <input type="submit" value="登入" class="btn btn-outline-primary"  style="width:400px" />
+                                <input type="submit" value="登入" class="btn btn-outline-primary" style="width:400px" />
                             </div>
                         </div>
 
 
                     }
 
-                        <section id="socialLoginForm" class="">
-                            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                        </section>
+                    <section id="socialLoginForm" class="">
+                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                    </section>
 
                 </section>
             </div>

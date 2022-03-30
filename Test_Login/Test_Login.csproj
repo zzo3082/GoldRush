@@ -178,7 +178,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203130910162_InitialCreate.cs" />
+    <Compile Include="Migrations\202203130910162_InitialCreate.designer.cs">
+      <DependentUpon>202203130910162_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203301534036_AddedFieldintable.cs" />
+    <Compile Include="Migrations\202203301534036_AddedFieldintable.designer.cs">
+      <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs">
@@ -343,6 +353,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202203130910162_InitialCreate.resx">
+      <DependentUpon>202203130910162_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203301534036_AddedFieldintable.resx">
+      <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-nav" }))
@@ -9,7 +10,7 @@
             <li class="nav-item " style="font-size:10px;">
                 <a href="#">
                     <span class="text-uppercase" >
-                        @Html.ActionLink("您好 " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" ,@class = "text-white" })
+                        @Html.ActionLink("您好 " + User.Identity.GetNickName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" ,@class = "text-white" })
                     </span>
                 </a>
             </li>
