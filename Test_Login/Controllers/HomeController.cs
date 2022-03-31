@@ -29,11 +29,15 @@ namespace Test_Login.Controllers
         }
 
         #region 討論區
+
+        private LabEntities db = new LabEntities();
         // Message 取得資料庫資料
         public ActionResult Message()
         {
             messageManager messageManager = new messageManager();
             List<message> messageList = messageManager.GetMessages();
+            var i = (from x in db.stockPrice select x.stockID + x.stockName).Distinct();
+            ViewBag.stockID = i;
             ViewBag.messageList = messageList;
             return View();
         }

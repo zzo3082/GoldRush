@@ -1,5 +1,6 @@
 ﻿@using Test_Login.Models
 @using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
 @{
     List<message>
     messageList = ViewBag.messageList;
@@ -97,7 +98,7 @@
 
     .myTag {
         height: 30px;
-        width: 88px;
+/*        width: 88px;*/
         text-align: justify-all;
         line-height: 0px;
     }
@@ -180,6 +181,58 @@
     label img {
         top: -10px;
     }
+    /*條件搜尋*/
+/*    #hashtagStock{
+        width:50px;
+    }*/
+.dddd{
+    display:inline-block;
+}
+    .search {
+        position: relative;
+        display: inline-block;
+        /* width: 200px;
+        position: fixed;
+        z-index: 2;
+        margin: auto;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 200px;*/
+    }
+
+    /*    .search input {
+            width: 200px;
+            border: none;
+            border: solid 1px #00a0e9;
+            height: 20px;
+            padding-left: 15px;
+        }*/
+
+        .search input, .search button:focus {
+            /*outline: none;*/
+        }
+
+        .search button {
+           /* width: 20px;
+            background: #00a0e9;
+            border: none;
+            height: 20px;*/
+        }
+
+    table {
+        position: absolute;
+        background-color:white;
+        left: 0;
+        width: 215px;
+        border: solid 1px #e0e0e0;
+    }
+
+        table td {
+            height: 0.6rem;
+            padding-left: 15px;
+        }
+    /*條件搜尋*/
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -188,7 +241,8 @@
     {
         // 有登入 @User.Identity.GetUserName()
         <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
-        <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
+        <button id="btnName" data-UserName="@User.Identity.GetNickName()" hidden></button>
+        <button id="btnID" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
         <div class="panel-group ">
             @foreach (message message in messageList)
@@ -226,9 +280,9 @@
                             <div class="panel-content">
                                 @*文章內文*@
 
-                                @if (@article.hashtagID.ToString() != "0   ")
+                                @if (@article.hashtagID.ToString() != "0")
                                 {
-                                    <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
+                                    <a href="/stocks/Chart/@article.hashtagID.Substring(0,4)"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
                                 }
                                 @article.main
@@ -546,7 +600,7 @@
                         <hr />
                         <div class="panel-body">
                             <div class="panel-content">
-                                @if (@article.hashtagID != "0   ")
+                                @if (@article.hashtagID != "0")
                                 {
                                     <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
@@ -720,20 +774,22 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
                         <div class="msginfo" id="hashtagBox">
                             <span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span>
                             <div class="btnSearch pull-right">
-                                <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
-                                    <i class="material-icons" aria-hidden="true">search </i>
-                                </button>
-                                <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                                <section class="search">
+                                    <div class="row dddd">
+                                        <input type="text" class="form-control-sm mb-3 pull-right" onkeyup="tipBox(this)" autocomplete="off" placeholder="股票代碼..." id="hashtagStock" name="hashtagStock">
+                                        <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
+                                            <i class="material-icons" aria-hidden="true">search </i>
+                                        </button>
+                                    </div>
+                                </section>
                             </div>
-
-                            @*<button type="button" class="btn btn-outline-dark pull-right" id="hashtag">#標個股</button>*@
                         </div>
 
                         <div class="form-group">
@@ -795,7 +851,7 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
@@ -854,7 +910,7 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
@@ -910,7 +966,7 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="檢舉使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
@@ -981,6 +1037,7 @@
 
 <script>
     let name = document.getElementById('btnName').dataset.username
+    let ID = document.getElementById('btnID').dataset.username
     $("#newItem").click(function () {
         $("#newsModal").modal({ backdrop: "static" });
     })
@@ -1073,7 +1130,7 @@
             messageID: 0,
             heart: -1,
             dislike: -1,
-            UserName: name,
+            UserName: ID,
             UserId: name
         }
         if (cb.checked) {
@@ -1142,7 +1199,7 @@
             messageID: 0,
             heart: -1,
             dislike: -1,
-            UserName: name,
+            UserName: ID,
             UserId: name
         }
         if (cb.checked) {
@@ -1219,7 +1276,7 @@
     }
 
     function cancelHashtag() {
-        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span><div class="btnSearch pull-right"><button id = "hashtag" type = "button" onclick = "confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button ><input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" /></div >');
+        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span><div class= "btnSearch pull-right" ><section class="search"><div class="row dddd"><input type="text" class="form-control-sm mb-3 pull-right" onkeyup="tipBox(this)" autocomplete="off" placeholder="股票代碼..." id="hashtagStock" name="hashtagStock"><button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block"><i class="material-icons" aria-hidden="true">search </i></button></div></section>');
         $("#hashtagBoxid").remove();
     }
 
@@ -1258,6 +1315,97 @@
             document.getElementById(`${btn.dataset.messageid}`).classList.toggle("none")
         })
     }
+    // 將資料庫的股票代號資料轉到JS內
+    var jScriptArray=[];
+        var array = @Html.Raw(Json.Encode(@ViewBag.stockID));
+        for(var i = 0; i < array.length; i++) {
+            jScriptArray[i] = array[i];
+    }
+    // 當input text keypu時執行比對 加入提示table
+    function tipBox(txt) {
+        QueryKeyword($(txt).val(), jScriptArray);
+        console.log("ok");
+    }
+    /*window.onload = ListenerSearch();*/
 
+    //實時監控搜尋框文字輸入事件
 
+    @*function ListenerSearch() {
+        var name = ['聯發科', '發哥'];
+        var jScriptArray=[];
+        var array = @Html.Raw(Json.Encode(@ViewBag.stockID));
+        for(var i = 0; i < array.length; i++) {
+            jScriptArray[i] = array[i];
+        }
+
+        //$("#hashtagStock").change(function () {
+        //    QueryKeyword($(this).val(), jScriptArray);
+        //    console.log("ok");
+        //})
+
+        //實時監控文字輸入
+        //$("input[name='hashtagStock']").bind('input propertychange', function () {
+        //    QueryKeyword($(this).val(), jScriptArray);
+        //    console.log("ok");
+        //});
+    }*@
+
+    //檢索數組裡是否有對應關鍵詞
+    function QueryKeyword(SearchName, ArrayList) {
+        //初始化陣列
+        var Keyword = [];
+        //遍歷陣列內容
+        for (var i = 0; i < ArrayList.length; i++) {
+            //查詢判斷陣列內是否包含關鍵詞
+            if (SearchName.length != 0) {
+                //搜尋框輸入資料全等於陣列內字串引數
+                //SearchName === ArrayList[i].substr(0, SearchName.length)
+                if ((ArrayList[i]).includes(SearchName)) {
+                    //新增資料
+                    Keyword.push(ArrayList[i]);
+                    console.log((ArrayList[i]).includes(SearchName));
+                }
+                //if (ArrayList[i].(SearchName)) {
+                //    //新增資料
+                ////    Keyword.push(ArrayList[i]);
+                //}
+            }
+        }
+        if (Keyword.length != 0) {
+            //建立table表單
+            CreateTable(Keyword);
+        } else {
+            //刪除table表單
+            RemoveTable();
+        }
+    }
+
+    //監控table表單點選事件,修改input內容
+    function TableOnclick(id) {
+        $("#hashtagStock").val($("#" + id).html());
+        $("#Table").remove();
+    }
+
+    //建立table表單
+    function CreateTable(Keyword) {
+        var TableContent = "";
+        for (var i = 0; i < Keyword.length; i++) {
+            TableContent += "" +
+                "<tr>" +
+                "<td id='" + i + "' onclick='TableOnclick(this.id)'>" + Keyword[i] + "</td>" +
+                "</tr>";
+        }
+        //table表單不存在時進行建立
+        if (!document.getElementById("#Table")) {
+            var Table = document.createElement('table');
+            Table.id = "Table";
+            $(".search").append(Table);
+        }
+        $("#Table").html(TableContent);
+    }
+
+    //刪除table表單
+    function RemoveTable() {
+        $("#Table").remove();
+    }
 </script>
