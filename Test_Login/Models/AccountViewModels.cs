@@ -8,6 +8,11 @@ namespace Test_Login.Models
         [Required]
         [Display(Name = "電子郵件")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "暱稱")]
+        public string NickName { get; set; }
+
     }
 
     public class ExternalLoginListViewModel
