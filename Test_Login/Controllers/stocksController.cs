@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Test_Login.Models;
@@ -235,6 +236,7 @@ namespace GoldRush.Controllers
             string resultKDJ1 = storedKDJ1;
             if(kdj1 == "true")
             {
+                Thread.Sleep(5000);
                 resultKDJ1 = "2330";
                 stockCustomize += resultKDJ1 + " ";
             }
