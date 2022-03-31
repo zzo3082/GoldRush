@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -23,7 +24,7 @@ namespace GoldRush.Controllers
 
         public ActionResult Chart(string id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return View("Index");
             }
@@ -49,7 +50,7 @@ namespace GoldRush.Controllers
             else
             {
                 var stock = db.stockPrice.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
-                if(stock.Count != 0)
+                if (stock.Count != 0)
                 {
                     ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
                 }
@@ -57,11 +58,13 @@ namespace GoldRush.Controllers
             }
         }
 
+
         public ActionResult Strategy(string str)
         {
+            SqlConnection cn = new SqlConnection(@"Data Source=.;Initial Catalog=Lab;Integrated Security=True");
             string id = "Strategy";
             string stringID = "";
-            string stockArray =  "";
+            string stockArray = "";
             switch (str)
             {
                 case "成交爆大量":
@@ -79,7 +82,7 @@ namespace GoldRush.Controllers
                     //    {
                     //    }
                     //}
-                    foreach(string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
+                    foreach (string s in db.stockPrice.Select(x => x.stockID).Distinct().OrderBy(x => x))
                     {
                         var dbs = db.stockPrice.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).Take(6).ToList();
                         try
@@ -93,11 +96,11 @@ namespace GoldRush.Controllers
                         {
 
                         }
-                        
+
                     }
                     break;
                 case "四海遊龍":
-                    var db2 = db.stockPrice.Where(x => x.stockID == "2330").OrderByDescending(x=>x.stockDate).ToList();
+                    var db2 = db.stockPrice.Where(x => x.stockID == "2330").OrderByDescending(x => x.stockDate).ToList();
                     double sma5 = db2.GetRange(1, 5).Select(x => Convert.ToDouble(x.endPrice)).Average();
                     double sma10 = db2.GetRange(1, 10).Select(x => Convert.ToDouble(x.endPrice)).Average();
                     double sma20 = db2.GetRange(1, 20).Select(x => Convert.ToDouble(x.endPrice)).Average();
@@ -114,14 +117,37 @@ namespace GoldRush.Controllers
                 case "強勢股票":
                     // Convert.ToDouble??
                     var db3 = db.stockPrice.Where(x => x.stockDate == "20220210").ToList();
-                    var dbs_Top10 = db3.Select(x => new { date = x.stockID, value = (Convert.ToDouble(x.endPrice) - Convert.ToDouble(x.openPrice))}).OrderByDescending(x => x.value).ToList();
-
+                    var dbs_Top10 = db3.Select(x => new { date = x.stockID, value = (Convert.ToDouble(x.endPrice) - Convert.ToDouble(x.openPrice)) }).OrderByDescending(x => x.value).ToList();
                     stockArray += ", 2609";
                     stockArray += ", 2409";
                     break;
+
                 case "外資連買":
-                    stockArray += ", 2610";
-                    stockArray += ", 2618";
+                    SqlCommand cmd = new SqlCommand();
+                    SqlCommand cmd2 = new SqlCommand();
+                    cmd.Connection = cn;
+                    cmd2.Connection = cn;
+                    cmd.CommandText = "select distinct top(5) stock_date from buy_and_sell_report order by stock_date desc";
+                    cn.Open();
+                    SqlDataReader dayResult = cmd.ExecuteReader();
+                    List<string> day = new List<string>();
+                    while (dayResult.Read()) { day.Add(Convert.ToString(dayResult[0])); }
+                    cn.Close(); cn.Open();
+                    cmd2.CommandText = "select  StockCode, count(StockCode) as countres " +
+                        "from buy_and_sell_report Where (globalCompany > 0) and stock_date <= 20220308 and stock_date >= 20220302	" +
+                        "group by StockCode	" +
+                        "order by countres desc";
+                    SqlDataReader selectResult = cmd2.ExecuteReader();
+                    List<string> selectResultList = new List<string>();
+                    while (selectResult.Read())
+                    {
+                        if (int.Parse(selectResult[1].ToString()) >= 5)
+                        {
+                            selectResultList.Add(Convert.ToString(selectResult[0]));
+                            stockArray += $", {selectResult[0]}";
+                        }
+                    }
+                    cn.Close();
                     break;
                 case "投信連買":
                     stockArray += ", 3481";
@@ -156,13 +182,13 @@ namespace GoldRush.Controllers
             }
             ViewBag.id = id;
             ViewBag.stringID = stringID;
-            if(stockArray == "")
+            if (stockArray == "")
             {
                 return View();
             }
             else
             {
-                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ThenBy(x=>x.stockID).ToList());
             }
         }
 
@@ -174,11 +200,12 @@ namespace GoldRush.Controllers
         [HttpPost]
         public ActionResult Customize(DateTime? selectDate, string priceType, string minValue, string maxValue)
         {
-            if(selectDate == null || priceType == null || minValue == null || maxValue == null)
+            if (selectDate == null || priceType == null || minValue == null || maxValue == null)
             {
                 return View();
                 // minValue and maxValue could only have one
-            }else
+            }
+            else
             {
                 ViewBag.priceType = priceType;
                 ViewBag.minValue = minValue;
@@ -233,12 +260,12 @@ namespace GoldRush.Controllers
             string stockCustomize = StockArray;
             // kdj1 strategy checked then calculate the corresponding stockID
             string resultKDJ1 = storedKDJ1;
-            if(kdj1 == "true")
+            if (kdj1 == "true")
             {
                 resultKDJ1 = "2330";
                 stockCustomize += resultKDJ1 + " ";
             }
-            else if(storedKDJ1 != "")
+            else if (storedKDJ1 != "")
             {
                 stockCustomize = stockCustomize.Replace(storedKDJ1, "");
             }
@@ -250,7 +277,7 @@ namespace GoldRush.Controllers
                 resultKDJ2 = "0050";
                 stockCustomize += resultKDJ2 + " ";
             }
-            else if(storedKDJ2 != "")
+            else if (storedKDJ2 != "")
             {
                 stockCustomize = stockCustomize.Replace(storedKDJ2, "");
             }
@@ -273,7 +300,7 @@ namespace GoldRush.Controllers
         }
 
         [HttpPost]
-        public ActionResult StockMarketIndex( string tech1, string test1, string test2)
+        public ActionResult StockMarketIndex(string tech1, string test1, string test2)
         {
 
             ViewBag.tech1 = tech1;
@@ -298,7 +325,7 @@ namespace GoldRush.Controllers
             return Json(result);
         }
 
-        
+
 
     }
 }
