@@ -188,6 +188,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\buy_and_sell_report.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -216,9 +219,6 @@
     </Compile>
     <Compile Include="Models\StockAll.cs" />
     <Compile Include="Models\stockPrice.cs">
-      <DependentUpon>model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\stocks.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\stockTech.cs" />

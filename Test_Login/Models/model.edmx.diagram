@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f9bb8ef2150c4bff9e1ecf672d79a543" Name="Diagram1">
-        <EntityTypeShape EntityType="LabModel.Member" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LabModel.Mymessage" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LabModel.stocks" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LabModel.stockPrice" Width="1.5" PointX="6.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabModel.buy_and_sell_report" Width="1.5" PointX="8.625" PointY="0.75" />
+        <EntityTypeShape EntityType="LabModel.Member" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LabModel.Mymessage" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
