@@ -66,6 +66,18 @@ namespace GoldRush.Controllers
             string id = "Strategy";
             string stringID = "";
             string stockArray = "";
+
+            #region 資料庫末5筆日期
+            // 取得資料庫最後5筆日期, 反著讀取依序加入dayList
+            SqlCommand getLast5Day = new SqlCommand();
+            getLast5Day.Connection = cn;
+            getLast5Day.CommandText = "select distinct top(5) stock_date from buy_and_sell_report order by stock_date desc ";
+            cn.Open();
+            SqlDataReader dayResult = getLast5Day.ExecuteReader();
+            List<string> dayList = new List<string>();
+            while (dayResult.Read()) { dayList.Add(Convert.ToString(dayResult[0])); }
+            cn.Close();
+            #endregion
             switch (str)
             {
                 case "成交爆大量":
@@ -124,35 +136,60 @@ namespace GoldRush.Controllers
                     break;
 
                 case "外資連買":
-                    SqlCommand cmd = new SqlCommand();
-                    SqlCommand cmd2 = new SqlCommand();
-                    cmd.Connection = cn;
-                    cmd2.Connection = cn;
-                    cmd.CommandText = "select distinct top(5) stock_date from buy_and_sell_report order by stock_date desc";
-                    cn.Open();
-                    SqlDataReader dayResult = cmd.ExecuteReader();
-                    List<string> day = new List<string>();
-                    while (dayResult.Read()) { day.Add(Convert.ToString(dayResult[0])); }
-                    cn.Close(); cn.Open();
-                    cmd2.CommandText = "select  StockCode, count(StockCode) as countres " +
-                        "from buy_and_sell_report Where (globalCompany > 0) and stock_date <= 20220308 and stock_date >= 20220302	" +
-                        "group by StockCode	" +
-                        "order by countres desc";
-                    SqlDataReader selectResult = cmd2.ExecuteReader();
-                    List<string> selectResultList = new List<string>();
-                    while (selectResult.Read())
+                    #region 外資查詢連買結果
+                    using (SqlCommand getStockID = new SqlCommand())
                     {
-                        if (int.Parse(selectResult[1].ToString()) >= 5)
+                        getStockID.Connection = cn;
+                        cn.Open();
+                        getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
+                            "from buy_and_sell_report " +
+                            "Where globalCompany > 100000 " +
+                            $"and (stock_date between {dayList.Last()} and {dayList.First()})" +
+                            "group by StockCode	" +
+                            "order by countres desc";
+                        SqlDataReader stockIDReader = getStockID.ExecuteReader();
+                        //List<string> globalCompanyList = new List<string>();
+                        while (stockIDReader.Read())
                         {
-                            selectResultList.Add(Convert.ToString(selectResult[0]));
-                            stockArray += $", {selectResult[0]}";
+                            if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
+                            {
+                                //globalCompanyList.Add($"{stockIDReader[0]}");
+                                stockArray += $", {stockIDReader[0]}";
+                            }
                         }
+                        cn.Close();
                     }
-                    cn.Close();
+                    // 查詢出外資連買5天, 且成交張>100的股票代號, 再加入globalCompanyList
+                    
+                    #endregion
                     break;
                 case "投信連買":
-                    stockArray += ", 3481";
-                    stockArray += ", 2002";
+                    #region 投信查詢連買結果
+                    using (SqlCommand getStockID = new SqlCommand())
+                    {
+                        getStockID.Connection = cn;
+                        cn.Open();
+                        getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
+                            "from buy_and_sell_report " +
+                            "Where investmentTrust > 100000 " +
+                            $"and (stock_date between {dayList.Last()} and {dayList.First()})" +
+                            "group by StockCode	" +
+                            "order by countres desc";
+                        SqlDataReader stockIDReader = getStockID.ExecuteReader();
+                        //List<string> globalCompanyList = new List<string>();
+                        while (stockIDReader.Read())
+                        {
+                            if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
+                            {
+                                //globalCompanyList.Add($"{stockIDReader[0]}");
+                                stockArray += $", {stockIDReader[0]}";
+                            }
+                        }
+                        cn.Close();
+                    }
+                    // 查詢出外資連買5天, 且成交張>100的股票代號, 再加入globalCompanyList
+
+                    #endregion
                     break;
                 case "KD黃金交叉":
                     stockArray += ", 5608";
@@ -189,7 +226,7 @@ namespace GoldRush.Controllers
             }
             else
             {
-                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ThenBy(x=>x.stockID).ToList());
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ThenBy(x => x.stockID).ToList());
             }
         }
 
