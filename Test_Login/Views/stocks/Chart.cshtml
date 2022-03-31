@@ -64,67 +64,67 @@
 <body>
 
     <div class="container">
-        <h2>@ViewBag.id</h2>
+        <h3>@ViewBag.id</h3>
         <div class="row">
             <div class="col-md-3">
-                <h6>主圖指標</h6>
+                <h4>主圖指標</h4>
                 <div class="list-group">
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawCol()" id="btnCol" style="display:none">
-                        成交量(Volume)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>成交量(Volume)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawSMA()" id="btnSMA" style="display:none">
-                        移動平均線(MA)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>移動平均線(MA)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawEMA()" id="btnEMA" style="display:none">
-                        指數移動平均線(EMA)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>指數移動平均線(EMA)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawBBands()" id="btnBBands" style="display:none">
-                        布林通道<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>布林通道
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKC()" id="btnKC" style="display:none">
-                        肯特納通道(KC)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>肯特納通道(KC)
                     </label>
                 </div>
-                <h6>副圖指標</h6>
+                <h4>副圖指標</h4>
                 <div class="list-group">
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKD()" id="btnKD" style="display:none" />
-                        隨機震盪指標(KD)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>隨機震盪指標(KD)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawMACD()" id="btnMACD" style="display:none" />
-                        指數平滑異同移動平均線(MACD)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>指數平滑異同移動平均線(MACD)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawRSI()" id="btnRSI" style="display:none" />
-                        相對強弱指標(RSI)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>相對強弱指標(RSI)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawADL()" id="btnADL" style="display:none" />
-                        累積/分配線(ADL)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>累積/分配線(ADL)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAroon()" id="btnAroon" style="display:none" />
-                        阿隆指標(Aroon)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>阿隆指標(Aroon)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawATR()" id="btnATR" style="display:none" />
-                        真實波動幅度均值(ATR)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>真實波動幅度均值(ATR)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAO()" id="btnAO" style="display:none" />
-                        動量震盪指標(AO)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>動量震盪指標(AO)
                     </label>
                 </div>
             </div>
             <div class="col-md-9">
                 <select id="typeSelect" onclick="create()">
-                    <option value="default" selected disabled>工具</option>
+                    <option value="default" selected disabled>繪圖工具</option>
                     <option value="andrews-pitchfork">分叉線</option>
                     <option value="horizontal-line">水平線</option>
                     <option value="vertical-line">垂直線</option>
