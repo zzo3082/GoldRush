@@ -22,6 +22,7 @@ namespace Test_Login.Models
 
 
         public string NickName { get; set; }
+        public string StockBag { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
