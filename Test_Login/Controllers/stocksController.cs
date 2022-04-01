@@ -300,7 +300,7 @@ namespace GoldRush.Controllers
             string resultKDJ1 = storedKDJ1;
             if (kdj1 == "true")
             {
-                Thread.Sleep(5000);
+                // Thread.Sleep(5000);
                 resultKDJ1 = "2330";
                 stockCustomize += resultKDJ1 + " ";
             }
