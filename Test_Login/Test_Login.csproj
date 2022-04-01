@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202203301534036_AddedFieldintable.designer.cs">
       <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204010320166_AddedFieldintable1.cs" />
+    <Compile Include="Migrations\202204010320166_AddedFieldintable1.designer.cs">
+      <DependentUpon>202204010320166_AddedFieldintable1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\buy_and_sell_report.cs">
@@ -360,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203301534036_AddedFieldintable.resx">
       <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204010320166_AddedFieldintable1.resx">
+      <DependentUpon>202204010320166_AddedFieldintable1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
