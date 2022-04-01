@@ -134,7 +134,7 @@ namespace Test_Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(string UserNameBox, string UserIdbox, string mainBox, int messageID)
+        public ActionResult Edit(string UserNameBox, string UserIdbox, HttpPostedFileBase imageBoxEdit, string mainBox, int messageID)
         {
             messageManager messageManager = new messageManager();
             message message = new message()
@@ -142,6 +142,17 @@ namespace Test_Login.Controllers
                 messageID = messageID,
                 main = mainBox
             };
+            byte[] photoBytes;
+            if (imageBoxEdit != null && imageBoxEdit.ContentLength > 0)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    imageBoxEdit.InputStream.CopyTo(ms);
+                    photoBytes = ms.GetBuffer();
+                    message.photo = photoBytes;
+                }
+            }
+
             messageManager.EditMessage(message);
             List<message> messageList = messageManager.GetMessages();
             ViewBag.messageList = messageList;

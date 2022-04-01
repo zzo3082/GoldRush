@@ -197,34 +197,7 @@
     .search {
         position: relative;
         display: inline-block;
-        /* width: 200px;
-        position: fixed;
-        z-index: 2;
-        margin: auto;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        top: 200px;*/
     }
-
-    /*    .search input {
-            width: 200px;
-            border: none;
-            border: solid 1px #00a0e9;
-            height: 20px;
-            padding-left: 15px;
-        }*/
-
-        .search input, .search button:focus {
-            /*outline: none;*/
-        }
-
-        .search button {
-           /* width: 20px;
-            background: #00a0e9;
-            border: none;
-            height: 20px;*/
-        }
 
     table {
         position: absolute;
@@ -245,8 +218,8 @@
 <div class="container center">
     @if (Request.IsAuthenticated)
     {
-        // 有登入 @User.Identity.GetUserName()
-        <h2 class="@User.Identity.GetStockBag()">討論區 @User.Identity.GetNickName()<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
+        // 有登入 @User.Identity.GetUserName() @User.Identity.GetNickName() @User.Identity.GetStockBag()
+        <h2 >討論區 <input type="text" id="filter" placeholder="輸入代號或名稱 篩選文章" onkeyup="filter()"/><span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
         <button id="btnName" data-UserName="@User.Identity.GetNickName()" hidden></button>
         <button id="btnID" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
@@ -261,7 +234,7 @@
                 foreach (message article in articleList)
                 {
                     //文章區塊
-                    <div class="panel panel-primary msg" id="@article.messageID">
+                    <div class="panel panel-primary msg" id="@article.messageID" data-hashtag="@article.hashtagID">
                         @*文章頭*@
                         <div class="panel-heading">
                             @article.UserName
@@ -270,7 +243,7 @@
                                 <label for="op+@article.messageID"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></label>
                                 <button class="dropbtn" id="op+@article.messageID" hidden onclick="drop(this)" data-messageID="@article.messageID" data-UserName="@article.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                 <div id="myDropdown+@article.messageID" class="dropdown-content">
-                                    <button onclick="edit(this)" class="btnEdit" data-messageID="@article.messageID" data-photo="@string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(article.photo))" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
+                                    <button onclick="edit(this)" class="btnEdit" @*data-photoOrg="@article.photo"*@ data-messageID="@article.messageID" data-photo="@string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(article.photo))" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
                                     <button onclick="myDelete(this)" data-messageID="@article.messageID">刪除</button>
                                 </div>
                                 <div id="myDropdown2+@article.messageID" class="dropdown-content">
@@ -903,7 +876,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/Home/Edit">
+                    <form method="post" action="/Home/Edit" enctype="multipart/form-data">
                         <div>
                             <input type="text" id="EditmessageID" name="messageID" value="0" hidden />
                         </div>
@@ -934,7 +907,7 @@
                                       id="editMain"
                                       value=""
                                       rows="3"></textarea>
-                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBox" id="imageBox" onchange="setPreview1(this)" />
+                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBoxEdit" id="imageBoxEdit" onchange="setPreview1(this)" />
                             <img id="previewEdit" src="#" />
                         </div>
 
@@ -1005,7 +978,7 @@
             </div>
         </div>
     </div>
-    <!-- 編輯貼文 -->
+    <!-- 檢舉貼文 -->
     <!-- 檢舉貼文 -->
     <div id="MyReportModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -1035,7 +1008,7 @@
             </div>
         </div>
     </div>
-    <!-- 修改貼文 -->
+    <!-- 檢舉貼文 -->
 </div>
 @*<script>CKEDITOR.replace("mainBox");</script>*@
 @*<script>CKEDITOR.replace("UserIdbox");</script>*@
@@ -1059,6 +1032,7 @@
         $("#editMain").val(this.dataset.main);
         $("#editModal").modal({ backdrop: "static" });
         $("#previewEdit").attr('src', this.dataset.photo);
+        /*$("#imageOrg").val(this.dataset.photoOrg);*/
         //var reader = new FileReader();
         //reader.onload = function (e) {
         //    $('#previewEdit')
@@ -1125,7 +1099,7 @@
 
     function setPreview(input) {
         $('#preview').show(); // 設定顯示圖片
-
+        console.log($("imageBox").val());
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -1141,11 +1115,11 @@
 
     function setPreview1(input) {
         $('#previewEdit').show(); // 設定顯示圖片
-
+        console.log($("imageBoxEdit").val());
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#preview')
+                $('#previewEdit')
                     .attr('src', e.target.result)
                     .maxHeight(150) // 設定圖片最大高度
 
@@ -1433,5 +1407,37 @@
     //刪除table表單
     function RemoveTable1() {
         $("#Table").remove();
+    }
+
+    // 篩選文章
+    function filter() {
+        if ($("#filter").val() != "") {
+            //console.log("有自");
+            //console.log($(".msg")[0].dataset.apple);
+            //console.log($(".msg").length);
+            //console.log($("#filter").val());
+            $(".msg").each(function (i) {
+                //console.log($(".msg")[i].dataset.hashtag);
+                if ($(".msg")[i].dataset.hashtag.length < 5) {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.add("none");
+                }
+                if (($(".msg")[i].dataset.hashtag).includes($("#filter").val())) {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.remove("none");
+                    document.getElementById($(".msg")[i].id).classList.add("show");
+                } else {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.remove("show");
+                    document.getElementById($(".msg")[i].id).classList.add("none");
+                }
+            })
+        } else {
+            //console.log("沒自");
+            $(".msg").each(function (i) {
+                document.getElementById($(".msg")[i].id).classList.remove("none");
+                document.getElementById($(".msg")[i].id).classList.add("show");
+            })
+        }
     }
 </script>
