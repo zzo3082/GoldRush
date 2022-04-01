@@ -11,8 +11,13 @@ namespace Test_Login.Controllers
 {
     public class HomeController : Controller
     {
+        private LabEntities db = new LabEntities();
+
+
         public ActionResult Index()
         {
+            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
             return View();
         }
 
@@ -30,7 +35,7 @@ namespace Test_Login.Controllers
 
         #region 討論區
 
-        private LabEntities db = new LabEntities();
+
         // Message 取得資料庫資料
         public ActionResult Message()
         {
@@ -42,6 +47,13 @@ namespace Test_Login.Controllers
             ViewBag.messageList = messageList;
             return View();
         }
+
+        //public JsonResult stockList()
+        //{
+        //    var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+        //    ViewBag.stockList = q;
+        //    return Json(new { ok = 0}, JsonRequestBehavior.AllowGet); ;
+        //}
 
         [HttpPost]
         public ActionResult Message(string UserNameBox, string mainBox, string UserIdbox, string hashtagBox, HttpPostedFileBase imageBox, int heart = 0, int messageID = 0)

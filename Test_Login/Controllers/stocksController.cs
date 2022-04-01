@@ -26,6 +26,9 @@ namespace GoldRush.Controllers
 
         public ActionResult Chart(string id)
         {
+
+            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
             if (id == null)
             {
                 return View("Index");
@@ -44,7 +47,6 @@ namespace GoldRush.Controllers
         [HttpPost]
         public ActionResult Chart(string stockID, string id)
         {
-
             if (stockID == "")
             {
                 return View("Index");
@@ -63,6 +65,8 @@ namespace GoldRush.Controllers
 
         public ActionResult Strategy(string str)
         {
+            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
             SqlConnection cn = new SqlConnection(@"Data Source=.;Initial Catalog=Lab;Integrated Security=True");
             string id = "Strategy";
             string stringID = "";
@@ -233,6 +237,8 @@ namespace GoldRush.Controllers
 
         public ActionResult Customize()
         {
+            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
             return View();
         }
 
