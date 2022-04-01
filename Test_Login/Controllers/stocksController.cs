@@ -18,6 +18,7 @@ namespace GoldRush.Controllers
         public ActionResult Index()
         {
             // return View(db.stockPrice.ToList());
+            int i = 0;
             return View();
         }
 

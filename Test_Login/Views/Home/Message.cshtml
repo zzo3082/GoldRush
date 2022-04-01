@@ -1355,15 +1355,23 @@
         //初始化陣列
         var Keyword = [];
         //遍歷陣列內容
+        if (parseInt(SearchName).toString() == "NaN") {
+            alert("not a number");
+            return;
+        } else {
+           alert("數字");
+            return;
+        }
         for (var i = 0; i < ArrayList.length; i++) {
             //查詢判斷陣列內是否包含關鍵詞
             if (SearchName.length != 0) {
                 //搜尋框輸入資料全等於陣列內字串引數
                 //SearchName === ArrayList[i].substr(0, SearchName.length)
+
                 if ((ArrayList[i]).includes(SearchName)) {
                     //新增資料
                     Keyword.push(ArrayList[i]);
-                    console.log((ArrayList[i]).includes(SearchName));
+                    console.log(i);
                 }
                 //if (ArrayList[i].(SearchName)) {
                 //    //新增資料

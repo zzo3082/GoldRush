@@ -36,8 +36,9 @@ namespace Test_Login.Controllers
         {
             messageManager messageManager = new messageManager();
             List<message> messageList = messageManager.GetMessages();
-            var i = (from x in db.stockPrice select x.stockID + x.stockName).Distinct();
-            ViewBag.stockID = i;
+            var i = (from x in db.stockPrice orderby x.stockID select x.stockID + x.stockName).Distinct();
+            var q = db.stockPrice.Select(x => x.stockID+ x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
             ViewBag.messageList = messageList;
             return View();
         }
