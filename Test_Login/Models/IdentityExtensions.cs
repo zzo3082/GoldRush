@@ -15,5 +15,11 @@ namespace Test_Login.Models.Extensions
             // Test for null to avoid issues during local testing
             return (claim != null) ? claim.Value : string.Empty;
         }
+        public static string GetStockBag(this IIdentity identity)
+        {
+            var claim2 = ((ClaimsIdentity)identity).FindFirst("StockBag");
+            // Test for null to avoid issues during local testing
+            return (claim2 != null) ? claim2.Value : string.Empty;
+        }
     }
 }

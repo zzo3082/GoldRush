@@ -257,6 +257,10 @@ namespace Test_Login.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
+            var user2 = UserManager.FindById(User.Identity.GetUserId());
+            string org = user2.StockBag;
+            user2.StockBag ="456,"+ org;
+            var res = await UserManager.UpdateAsync(user2);
             if (ModelState.IsValid)
             {
                 var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
