@@ -435,7 +435,7 @@ namespace GoldRush.Controllers
             }
             else
             {
-                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockDate).ThenBy(x => x.stockID).ToList());
+                return View(db.stockPrice.Where(x => stockArray.Contains(x.stockID)).OrderBy(x => x.stockID).ToList());
             }
         }
 
