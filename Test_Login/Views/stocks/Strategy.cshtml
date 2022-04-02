@@ -37,7 +37,7 @@
     .stockName {
         width: 120px;
         text-align: center;
-        margin-bottom:5px;
+        margin-bottom: 5px;
     }
 
     table {
@@ -63,7 +63,6 @@
         position: relative;
         display: inline-block;
     }
-
 </style>
 
 <h2 class="nav justify-content-center">常用策略</h2>
@@ -77,7 +76,7 @@
     <form method="post">
 
         <div class=" alert alert-danger alert-dismissible fade show">
-            <h3>利多</h3>
+            <h3>挖掘多方股票</h3>
 
         </div>
         <div>
@@ -95,44 +94,24 @@
 
                 <button class="btn btn-outline-danger  strategyDiv" value="外資連買" name="str">
                     <h3><b>外資連買</b></h3>
-                    <span class="buttonText">外資連買5天,成交張數>=100張</span>
+                    <span class="buttonText">外資連續五日買超五百張(含)以上</span>
                 </button>
 
                 <button class="btn btn-outline-danger  strategyDiv" value="投信連買" name="str">
                     <h3><b>投信連買</b></h3>
-                    <span class="buttonText">投信連買5天,成交張數皆>=100張</span>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
                 </button>
 
-                <button class="btn btn-outline-danger  strategyDiv" value="投信連買" name="str">
-                    <h3><b>外投同買</b></h3>
-                    <span class="buttonText">外資投信同買5天,成交張數皆>=100張</span>
+                <button class="btn btn-outline-danger  strategyDiv" value="外資投信同買" name="str">
+                    <h3><b>外資投信同買</b></h3>
+                    <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
                 </button>
-                @*<button class="btn btn-outline-danger  strategyDiv" value="KD黃金交叉" name="str">
-            <h3><b>KD黃金交叉</b></h3>
-            <span class="buttonText">k線和d線交叉</span>
-        </button>*@
-
-                @*<button class="btn btn-outline-danger  strategyDiv" value="EPS創新高" name="str">
-            <h3><b>EPS創新高</b></h3>
-            <span class="buttonText">營收創高</span>
-        </button>*@
-
-                @*<button class="btn btn-outline-danger  strategyDiv" value="營收由虧轉盈" name="str">
-            <h3><b>營收由虧轉盈</b></h3>
-            <span class="buttonText">收益轉正成長</span>
-        </button>
-
-        <button class="btn btn-outline-danger  strategyDiv" value="強勢股票" name="str">
-            <h3><b>強勢股票</b></h3>
-            <span class="buttonText">漲很兇</span>
-        </button>*@
 
 
                 <div class="negativeStrategy">
                     <div class="alert alert-primary">
-                        <h3>利空</h3>
+                        <h3>挖掘空方股票</h3>
                     </div>
-
 
                     <button class="btn btn-outline-primary  strategyDiv" value="弱勢股票" name="str">
                         <h3><b>弱勢股票</b></h3>
@@ -141,34 +120,48 @@
 
                     <button class="btn btn-outline-primary  strategyDiv" value="外資連賣" name="str">
                         <h3><b>外資連賣</b></h3>
-                        <span class="buttonText">外資連續?天賣超</span>
+                        <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
                     </button>
-
 
                     <button class="btn btn-outline-primary  strategyDiv" value="投信連賣" name="str">
                         <h3><b>投信連賣</b></h3>
-                        <span class="buttonText">投信連續?天賣超</span>
+                        <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
                     </button>
 
-
-                    <button class="btn btn-outline-primary  strategyDiv" value="KD死亡交叉" name="str">
-                        <h3><b>KD死亡交叉</b></h3>
-                        <span class="buttonText">k線低於d線</span>
+                    <button class="btn btn-outline-primary  strategyDiv" value="外資投信同賣" name="str">
+                        <h3><b>外資投信同賣</b></h3>
+                        <span class="buttonText">前一日外資投信同賣而且跌幅>2%</span>
                     </button>
-
                 </div>
             </div>
         </div>
     </form>
 </div>
+<br />
+<br />
+<script src="/Scripts/jquery-3.4.1.js"></script>
+@*<script>
+    console.log($)
+    $('.btn').click(function () {
+        alert($(this).val())
+    })
+</script>*@
 
-<br />
-<br />
+@{
+    if (@ViewBag.resultCount > -1)
+    {
+        <nav>
+            <nav class="navbar navbar-light bg-light justify-content-center">
+                    <h3 class="navbar-text">挖掘出了 @ViewBag.resultCount 筆資料</h3>
+            </nav>
+        </nav>
+    }
+}
+
 <div id="stockInfo">
     @{
         if (Model != null)
         {
-
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -212,11 +205,11 @@
                         foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
                         {
                             // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x =>x.stockDate).ToList()[0];
+                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
                             <tr>
                                 <td class="">
-                                    <input class="stockName btn btn-outline-info"  type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
-                                    <input class="stockName btn btn-outline-info" type="button"  value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                    <input class="stockName btn btn-outline-info" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
+                                    <input class="stockName btn btn-outline-info" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
                                 <td>@item.stockDate</td>
                                 <td>@item.endPrice</td>
@@ -228,7 +221,7 @@
                                     string result = num.ToString("N0");}
                                 <td>@result</td>
 
-                          </tr>
+                            </tr>
                         }
                     }
 

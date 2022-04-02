@@ -65,23 +65,34 @@ namespace GoldRush.Controllers
 
         public ActionResult Strategy(string str)
         {
+            // StockPrice的StockDate倒著排
+            var dateList = db.stockPrice.OrderByDescending(x => x.stockDate).Select(x => x.stockDate).ToList().Distinct();
             var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
             ViewBag.stockID = q;
             SqlConnection cn = new SqlConnection(@"Data Source=.;Initial Catalog=Lab;Integrated Security=True");
             string id = "Strategy";
             string stringID = "";
             string stockArray = "";
+            int selectResultcount = 0;
 
-            #region 資料庫末5筆日期
+            #region 資料庫末5筆日期(已不需要)
             // 取得資料庫最後5筆日期, 反著讀取依序加入dayList
-            SqlCommand getLast5Day = new SqlCommand();
-            getLast5Day.Connection = cn;
-            getLast5Day.CommandText = "select distinct top(5) stock_date from buy_and_sell_report order by stock_date desc ";
-            cn.Open();
-            SqlDataReader dayResult = getLast5Day.ExecuteReader();
-            List<string> dayList = new List<string>();
-            while (dayResult.Read()) { dayList.Add(Convert.ToString(dayResult[0])); }
-            cn.Close();
+            //方法1
+            //SqlCommand getLast5Day = new SqlCommand();
+            //getLast5Day.Connection = cn;
+            //getLast5Day.CommandText = "select distinct top(5) stock_date from buy_and_sell_report order by stock_date desc ";
+            //cn.Open();
+            //SqlDataReader dayResult = getLast5Day.ExecuteReader();
+            //List<string> dayList = new List<string>();
+            //while (dayResult.Read()) { dayList.Add(Convert.ToString(dayResult[0])); }
+            //cn.Close();
+
+            //方法2
+            //List<string> dayList = new List<string>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    dayList.Add(dateList.ElementAt(i));
+            //}
             #endregion
             switch (str)
             {
@@ -148,24 +159,22 @@ namespace GoldRush.Controllers
                         cn.Open();
                         getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
                             "from buy_and_sell_report " +
-                            "Where globalCompany > 100000 " +
-                            $"and (stock_date between {dayList.Last()} and {dayList.First()})" +
+                            "Where globalCompany > 500000 " +
+                            $"and (stock_date between {dateList.ElementAt(4)} and {dateList.ElementAt(0)})" +
                             "group by StockCode	" +
                             "order by countres desc";
                         SqlDataReader stockIDReader = getStockID.ExecuteReader();
-                        //List<string> globalCompanyList = new List<string>();
                         while (stockIDReader.Read())
                         {
                             if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
                             {
-                                //globalCompanyList.Add($"{stockIDReader[0]}");
+                                selectResultcount += 1;
                                 stockArray += $", {stockIDReader[0]}";
                             }
                         }
                         cn.Close();
                     }
-                    // 查詢出外資連買5天, 且成交張>100的股票代號, 再加入globalCompanyList
-                    
+                    ViewBag.resultCount = selectResultcount;
                     #endregion
                     break;
                 case "投信連買":
@@ -176,30 +185,86 @@ namespace GoldRush.Controllers
                         cn.Open();
                         getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
                             "from buy_and_sell_report " +
-                            "Where investmentTrust > 100000 " +
-                            $"and (stock_date between {dayList.Last()} and {dayList.First()})" +
+                            "Where investmentTrust > 500000 " +
+                            $"and (stock_date between {dateList.ElementAt(4)} and {dateList.ElementAt(0)})" +
                             "group by StockCode	" +
                             "order by countres desc";
                         SqlDataReader stockIDReader = getStockID.ExecuteReader();
-                        //List<string> globalCompanyList = new List<string>();
                         while (stockIDReader.Read())
                         {
                             if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
                             {
-                                //globalCompanyList.Add($"{stockIDReader[0]}");
+                                selectResultcount += 1;
                                 stockArray += $", {stockIDReader[0]}";
                             }
                         }
                         cn.Close();
                     }
-                    // 查詢出外資連買5天, 且成交張>100的股票代號, 再加入globalCompanyList
+                    #endregion
+                    ViewBag.resultCount = selectResultcount;
+                    break;
+                case "外資投信同買":
+                    #region 外資投信同買超過100張(含)且漲幅>2%
+                    List<string> stockCodeList = new List<string>(); // 符合規則的股票代號
+                    List<string> AmplitudeList = new List<string>(); // 漲幅>=2%以上的股票
+                    using (SqlCommand sqlcmd = new SqlCommand()) // 外資投信同買100張+
+                    {
+                        sqlcmd.Connection = cn;
+                        sqlcmd.CommandText = "select StockCode from buy_and_sell_report " +
+                            "where globalCompany > 100000" +
+                            "and investmentTrust > 100000" +
+                            $"and stock_date = {dateList.First()}" +
+                            $"order by StockCode";
+                        cn.Open();
+                        SqlDataReader stockIDReader = sqlcmd.ExecuteReader();
+                        while (stockIDReader.Read()) { stockCodeList.Add(stockIDReader[0].ToString()); }
+                        cn.Close();
+                    }
+                    foreach (string stockID in stockCodeList) //漲幅>=2%
+                    {
+                        using (SqlCommand sqlcmd = new SqlCommand()) // 最新一筆及前一日的收盤價
+                        {
+                            sqlcmd.Connection = cn;
+                            sqlcmd.CommandText = "select endPrice, stockDate" +
+                                " from stockPrice" +
+                                $" where stockID = {stockID}" +
+                                $" and (stockDate = {dateList.First()} or stockDate = {dateList.Skip(1).First()})" +
+                                "order by stockDate desc";
+                            cn.Open();
+                            SqlDataReader amplitudeReader = sqlcmd.ExecuteReader();
+                            double temp1 = 0; // 最新收盤價
+                            double temp2 = 0; // 最新前一日收盤價
+                            while (amplitudeReader.Read())     // 漲幅>2%加入清單
+                            {
+                                if (amplitudeReader[1].ToString() == dateList.First())
+                                {
+                                    temp1 = Convert.ToDouble(amplitudeReader[0]);
+                                }
+                                else temp2 = Convert.ToDouble(amplitudeReader[0]);
 
+                                if (temp1 != 0 && temp2 != 0)
+                                {
+                                    if ((temp1 - temp2) / temp2 >= 0.02)
+                                    {
+                                        //AmplitudeList.Add(stockCodeTemp);
+                                        AmplitudeList.Add(stockID);
+                                        temp1 = 0; temp2 = 0; //stockCodeTemp = "";
+                                    }
+                                    else { temp1 = 0; temp2 = 0; }
+                                }
+                            }
+                            cn.Close();
+                        }
+                    }
+                    foreach(string result in AmplitudeList)
+                    {
+                        selectResultcount += 1;
+                        stockArray += $", {result}";
+                    }
+                    ViewBag.resultCount = selectResultcount;
                     #endregion
                     break;
-                case "KD黃金交叉":
-                    stockArray += ", 5608";
-                    stockArray += ", 1439";
-                    break;
+
                 case "EPS創新高":
                     stockArray += ", 2883";
                     stockArray += ", 2888";
@@ -212,13 +277,117 @@ namespace GoldRush.Controllers
                     stockArray += "2883";
                     break;
                 case "外資連賣":
-                    stockArray += "8069";
+                    #region 外資查詢連賣結果
+                    using (SqlCommand getStockID = new SqlCommand())
+                    {
+                        getStockID.Connection = cn;
+                        cn.Open();
+                        getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
+                            "from buy_and_sell_report " +
+                            "Where globalCompany < -1000000 " +
+                            $"and (stock_date between {dateList.ElementAt(4)} and {dateList.ElementAt(0)})" +
+                            "group by StockCode	" +
+                            "order by countres desc";
+                        SqlDataReader stockIDReader = getStockID.ExecuteReader();
+                        while (stockIDReader.Read())
+                        {
+                            if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
+                            {
+                                selectResultcount += 1;
+                                stockArray += $", {stockIDReader[0]}";
+                            }
+                        }
+                        cn.Close();
+                    }
+                    #endregion
+                    ViewBag.resultCount = selectResultcount;
                     break;
                 case "投信連賣":
-                    stockArray += "3481";
+                    #region 投信查詢連賣結果
+                    using (SqlCommand getStockID = new SqlCommand())
+                    {
+                        getStockID.Connection = cn;
+                        cn.Open();
+                        getStockID.CommandText = "select StockCode, count(StockCode) as countres " +
+                            "from buy_and_sell_report " +
+                            "Where investmentTrust < -500000 " +
+                            $"and (stock_date between {dateList.ElementAt(4)} and {dateList.ElementAt(0)})" +
+                            "group by StockCode	" +
+                            "order by countres desc";
+                        SqlDataReader stockIDReader = getStockID.ExecuteReader();
+                        while (stockIDReader.Read())
+                        {
+                            if (int.Parse(stockIDReader[1].ToString()) >= 5)    // stockIDReader[1] = count(StockCode)
+                            {
+                                selectResultcount += 1;
+                                stockArray += $", {stockIDReader[0]}";
+                            }
+                        }
+                        cn.Close();
+                    }
+                    ViewBag.resultCount = selectResultcount;
+                    #endregion
                     break;
-                case "KD死亡交叉":
-                    stockArray += "6770";
+                case "外資投信同賣":
+                    #region 外資投信同賣超過100張(含)且跌幅>2%
+                    List<string> stockCodeList2 = new List<string>(); // 符合規則的股票代號
+                    List<string> AmplitudeList2 = new List<string>(); // 跌幅>=2%以上的股票
+                    using (SqlCommand sqlcmd = new SqlCommand()) // 外資投信同賣100張+
+                    {
+                        sqlcmd.Connection = cn;
+                        sqlcmd.CommandText = "select StockCode from buy_and_sell_report " +
+                            "where globalCompany < -100000" +
+                            "and investmentTrust < -100000" +
+                            $"and stock_date = {dateList.First()}" +
+                            $"order by StockCode";
+                        cn.Open();
+                        SqlDataReader stockIDReader = sqlcmd.ExecuteReader();
+                        while (stockIDReader.Read()) { stockCodeList2.Add(stockIDReader[0].ToString()); }
+                        cn.Close();
+                    }
+                    foreach (string stockID in stockCodeList2) //跌幅>=2%
+                    {
+                        using (SqlCommand sqlcmd = new SqlCommand()) // 最新一筆及前一日的收盤價
+                        {
+                            sqlcmd.Connection = cn;
+                            sqlcmd.CommandText = "select endPrice, stockDate" +
+                                " from stockPrice" +
+                                $" where stockID = {stockID}" +
+                                $" and (stockDate = {dateList.First()} or stockDate = {dateList.Skip(1).First()})" +
+                                "order by stockDate desc";
+                            cn.Open();
+                            SqlDataReader amplitudeReader = sqlcmd.ExecuteReader();
+                            double temp1 = 0; // 最新收盤價
+                            double temp2 = 0; // 最新前一日收盤價
+                            while (amplitudeReader.Read())     // 跌幅>2%加入清單
+                            {
+                                if (amplitudeReader[1].ToString() == dateList.First())
+                                {
+                                    temp1 = Convert.ToDouble(amplitudeReader[0]);
+                                }
+                                else temp2 = Convert.ToDouble(amplitudeReader[0]);
+
+                                if (temp1 != 0 && temp2 != 0)
+                                {
+                                    if ((temp1 - temp2) / temp2 <= -0.02)
+                                    {
+                                        //AmplitudeList.Add(stockCodeTemp);
+                                        AmplitudeList2.Add(stockID);
+                                        temp1 = 0; temp2 = 0; //stockCodeTemp = "";
+                                    }
+                                    else { temp1 = 0; temp2 = 0; }
+                                }
+                            }
+                            cn.Close();
+                        }
+                    }
+                    foreach (string result in AmplitudeList2)
+                    {
+                        selectResultcount += 1;
+                        stockArray += $", {result}";
+                    }
+                    ViewBag.resultCount = selectResultcount;
+                    #endregion
                     break;
                 default:
                     break;
