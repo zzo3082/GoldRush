@@ -151,7 +151,7 @@ namespace Test_Login.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName, StockBag = ""};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

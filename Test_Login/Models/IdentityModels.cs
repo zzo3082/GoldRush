@@ -17,7 +17,7 @@ namespace Test_Login.Models
 
 
             userIdentity.AddClaim(new Claim("NickName", this.NickName.ToString()));
-            //userIdentity.AddClaim(new Claim("StockBag", this.StockBag.ToString()));
+            userIdentity.AddClaim(new Claim("StockBag", this.StockBag.ToString()));
             return userIdentity;
         }
 
