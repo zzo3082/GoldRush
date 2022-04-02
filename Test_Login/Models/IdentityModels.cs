@@ -16,7 +16,8 @@ namespace Test_Login.Models
             // 在這裡新增自訂使用者宣告
 
 
-             userIdentity.AddClaim(new Claim("NickName", this.NickName.ToString()));
+            userIdentity.AddClaim(new Claim("NickName", this.NickName.ToString()));
+            userIdentity.AddClaim(new Claim("StockBag", this.StockBag.ToString()));
             return userIdentity;
         }
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,14 +9,28 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Test_Login;
 using Test_Login.Models;
 
 namespace GoldRush.Controllers
 {
     public class stocksController : Controller
     {
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         private LabEntities db = new LabEntities();
         // GET: stocks
         public ActionResult Index()
@@ -27,8 +44,8 @@ namespace GoldRush.Controllers
         public ActionResult Chart(string id)
         {
 
-            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
-            ViewBag.stockID = q;
+            //var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            //ViewBag.stockID = q;
             if (id == null)
             {
                 return View("Index");
@@ -39,27 +56,45 @@ namespace GoldRush.Controllers
                 if (stock.Count != 0)
                 {
                     ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+                    ViewBag.stockID = stock.First().stockID;
                 }
                 return View(stock);
             }
         }
 
+        //[HttpPost]
+        //public ActionResult Chart(string stockID, string id)
+        //{
+        //    if (stockID == "")
+        //    {
+        //        return View("Index");
+        //    }
+        //    else
+        //    {
+        //        var stock = db.stockPrice.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
+        //        if (stock.Count != 0)
+        //        {
+        //            ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
+        //            ViewBag.stockID = stock.First().stockID;
+        //        }
+        //        return View(stock);
+        //    }
+        //}
+
         [HttpPost]
-        public ActionResult Chart(string stockID, string id)
+        public async Task<string> Chart(bool isLike, string stockID)
         {
-            if (stockID == "")
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (isLike)
             {
-                return View("Index");
+                user.StockBag += stockID + " ";
             }
             else
             {
-                var stock = db.stockPrice.Where(x => x.stockID == stockID || x.stockName == stockID).OrderBy(x => x.stockDate).ToList();
-                if (stock.Count != 0)
-                {
-                    ViewBag.id = stock.First().stockName + "(" + stock.First().stockID + ")";
-                }
-                return View(stock);
+                user.StockBag = user.StockBag.Replace(stockID, "");
             }
+            await UserManager.UpdateAsync(user);
+            return "";
         }
 
 

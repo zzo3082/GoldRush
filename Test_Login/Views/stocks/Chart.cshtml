@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Test_Login.Models.stockPrice>
+@using Microsoft.AspNet.Identity
+@using Test_Login.Models
+@using Test_Login.Models.Extensions;
 
-@{
-    ViewBag.Title = ViewBag.id;
-}
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
@@ -35,28 +35,28 @@
         display: none !important;
     }
 
-     Hiding the checkbox, but allowing it to be focused 
+    Hiding the checkbox, but allowing it to be focused
     .badgebox {
         opacity: 0;
     }
 
     .badgebox + .badge {
-        /* Move the check mark away when unchecked*/        
+        /* Move the check mark away when unchecked*/
         text-indent: -999999px;
-        /* Makes the badge's width stay the same checked and unchecked*/        
+        /* Makes the badge's width stay the same checked and unchecked*/
         width: 27px;
     }
 
     /*.badgebox:focus + .badge {*/
-        /* Set something to make the badge looks focused */
-        /* This really depends on the application, in my case it was: */
-        /* Adding a light border */
-        /*box-shadow: inset 0px 0px 5px;*/
-        /* Taking the difference out of the padding */
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    /* Adding a light border */
+    /*box-shadow: inset 0px 0px 5px;*/
+    /* Taking the difference out of the padding */
     /*}*/
 
     .badgebox:checked + .badge {
-        /*Move the check mark back when checked*/ 
+        /*Move the check mark back when checked*/
         text-indent: 0;
     }
 
@@ -69,7 +69,27 @@
 <body>
 
     <div class="container">
-        <h3>@ViewBag.id</h3>
+        <h3>
+            @ViewBag.id
+            <span>
+                    @{ 
+                        string user = User.Identity.GetStockBag();
+                        if (user?.Contains(ViewBag.stockID))
+                        {
+                            <label for="isLike">
+                            <svg width="20px" id="likeSVG" class="w-6 h-6" fill="gray" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></label>
+                            <input type="checkbox" id="isLike" onchange="isLikeCheck()" checked style="display:none" />
+                        }
+                        else
+                        {
+                            <label for="isLike">
+                            <svg width="20px" id="likeSVG" class="w-6 h-6" fill="none" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></label>
+                            <input type="checkbox" id="isLike" onchange="isLikeCheck()" style="display:none" />
+                        }
+                    }
+            </span>
+        </h3>
+
         <div class="row">
             <div class="col-md-3">
                 <h4>主圖指標</h4>
@@ -514,5 +534,33 @@
         var selectedAnnotation = chart.annotations().getSelectedAnnotation();
         // remove the selected annotation
         chart.annotations().removeAnnotation(selectedAnnotation);
+    }
+
+    function isLikeCheck() {
+        // check stockID like by user.StockBag
+        if ($("#isLike").is(":checked")) {
+            $("#likeSVG").css("fill", "gray");
+        } else {
+            $("#likeSVG").css("fill", "none");
+        }
+        if ('@User.Identity.IsAuthenticated') {
+            // ajax to post check to user.stockbag
+            console.log("1234");
+            $.ajax({
+                async: "false",
+                type: "post",
+                url: "/stocks/Chart",
+                data: {
+                    isLike: $("#isLike").is(":checked"),
+                    stockID: '@ViewBag.stockID'
+                },
+                success: function (data) {
+
+                }
+            })
+            console.log("1234");
+
+        }
+
     }
 </script>
