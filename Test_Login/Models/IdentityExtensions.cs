@@ -21,5 +21,12 @@ namespace Test_Login.Models.Extensions
             // Test for null to avoid issues during local testing
             return (claim2 != null) ? claim2.Value : string.Empty;
         }
+
+        public static string GetUserTier(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("UserTier");
+            // 測試是否為null
+            return (claim != null) ? claim.Value : "404 userTier";
+        }
     }
 }

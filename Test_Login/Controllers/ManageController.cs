@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -7,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Test_Login.Models;
+using Test_Login.Models.Extensions;
 
 namespace Test_Login.Controllers
 {
@@ -337,7 +340,97 @@ namespace Test_Login.Controllers
             base.Dispose(disposing);
         }
 
-#region Helper
+        public ActionResult Pay()
+        {
+            if(User.Identity.GetUserTier().ToLower() == "true")
+            {
+                return View("PayCancel");
+            }
+            else
+            {
+                return View();
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Pay(string prime, string name, string phone, string email)
+        {
+            var url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime";
+            var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpRequest.Method = "POST";
+            //httpRequest.Headers[HttpRequestHeader ] = "application/json";
+            httpRequest.Headers["x-api-key"] = "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM";
+
+            var data = @"{
+                    ""partner_key"": ""partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM"",
+                    ""prime"": """ + $"{prime}" + @""",
+                    ""amount"": ""1"",
+                    ""merchant_id"": ""GlobalTesting_CTBC"",
+                    ""details"": ""Gold Rush Subscribe"",
+                    ""cardholder"": {
+                        ""phone_number"": """ + $"{phone}" + @""",
+                        ""name"": """ + $"{name}" + @""",
+                        ""email"": """ + $"{email}" + @"""
+                    }
+                }";
+
+            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+            }
+            bool payResult;
+            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+
+                if (result.IndexOf("Success") > 0)
+                {
+
+                    payResult = true;
+                }
+                else
+                {
+
+                    payResult = false;
+                };
+            }
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (payResult)
+            {
+                user.UserTier = true;
+                var ok = await UserManager.UpdateAsync(user);
+                return Redirect("/Manage/PayOK");
+            }
+            else
+            {
+                user.UserTier = false;
+                var notok = await UserManager.UpdateAsync(user);
+                return Redirect("/Manage/PayOK");
+            }
+        }
+
+        public ActionResult PayOK()
+        {
+            return View();
+        }
+
+        public ActionResult PayCancel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SubCancel()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            user.UserTier = false;
+            var result = await UserManager.UpdateAsync(user);
+            return Redirect("/Home/Index");
+        }
+
+        #region Helper
         // 新增外部登入時用來當做 XSRF 保護
         private const string XsrfKey = "XsrfId";
 

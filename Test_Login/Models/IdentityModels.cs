@@ -18,12 +18,14 @@ namespace Test_Login.Models
 
             userIdentity.AddClaim(new Claim("NickName", this.NickName.ToString()));
             userIdentity.AddClaim(new Claim("StockBag", this.StockBag.ToString()));
+            userIdentity.AddClaim(new Claim("UserTier", this.UserTier.ToString()));
             return userIdentity;
         }
 
 
         public string NickName { get; set; }
         public string StockBag { get; set; }
+        public bool UserTier { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
