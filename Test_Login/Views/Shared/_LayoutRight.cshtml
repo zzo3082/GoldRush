@@ -1,0 +1,316 @@
+﻿@using Test_Login.Models.Extensions;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Rush</title>
+    <logo> </logo>
+
+    <link rel="stylesheet" href="~/Content/vendor.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="~/assets/custom.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <style>
+        html, body {
+            height: 100%;
+            /* background-color: azure; */
+        }
+
+        df-messenger {
+            --df-messenger-bot-message: #878fac;
+            --df-messenger-button-titlebar-color: #fdb813;
+            --df-messenger-chat-background-color: #fafafa;
+            --df-messenger-font-color: white;
+            --df-messenger-send-icon: #878fac;
+            --df-messenger-user-message: #479b3d;
+        }
+
+        .Table1 {
+            position: absolute;
+            background-color: white;
+            left: 0;
+            width: 215px;
+            border: solid 1px #e0e0e0;
+        }
+
+            .Table1 td {
+                height: 0.6rem;
+                padding-left: 15px;
+            }
+        /*條件搜尋*/
+    </style>
+
+</head>
+<body>
+
+    <div id="page-start-anchor"></div>
+    <section class="header header-fixed-xl">
+        <div class="header-top-line bg-cyan">
+            @*上方Navbar(綠色)欄位*@
+            <div class="container">
+                <div class="row">
+
+                    <nav class="navbar navbar-expand navbar-dark navbar-short justify-content-end w-100">
+                        <ul class="navbar-nav">
+                            <li class="nav-item  ">
+                                <a class="nav-link text-white justify-content-md-between" href="https://demo.htmlhunters.com/profi/documentation/getting-started/customizing.html">
+                                    <span class="text-uppercase">
+                                        LayoutDemo
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="navbar-spacer"></div>
+                        @Html.Partial("_LoginPartial")
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="header-main bg-white">
+            <div class="container" style="max-width:1400px;">
+                <div class="row" style="max-width:1400px;">
+                    <nav class="navbar navbar-expand-lg navbar-light" id="header-navbar" style="font-size:15px;">
+                        @*Navbar(白色)*@
+                        <a class="navbar-brand font-weight-bold" href="/Home/Index"><img src="~/img/LOgo.png" style="width: 200px;" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div class="navbar-spacer"></div>
+                            <div class="navbar-spacer"></div>
+                            <ul class="navbar-nav ml-auto">
+
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Strategy">
+                                        挖掘股票
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
+                                        自訂策略
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/BackTesting/BackTesting001">
+                                        回測:
+                                        定期定額(定股)
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
+                                        討論區
+                                    </a>
+
+                                </li>
+                            </ul>
+                            <div class="navbar-spacer"></div>
+                            <a class="btn btn-outline-warning text-uppercase" href="/stocks/Strategy" data-toggle="none" target="">
+                                開始發掘
+                            </a>
+
+                            <div class="navbar-spacer"></div>
+                            <div class="navbar-spacer"></div>
+
+                            @{
+                                try
+                                {
+                                    <form>
+                                        <section class="search" id="search1">
+                                            <div class="row">
+                                                <input type="text" onkeyup="tipBox(this)" class="form-control-sm mb-3 " autocomplete="off" aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                                                <button id="GoToChart" style="border:0px; background-color:white;">
+                                                    <i class="material-icons" aria-hidden="true">search </i>
+                                                </button>
+                                            </div>
+                                        </section>
+                                    </form>
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                @RenderBody()
+            </div>
+            <div class="col-4">
+                @Html.Action("rightBar", "stocks")
+            </div>
+        </div>
+    </div>
+    
+
+    @*footer*@
+    <df-messenger intent="WELCOME"
+                  chat-title="GoldRushBot"
+                  chat-icon="https://i.imgur.com/VSmAgpd.png"
+                  agent-id="c7e2956c-5b2c-424f-b914-590a1b66ce19"
+                  wait-open="true"
+                  language-code="zh-tw">
+
+    </df-messenger>
+
+    <section class="footer bg-cyan-30" style=" width: 100%; position:relative; bottom:0; top:30%">
+        <div class="container py-19 py-sm-23 py-lg-25">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 col-lg-5 mb-14 mb-md-0">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <a href="index.html" class="footer-brand">GoldRush</a>
+                        <div class="brand-icons-list ml-10 ml-sm-20">
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-facebook">
+                                <i class="fa fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-twitter">
+                                <i class="fa fa-twitter "></i>
+                            </a>
+                            <a href="#" class="brand-icon brand-icon-circle brand-icon-pinterest">
+                                <i class="fa fa-pinterest-p"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-lg-2 text-center d-none d-lg-block">
+                    <a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">
+                        <i class="material-icons text-black">arrow_upward</i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-12 col-md-6 col-lg-5 text-center text-md-right">
+                    <ul class="footer-menu">
+                        <li><a href="#" data-toggle="smooth-scroll">聯絡我們</a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <br />
+            <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted" style="margin:0px -10px 0px -10px;">
+                免責聲明: 僅提供之分析資料、選股工具僅供參考，不暗示買賣建議，本站對資訊正確、更新延誤或傳輸中斷不負任何責任，依本站資訊交易發生損失需自行負責，請謹慎評估風險。
+            </small>
+        </div>
+    </section>
+
+    <script src="~/Scripts/vendor.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    @RenderSection("scripts", required: false)
+    <script>
+        $("#GoToChart").click(function (e) {
+            e.preventDefault();
+            var stockid = $("#selectStock").val().substring(0, 4);
+            window.location = "/stocks/Chart/" + stockid;
+
+        });
+
+          // 將資料庫的股票代號資料轉到JS內
+        var jScriptArray = [];
+       @*var result = @Html.Action("stockList", "Home");*@
+        var array = @Html.Raw(Json.Encode(@ViewBag.stockID));
+        for(var i = 0; i < array.length; i++) {
+            jScriptArray[i] = array[i];
+    }
+    // 當input text keypu時執行比對 加入提示table
+    function tipBox(txt) {
+        QueryKeyword($(txt).val(), jScriptArray);
+        console.log("ok");
+    }
+
+    //檢索數組裡是否有對應關鍵詞
+    function QueryKeyword(SearchName, ArrayList) {
+        //初始化陣列
+        var Keyword = [];
+        console.log(array);
+        //遍歷陣列內容
+        if (parseInt(SearchName).toString() == "NaN") {
+            //alert("not a number");
+            for (var i = 0; i < ArrayList.length; i++) {
+                //查詢判斷陣列內是否包含關鍵詞
+                if (SearchName.length != 0) {
+                    //中文有包含就輸出
+                    if ((ArrayList[i]).includes(SearchName)) {
+                        //新增資料
+                        Keyword.push(ArrayList[i]);
+                        console.log(i);
+                    }
+                }
+            }
+        } else {
+            //alert("數字");
+            for (var i = 0; i < ArrayList.length; i++) {
+                //查詢判斷陣列內是否包含關鍵詞
+                if (SearchName.length != 0) {
+                    //搜尋框輸入資料全等於陣列內字串引數
+                    // 數字從頭開始比對
+                    if (SearchName === ArrayList[i].substr(0, SearchName.length)) {
+                        //新增資料
+                        Keyword.push(ArrayList[i]);
+                        console.log(i);
+                    }
+                }
+            }
+        }
+
+        if (Keyword.length != 0) {
+            //建立table表單
+            CreateTable(Keyword);
+        } else {
+            //刪除table表單
+            RemoveTable();
+        }
+    }
+
+    //監控table表單點選事件,修改input內容
+    function TableOnclick1(id) {
+        $("#selectStock").val($("#" + id).html());
+        $("#Table1").remove();
+    }
+
+    //建立table表單
+    function CreateTable(Keyword) {
+        var TableContent = "";
+        for (var i = 0; i < Keyword.length; i++) {
+            TableContent += "" +
+                "<tr>" +
+                "<td id='" + i + "' onclick='TableOnclick1(this.id)'>" + Keyword[i] + "</td>" +
+                "</tr>";
+        }
+        //table表單不存在時進行建立
+        if (!document.getElementById("#Table1")) {
+            var Table = document.createElement('table');
+            Table.id = "Table1";
+            Table.classList.add("Table1");
+            $("#search1").append(Table);
+        }
+        $("#Table1").html(TableContent);
+    }
+
+    //刪除table表單
+    function RemoveTable() {
+        $("#Table1").remove();
+    }
+    </script>
+</body>
+</html>

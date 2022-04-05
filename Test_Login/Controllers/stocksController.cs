@@ -113,8 +113,8 @@ namespace GoldRush.Controllers
         {
             // StockPrice的StockDate倒著排
             var dateList = db.stockPrice.OrderByDescending(x => x.stockDate).Select(x => x.stockDate).ToList().Distinct();
-            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
-            ViewBag.stockID = q;
+            //var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            //ViewBag.stockID = q;
             SqlConnection cn = new SqlConnection(@"Data Source=.;Initial Catalog=Lab;Integrated Security=True");
             string id = "Strategy";
             string stringID = "";
@@ -586,6 +586,13 @@ namespace GoldRush.Controllers
             return Json(result);
         }
 
+        public PartialViewResult rightBar()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var stockBag = user.StockBag;
+            var target = db.stockPrice.Where(x => stockBag.Contains(x.stockID) && x.stockDate == "20220308").ToList();
+            return PartialView("rightBar", target);
+        }
 
 
     }
