@@ -93,6 +93,17 @@ namespace GoldRush.Controllers
             {
                 user.StockBag = user.StockBag.Replace(stockID, "");
             }
+            string[] stockIDsplit = user.StockBag.Split(' ');
+            string userInterest = "提供您感興趣的個股，在鉅亨網查詢如下：\r\n";
+            foreach (string x in stockIDsplit)
+            {
+                if(x.Length != 0)
+                {
+                    var temp = db.stockPrice.Where(y => y.stockID == x).Select(y => y.stockID + " " + y.stockName).ToList().First();
+                    userInterest += $"{temp}：https://www.cnyes.com/search/news?keyword={x}\r\n";
+                }
+            }
+            
             await UserManager.UpdateAsync(user);
             return "";
         }
