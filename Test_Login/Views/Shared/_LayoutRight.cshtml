@@ -93,9 +93,17 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
-                                        自訂策略
-                                    </a>
+                                    @if (User.Identity.GetUserTier().ToLower() == "true")
+                                    {
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
+                                            自訂策略
+                                        </a>
+                                    }
+                                    else
+                                    {<a class="nav-link text-uppercase " data-toggle="none" href="/Manage/Pay">
+                                            <img src="~/img/lock-removebg-preview.png" width="10" height="10" /> 自訂策略
+                                        </a>
+                                    }
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/BackTesting/BackTesting001">

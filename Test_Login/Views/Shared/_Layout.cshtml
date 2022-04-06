@@ -124,9 +124,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
-                                        自訂策略
-                                    </a>
+                                    @if (User.Identity.GetUserTier().ToLower() == "true")
+                                    {
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
+                                            自訂策略
+                                        </a>
+                                    }
+                                    else
+                                    {<a class="nav-link text-uppercase " data-toggle="none" href="/Manage/Pay">
+                                            <img src="~/img/lock-removebg-preview.png" width="10" height="10" /> 自訂策略
+                                        </a>
+                                    }
+
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/BackTesting/BackTesting001">
@@ -135,20 +144,20 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
-                    大盤走向
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
+                                            大盤走向
+                                        </a>
+                                    </li>*@
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
-                    會員註冊
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
-                    會員登入
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                                            會員註冊
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                                            會員登入
+                                        </a>
+                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
                                         討論區
@@ -169,7 +178,7 @@
                                 {
                                     @*@Html.Partial("_SearchBox");*@
                                     @Html.Action("SearchBox", "Home")
-                                    
+
                                 }
                                 catch (Exception)
                                 {
@@ -247,6 +256,6 @@
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
-    
+
 </body>
 </html>

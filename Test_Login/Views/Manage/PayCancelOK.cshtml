@@ -11,17 +11,17 @@
     <div class="ui grid centered doubling stackable">
         <div class="six wide column">
             <div class="ui segment">
-                <h1 class="ui header">用戶已訂閱</h1>
-                <h3>想要取消訂閱嗎?</h3>
-                <form class="ui form" method="post" action="/Manage/SubCancel">
-                    <p>點擊下方按鈕來取消訂閱</p>
-                    <button id="btnCancel" class="ui button" type="submit">取消訂閱</button>
-                </form>
-
+                <h1 class="ui header">取消訂閱成功 </h1>
+                <h3> 成功退訂本網站 </h3>
+                <a href="/Home/Index">等待3秒後跳轉頁面</a>
             </div>
         </div>
     </div>
 
-    
+    <script>
+        window.onload = function () {
+            setTimeout("location.href='/Home/Index';", 3000);
+        }
+    </script>
 </body>
 

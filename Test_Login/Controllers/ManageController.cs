@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -427,9 +428,12 @@ namespace Test_Login.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             user.UserTier = false;
             var result = await UserManager.UpdateAsync(user);
-            return Redirect("/Home/Index");
+            return Redirect("/Manage/PayCancelOK");
         }
-
+        public ActionResult PayCancelOK()
+        {
+            return View();
+        }
         #region Helper
         // 新增外部登入時用來當做 XSRF 保護
         private const string XsrfKey = "XsrfId";

@@ -265,6 +265,7 @@
     <Content Include="img\backgroundImage-3.png" />
     <Content Include="img\haveMoney.jpg" />
     <Content Include="img\investment-pattaya.jpg" />
+    <Content Include="img\lock-removebg-preview.png" />
     <Content Include="img\LOgo.png" />
     <Content Include="img\pngtree-red-gold-stock.jpg" />
     <Content Include="img\stock-vector-abstract.jpg" />
@@ -364,6 +365,7 @@
     <Content Include="Views\Shared\_LayoutRight.cshtml" />
     <Content Include="Views\stocks\rightBar.cshtml" />
     <Content Include="Views\Home\SearchBox.cshtml" />
+    <Content Include="Views\Manage\PayCancelOK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
