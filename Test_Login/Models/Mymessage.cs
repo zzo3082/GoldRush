@@ -19,8 +19,6 @@ namespace Test_Login.Models
         public string UserName { get; set; }
         public string main { get; set; }
         public Nullable<int> replyID { get; set; }
-        public string hashtagID { get; set; }
-        public byte[] photo { get; set; }
         public Nullable<int> heart { get; set; }
         public Nullable<int> dislike { get; set; }
         public string wholike { get; set; }

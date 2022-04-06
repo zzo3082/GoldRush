@@ -165,53 +165,39 @@
         if (Model != null)
         {
             <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>股票名稱</th>
-                        <th colspan="7" style="text-align:center">今日資訊</th>
-                        <th colspan="4" style="text-align:center">基本資料</th>
-                        <th colspan="4" style="text-align:center">每股盈餘</th>
-                        <th colspan="4" style="text-align:center">近一季獲利指標</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">股票代號</th>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="7" style="text-align:center">今日資訊</th>
+                            <th colspan="2" style="text-align:center">財務資訊</th>
+                        </tr>
 
-                        <th scope="col">日期</th>
-                        <th scope="col">收盤價</th>
-                        <th scope="col">漲跌</th>
-                        <th scope="col">漲跌%</th>
-                        <th scope="col">成交量</th>
-                        <th scope="col">本益比</th>
-                        <th scope="col">股價淨值比</th>
-
-                        <th scope="col">上市櫃</th>
-                        <th scope="col"> 股票代號</th>
-                        <th scope="col">產業</th>
-                        <th scope="col">股本(億)</th>
-
-                        <th scope="col">今年目前</th>
-                        <th scope="col">近一年</th>
-                        <th scope="col">近一季</th>
-                        <th scope="col">近四季</th>
-
-                        <th scope="col">毛利率(%)</th>
-                        <th scope="col">營業收益率(%)</th>
-                        <th scope="col">稅前純益率(&)</th>
-                        <th scope="col">稅後純益率(%)</th>
-
-
-                    </tr>
-                </thead>
+                        <tr>
+                            <th scope="col">股票代號名稱</th>
+                            <th scope="col">日期</th>
+                            <th scope="col">收盤價</th>
+                            <th scope="col">漲跌</th>
+                            <th scope="col">漲跌%</th>
+                            <th scope="col">成交量</th>
+                            <th scope="col">外資買賣超</th>
+                            <th scope="col">投信買賣超</th>
+                            <th scope="col">二月營收(仟元)</th>
+                            <th scope="col">二月營收成長率(YOY)</th>
+                        </tr>
+                    </thead>
                 <tbody>
                     @{
                         foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
                         {
                             // stockDate should use current datetime
                             var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
+                            
+                            {
+
+                            }
                             <tr>
                                 <td class="">
-                                    <input class="stockName btn btn-outline-info" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
-                                    <input class="stockName btn btn-outline-info" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                    <input class="stockName btn btn-outline-info" style="padding:0px 3px; " type="button" value="@item.stockID @item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                 </td>
                                 <td>@item.stockDate</td>
                                 <td>@item.endPrice</td>
@@ -222,7 +208,9 @@
                                 @{ int num = (int)item.numOfSharesTrade;
                                     string result = num.ToString("N0");}
                                 <td>@result</td>
-
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         }
                     }

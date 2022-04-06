@@ -25,9 +25,10 @@ namespace Test_Login.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<stockPrice> stockPrice { get; set; }
         public virtual DbSet<buy_and_sell_report> buy_and_sell_report { get; set; }
+        public virtual DbSet<Revenues> Revenues { get; set; }
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<Mymessage> Mymessage { get; set; }
+        public virtual DbSet<stockPrice> stockPrice { get; set; }
     }
 }
