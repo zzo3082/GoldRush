@@ -323,6 +323,8 @@
     function TableOnclick1(id) {
         $("#selectStock").val($("#" + id).html());
         $("#Table1").remove();
+        var stockid = $("#selectStock").val().substring(0, 4);
+        window.location = "/stocks/Chart/" + stockid;
     }
 
     //建立table表單
