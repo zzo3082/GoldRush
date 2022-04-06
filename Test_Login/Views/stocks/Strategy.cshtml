@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = ViewBag.id;
 }
-@{ 
+@{
     Layout = "~/Views/Shared/_LayoutRight.cshtml";
 }
 <style>
@@ -74,7 +74,7 @@
         @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
                 Easy 3 steps online booking
             </span>*@
-        <h1 class="nav justify-content-lg-center">常用策略</h1>
+        <h1 class="nav justify-content-lg-center animated infinite bounce ">常用策略</h1>
     </div>
 </section>
 <br />
@@ -99,57 +99,54 @@
                 </button>
                 @*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
 
-                    <button class="btn btn-outline-danger  strategyDiv" value="四海遊龍" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                        <h3><b>四海遊龍1</b></h3>
-                        <span class="buttonText">四海遊龍 skr skr</span>
+                
+
+                <button class="btn btn-outline-danger  strategyDiv" value="四海遊龍" name="str" data-toggle="smooth-scroll" data-target="#selectReasult" >
+                    <h3><b>四海遊龍</b></h3>
+                    <span class="buttonText">四海遊龍 skr skr</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv" value="外資連買" name="str">
+                    <h3><b>外資連買</b></h3>
+                    <span class="buttonText">外資連續五日買超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv" value="投信連買" name="str">
+                    <h3><b>投信連買</b></h3>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv" value="外資投信同買" name="str">
+                    <h3><b>外資投信同買</b></h3>
+                    <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
+                </button>
+
+
+                <div class="negativeStrategy">
+                    <div class="alert alert-primary">
+                        <h3>挖掘空方股票</h3>
+                    </div>
+
+                    <button class="btn btn-outline-primary  strategyDiv" value="弱勢股票" name="str">
+                        <h3><b>弱勢股票</b></h3>
+                        <span class="buttonText">止跌部漲 嫩</span>
                     </button>
 
-                    <button class="btn btn-outline-danger  strategyDiv" value="四海遊龍" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                        <h3><b>四海遊龍</b></h3>
-                        <span class="buttonText">四海遊龍 skr skr</span>
+                    <button class="btn btn-outline-primary  strategyDiv" value="外資連賣" name="str">
+                        <h3><b>外資連賣</b></h3>
+                        <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
                     </button>
 
-                    <button class="btn btn-outline-danger  strategyDiv" value="外資連買" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                        <h3><b>外資連買</b></h3>
-                        <span class="buttonText">外資連續五日買超五百張(含)以上</span>
-                    </button>
-
-                    <button class="btn btn-outline-danger  strategyDiv" value="投信連買" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                        <h3><b>投信連買</b></h3>
+                    <button class="btn btn-outline-primary  strategyDiv" value="投信連賣" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
+                        <h3><b>投信連賣</b></h3>
                         <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
                     </button>
 
-                    <button class="btn btn-outline-danger  strategyDiv" value="外資投信同買" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                        <h3><b>外資投信同買</b></h3>
-                        <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
+                    <button class="btn btn-outline-primary  strategyDiv" value="外資投信同賣" name="str">
+                        <h3><b>外資投信同賣</b></h3>
+                        <span class="buttonText">前一日外資投信同賣而且跌幅>2%</span>
                     </button>
-
-
-                    <div class="negativeStrategy">
-                        <div class="alert alert-primary">
-                            <h3>挖掘空方股票</h3>
-                        </div>
-
-                        <button class="btn btn-outline-primary  strategyDiv" value="弱勢股票" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                            <h3><b>弱勢股票</b></h3>
-                            <span class="buttonText">止跌部漲 嫩</span>
-                        </button>
-
-                        <button class="btn btn-outline-primary  strategyDiv" value="外資連賣" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                            <h3><b>外資連賣</b></h3>
-                            <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
-                        </button>
-
-                        <button class="btn btn-outline-primary  strategyDiv" value="投信連賣" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                            <h3><b>投信連賣</b></h3>
-                            <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
-                        </button>
-
-                        <button class="btn btn-outline-primary  strategyDiv" value="外資投信同賣" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                            <h3><b>外資投信同賣</b></h3>
-                            <span class="buttonText">前一日外資投信同賣而且跌幅>2%</span>
-                        </button>
-                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -158,55 +155,55 @@
 <br />
 <script src="/Scripts/jquery-3.4.1.js"></script>
 @*<script>
-    console.log($)
-    $('.btn').click(function () {
-        alert($(this).val())
-    })
-</script>*@
+        console.log($)
+        $('.btn').click(function () {
+            alert($(this).val())
+        })
+    </script>*@
 
 @{
     if (@ViewBag.resultCount > -1)
     {
         <nav>
             <nav class="navbar navbar-light bg-light justify-content-center">
-                    <h3 class="navbar-text" id="selectReasult">挖掘出了 @ViewBag.resultCount 筆資料</h3>
+                <h3 class="navbar-text" id="selectReasult">挖掘出了 @ViewBag.resultCount 筆資料</h3>
             </nav>
         </nav>
     }
 }
-
+<div id="selectReasult" ></div>
 <div id="stockInfo">
     @{
         if (Model != null)
         {
             <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th colspan="7" style="text-align:center" >今日資訊</th>
-                            <th colspan="2" style="text-align:center">財務資訊</th>
-                        </tr>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan="7" style="text-align:center">今日資訊</th>
+                        <th colspan="2" style="text-align:center">財務資訊</th>
+                    </tr>
 
-                        <tr>
-                            <th scope="col">股票代號名稱</th>
-                            <th scope="col">日期</th>
-                            <th scope="col">收盤價</th>
-                            <th scope="col">漲跌</th>
-                            <th scope="col">漲跌%</th>
-                            <th scope="col">成交量</th>
-                            <th scope="col">外資買賣超</th>
-                            <th scope="col">投信買賣超</th>
-                            <th scope="col">二月營收(仟元)</th>
-                            <th scope="col">二月營收成長率(YOY)</th>
-                        </tr>
-                    </thead>
+                    <tr>
+                        <th scope="col">股票代號名稱</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">收盤價</th>
+                        <th scope="col">漲跌</th>
+                        <th scope="col">漲跌%</th>
+                        <th scope="col">成交量</th>
+                        <th scope="col">外資買賣超</th>
+                        <th scope="col">投信買賣超</th>
+                        <th scope="col">二月營收(仟元)</th>
+                        <th scope="col">二月營收成長率(YOY)</th>
+                    </tr>
+                </thead>
                 <tbody>
                     @{
                         foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
                         {
                             // stockDate should use current datetime
                             var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
-                            
+
                             {
 
                             }
