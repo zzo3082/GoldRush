@@ -97,53 +97,59 @@ namespace GoldRush.Controllers
             #region 寄信用戶感興趣的個股
             string[] stockIDsplit = user.StockBag.Split(' ');
             string userInterest = "提供您感興趣的個股，在鉅亨網查詢如下：<br>";
+            int sendMail = 0;
             foreach (string x in stockIDsplit)
             {
                 if (x.Length != 0)
                 {
                     var temp = db.stockPrice.Where(y => y.stockID == x).Select(y => y.stockID + " " + y.stockName).ToList().First();
                     userInterest += $"{temp}：https://www.cnyes.com/search/news?keyword={x}<br>";
+                    sendMail = 1;
                 }
             }
-            MailMessage mail = new MailMessage();
-            //前面是發信email後面是顯示的名稱
-            mail.From = new MailAddress("msit38lin@gmail.com", "Gold Rush");
+            if(sendMail > 0)
+            {
+                MailMessage mail = new MailMessage();
+                //前面是發信email後面是顯示的名稱
+                mail.From = new MailAddress("msit38lin@gmail.com", "Gold Rush");
 
-            //收信者email
-            mail.To.Add(user.Email);
+                //收信者email
+                mail.To.Add(user.Email);
 
-            //設定優先權
-            mail.Priority = MailPriority.Normal;
+                //設定優先權
+                mail.Priority = MailPriority.Normal;
 
-            //標題
-            mail.Subject = "Gold Rush有一些你關心的個股資訊連結";
+                //標題
+                mail.Subject = "Gold Rush有一些你關心的個股資訊連結";
 
-            //內容
-            mail.Body = userInterest;
+                //內容
+                mail.Body = userInterest;
 
-            //內容使用html
-            mail.IsBodyHtml = true;
+                //內容使用html
+                mail.IsBodyHtml = true;
 
-            //設定gmail的smtp (這是google的)
-            SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+                //設定gmail的smtp (這是google的)
+                SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
 
-            //您在gmail的帳號密碼
-            MySmtp.Credentials = new System.Net.NetworkCredential("msit38lin@gmail.com", "msit3820220308");
+                //您在gmail的帳號密碼
+                MySmtp.Credentials = new System.Net.NetworkCredential("msit38lin@gmail.com", "msit3820220308");
 
-            //開啟ssl
-            MySmtp.EnableSsl = true;
+                //開啟ssl
+                MySmtp.EnableSsl = true;
 
-            //發送郵件
-            MySmtp.Send(mail);
+                //發送郵件
+                MySmtp.Send(mail);
 
-            //放掉宣告出來的MySmtp
-            MySmtp = null;
+                //放掉宣告出來的MySmtp
+                MySmtp = null;
 
-            //放掉宣告出來的mail
-            mail.Dispose();
-            //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            //await UserManager.SendEmailAsync(user.Id, "2345", "寄信測試2");
+                //放掉宣告出來的mail
+                mail.Dispose();
+                //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //await UserManager.SendEmailAsync(user.Id, "2345", "寄信測試2");
+            }
+
             #endregion
 
 
