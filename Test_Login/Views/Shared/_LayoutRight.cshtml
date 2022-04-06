@@ -121,7 +121,8 @@
                             @{
                                 try
                                 {
-                                    <form>
+                                    @Html.Action("SearchBox", "Home")
+                                    @*<form>
                                         <section class="search" id="search1">
                                             <div class="row">
                                                 <input type="text" onkeyup="tipBox(this)" class="form-control-sm mb-3 " autocomplete="off" aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />
@@ -130,7 +131,7 @@
                                                 </button>
                                             </div>
                                         </section>
-                                    </form>
+                                    </form>*@
                                 }
                                 catch (Exception)
                                 {
@@ -217,100 +218,6 @@
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
-    <script>
-        $("#GoToChart").click(function (e) {
-            e.preventDefault();
-            var stockid = $("#selectStock").val().substring(0, 4);
-            window.location = "/stocks/Chart/" + stockid;
-
-        });
-
-          // 將資料庫的股票代號資料轉到JS內
-        var jScriptArray = [];
-       @*var result = @Html.Action("stockList", "Home");*@
-        var array = @Html.Raw(Json.Encode(@ViewBag.stockID));
-        for(var i = 0; i < array.length; i++) {
-            jScriptArray[i] = array[i];
-    }
-    // 當input text keypu時執行比對 加入提示table
-    function tipBox(txt) {
-        QueryKeyword($(txt).val(), jScriptArray);
-        console.log("ok");
-    }
-
-    //檢索數組裡是否有對應關鍵詞
-    function QueryKeyword(SearchName, ArrayList) {
-        //初始化陣列
-        var Keyword = [];
-        console.log(array);
-        //遍歷陣列內容
-        if (parseInt(SearchName).toString() == "NaN") {
-            //alert("not a number");
-            for (var i = 0; i < ArrayList.length; i++) {
-                //查詢判斷陣列內是否包含關鍵詞
-                if (SearchName.length != 0) {
-                    //中文有包含就輸出
-                    if ((ArrayList[i]).includes(SearchName)) {
-                        //新增資料
-                        Keyword.push(ArrayList[i]);
-                        console.log(i);
-                    }
-                }
-            }
-        } else {
-            //alert("數字");
-            for (var i = 0; i < ArrayList.length; i++) {
-                //查詢判斷陣列內是否包含關鍵詞
-                if (SearchName.length != 0) {
-                    //搜尋框輸入資料全等於陣列內字串引數
-                    // 數字從頭開始比對
-                    if (SearchName === ArrayList[i].substr(0, SearchName.length)) {
-                        //新增資料
-                        Keyword.push(ArrayList[i]);
-                        console.log(i);
-                    }
-                }
-            }
-        }
-
-        if (Keyword.length != 0) {
-            //建立table表單
-            CreateTable(Keyword);
-        } else {
-            //刪除table表單
-            RemoveTable();
-        }
-    }
-
-    //監控table表單點選事件,修改input內容
-    function TableOnclick1(id) {
-        $("#selectStock").val($("#" + id).html());
-        $("#Table1").remove();
-    }
-
-    //建立table表單
-    function CreateTable(Keyword) {
-        var TableContent = "";
-        for (var i = 0; i < Keyword.length; i++) {
-            TableContent += "" +
-                "<tr>" +
-                "<td id='" + i + "' onclick='TableOnclick1(this.id)'>" + Keyword[i] + "</td>" +
-                "</tr>";
-        }
-        //table表單不存在時進行建立
-        if (!document.getElementById("#Table1")) {
-            var Table = document.createElement('table');
-            Table.id = "Table1";
-            Table.classList.add("Table1");
-            $("#search1").append(Table);
-        }
-        $("#Table1").html(TableContent);
-    }
-
-    //刪除table表單
-    function RemoveTable() {
-        $("#Table1").remove();
-    }
-    </script>
+    
 </body>
 </html>

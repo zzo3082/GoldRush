@@ -16,8 +16,6 @@ namespace Test_Login.Controllers
 
         public ActionResult Index()
         {
-            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
-            ViewBag.stockID = q;
             return View();
         }
 
@@ -33,6 +31,12 @@ namespace Test_Login.Controllers
             return View();
         }
 
+        public PartialViewResult SearchBox()
+        {
+            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
+            ViewBag.stockID = q;
+            return PartialView("SearchBox", q);
+        }
         #region 討論區
 
 
