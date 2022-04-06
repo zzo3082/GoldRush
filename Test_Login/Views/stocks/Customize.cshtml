@@ -8,17 +8,17 @@
         text-align: left;
     }
 
-    .stockCustomize input[type=text] {
-        width: 40px;
-        height: 23px;
-    }
+        .stockCustomize input[type=text] {
+            width: 40px;
+            height: 23px;
+        }
 
     #stockInfo {
         text-align: center;
     }
 
-    .stockName{
-        width:100px;
+    .stockName {
+        width: 100px;
     }
 
     .search {
@@ -28,7 +28,16 @@
 </style>
 
 
-<h2 class="nav justify-content-lg-center">自訂策略</h2>
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.jpg" alt="background image" />
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+            Easy 3 steps online booking
+        </span>*@
+        <h1 class="nav justify-content-lg-center">自訂策略</h1>
+    </div>
+</section>
 
 <div class="container">
     <div id="basic">
@@ -548,12 +557,12 @@
             url: "/stocks/StockResult",
             data: data
         })
-        .done(function (r) {
-            $("#stockDiv").html(r);
-            $("#kdjModal").modal("hide");
-            $(".spinner-border").css("display", "none");
-            $("#btnKDJ").css("display", "block");
-        })
+            .done(function (r) {
+                $("#stockDiv").html(r);
+                $("#kdjModal").modal("hide");
+                $(".spinner-border").css("display", "none");
+                $("#btnKDJ").css("display", "block");
+            })
     }
 
     function kdj2() {

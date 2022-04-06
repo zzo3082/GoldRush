@@ -42,11 +42,27 @@
         table td {
             text-align: left
         }
+
     .search {
         position: relative;
         display: inline-block;
     }
 </style>
+
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.jpg" alt="background image" />
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+                Easy 3 steps online booking
+            </span>*@
+        <h1 class="nav justify-content-lg-center">自訂回測系統</h1>
+    </div>
+</section>
+
+<br />
+<br />
+
 <div class="container  text-center" style="width:600px">
     <div class=""></div>
     <div class="radio-buttons-group mb-7" onchange="displayControl()">
@@ -55,7 +71,7 @@
     </div>
 
     @* 定期定額 *@
-    <div class="tab-content" id="nav-tabContent" style="background-color:antiquewhite;">
+    <div class="tab-content" id="nav-tabContent" style="background-color:antiquewhite; padding-top:15px;">
         <div id="nav-backTest001" role="tabpanel" class="text-center ">
             <h2>定期定額</h2>
             <table class="">
@@ -221,5 +237,5 @@
             $('#stockLink').attr('href', `/stocks/Chart/${$('#stockID1').val()}`)
         })
     })
-    function stock() {}
+    function stock() { }
 </script>
