@@ -363,6 +363,7 @@
     <Content Include="Views\Manage\PayCancel.cshtml" />
     <Content Include="Views\Shared\_LayoutRight.cshtml" />
     <Content Include="Views\stocks\rightBar.cshtml" />
+    <Content Include="Views\Home\SearchBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

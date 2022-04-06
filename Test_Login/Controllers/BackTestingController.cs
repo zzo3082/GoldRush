@@ -15,9 +15,6 @@ namespace Test_Login.Controllers
         // GET: BackTesting
         public ActionResult BackTesting001()
         {
-
-            var q = db.stockPrice.Select(x => x.stockID + x.stockName).Distinct().OrderBy(x => x).ToList();
-            ViewBag.stockID = q;
             return View();
         }
         string[] years = { "2021", "2022" };

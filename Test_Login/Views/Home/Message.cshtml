@@ -1383,6 +1383,18 @@
     function TableOnclick(id) {
         $("#hashtagStock").val($("#" + id).html());
         $("#Table").remove();
+        var stockid = $("#hashtagStock").val();
+        if (stockid == "") {
+            //alert("請輸入股票代號")
+            $("#thinking").text("請輸入股票代號!!!!!!");
+            $("#thinking").addClass("btn btn-outline-danger");
+        } else {
+            $("#UserIdbox").after(`<input type="text" name = "hashtagBox" id = "hashtagBoxid" value = "${stockid}" hidden >`);
+            //$("#hashtagBoxid").val(stockid);
+            // alert(stockid);
+            $("#hashtagBox").html(`<button type="button" class="btn btn-outline-dark" onclick="cancelHashtag()" width="40px" id="hashtaged" data-hashtag="${stockid}" value="${stockid}">${stockid}  <img alt="" width="16" height="16" class="img img-base img-res" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjgiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTUuMjk4NjYgMTEuMzI5OUM1LjEzNTIxIDExLjMzOTUgNC45NzQ0NiAxMS4yODQ1IDQuODUwMzIgMTEuMTc2NkM0LjYwNTQ4IDEwLjkyNzQgNC42MDU0OCAxMC41MjUgNC44NTAzMiAxMC4yNzU4TDEwLjIxMTUgNC44NTIyMkMxMC40NjYyIDQuNjExMTYgMTAuODY1OCA0LjYyNDU2IDExLjEwNCA0Ljg4MjE4QzExLjMxOTUgNS4xMTUxNCAxMS4zMzIxIDUuNDczMjEgMTEuMTMzNSA1LjcyMTAyTDUuNzQwNjcgMTEuMTc2NkM1LjYxODEzIDExLjI4MyA1LjQ1OTk2IDExLjMzNzggNS4yOTg2NiAxMS4zMjk5WiIgZmlsbD0iI0YwRjBGMCIvPgo8cGF0aCBkPSJNMTAuNjUzNSAxMS4zMjk5QzEwLjQ4NzkgMTEuMzI5MiAxMC4zMjkxIDExLjI2MjYgMTAuMjExNSAxMS4xNDQ2TDQuODUwMjcgNS43MjEwMUM0LjYyMzQzIDUuNDUzMDQgNC42NTQyNyA1LjA0OTc2IDQuOTE5MTYgNC44MjAyN0M1LjE1NTU4IDQuNjE1NDUgNS41MDQyNSA0LjYxNTQ1IDUuNzQwNjQgNC44MjAyN0wxMS4xMzM0IDEwLjI0MzlDMTEuMzg4IDEwLjQ4NSAxMS40MDEyIDEwLjg4OTMgMTEuMTYyOCAxMS4xNDY4QzExLjE1MzMgMTEuMTU3MSAxMS4xNDM1IDExLjE2NyAxMS4xMzM0IDExLjE3NjZDMTEuMDAxNCAxMS4yOTI3IDEwLjgyNzYgMTEuMzQ4MiAxMC42NTM1IDExLjMyOTlaIiBmaWxsPSIjRjBGMEYwIi8+Cjwvc3ZnPgo=" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjgiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTUuMjk4NjYgMTEuMzI5OUM1LjEzNTIxIDExLjMzOTUgNC45NzQ0NiAxMS4yODQ1IDQuODUwMzIgMTEuMTc2NkM0LjYwNTQ4IDEwLjkyNzQgNC42MDU0OCAxMC41MjUgNC44NTAzMiAxMC4yNzU4TDEwLjIxMTUgNC44NTIyMkMxMC40NjYyIDQuNjExMTYgMTAuODY1OCA0LjYyNDU2IDExLjEwNCA0Ljg4MjE4QzExLjMxOTUgNS4xMTUxNCAxMS4zMzIxIDUuNDczMjEgMTEuMTMzNSA1LjcyMTAyTDUuNzQwNjcgMTEuMTc2NkM1LjYxODEzIDExLjI4MyA1LjQ1OTk2IDExLjMzNzggNS4yOTg2NiAxMS4zMjk5WiIgZmlsbD0iI0YwRjBGMCIvPgo8cGF0aCBkPSJNMTAuNjUzNSAxMS4zMjk5QzEwLjQ4NzkgMTEuMzI5MiAxMC4zMjkxIDExLjI2MjYgMTAuMjExNSAxMS4xNDQ2TDQuODUwMjcgNS43MjEwMUM0LjYyMzQzIDUuNDUzMDQgNC42NTQyNyA1LjA0OTc2IDQuOTE5MTYgNC44MjAyN0M1LjE1NTU4IDQuNjE1NDUgNS41MDQyNSA0LjYxNTQ1IDUuNzQwNjQgNC44MjAyN0wxMS4xMzM0IDEwLjI0MzlDMTEuMzg4IDEwLjQ4NSAxMS40MDEyIDEwLjg4OTMgMTEuMTYyOCAxMS4xNDY4QzExLjE1MzMgMTEuMTU3MSAxMS4xNDM1IDExLjE2NyAxMS4xMzM0IDExLjE3NjZDMTEuMDAxNCAxMS4yOTI3IDEwLjgyNzYgMTEuMzQ4MiAxMC42NTM1IDExLjMyOTlaIiBmaWxsPSIjRjBGMEYwIi8+Cjwvc3ZnPgo=" lazy="loaded"></button>`);
+            //console.log($("#hashtagBoxid").val());
+        }
     }
 
     //建立table表單
