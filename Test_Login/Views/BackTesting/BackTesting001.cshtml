@@ -69,7 +69,7 @@
 <div class="container  text-center" style="width:600px">
     <div class=""></div>
     <div class="radio-buttons-group mb-7" onchange="displayControl()">
-        <button class="btn btn-light" id="btn1" data-value="all">定期定額</button>
+        <button class="btn btn-light selected" id="btn1" data-value="all">定期定額</button>
         <button class="btn btn-light" id="btn2" data-value="breakfast">定期定股</button>
     </div>
 
@@ -91,7 +91,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>固定投入多少錢</td>
+                    @*<td>固定投入多少錢</td>*@
+                    <td>固定金額</td>
                     <td>
                         <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" class="form-control form-control-sm" />
                     </td>
@@ -118,7 +119,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>固定買幾股</td>
+                    @*<td>固定買幾股</td>*@
+                    <td>固定股數</td>
                     <td>
                         <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" class="form-control form-control-sm" />
                     </td>
