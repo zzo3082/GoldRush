@@ -637,10 +637,18 @@ namespace GoldRush.Controllers
 
         public PartialViewResult rightBar()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            var stockBag = user.StockBag;
-            var target = db.stockPrice.Where(x => stockBag.Contains(x.stockID) && x.stockDate == "20220308").ToList();
-            return PartialView("rightBar", target);
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                var stockBag = user.StockBag;
+                var target = db.stockPrice.Where(x => stockBag.Contains(x.stockID) && x.stockDate == "20220308").ToList();
+                return PartialView("rightBar", target);
+            }
+            else
+            {
+                return PartialView();
+            }
+            
         }
     }
 }

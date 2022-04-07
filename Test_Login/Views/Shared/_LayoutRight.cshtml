@@ -41,6 +41,15 @@
                 padding-left: 15px;
             }
         /*條件搜尋*/
+        .rightbar {
+            position: fixed;
+            top: 100px;
+            right: 40px;
+            box-shadow: 1px 1px 9px 1px #A6A6A6;
+            -webkit-box-shadow: 1px 1px 9px 1px #A6A6A6;
+            -moz-box-shadow: 1px 1px 9px 1px #A6A6A6;
+            -o-box-shadow: 1px 1px 9px 1px #A6A6A6;
+        }
     </style>
 
 </head>
@@ -131,15 +140,15 @@
                                 {
                                     @Html.Action("SearchBox", "Home")
                                     @*<form>
-                                        <section class="search" id="search1">
-                                            <div class="row">
-                                                <input type="text" onkeyup="tipBox(this)" class="form-control-sm mb-3 " autocomplete="off" aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />
-                                                <button id="GoToChart" style="border:0px; background-color:white;">
-                                                    <i class="material-icons" aria-hidden="true">search </i>
-                                                </button>
-                                            </div>
-                                        </section>
-                                    </form>*@
+                                            <section class="search" id="search1">
+                                                <div class="row">
+                                                    <input type="text" onkeyup="tipBox(this)" class="form-control-sm mb-3 " autocomplete="off" aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                                                    <button id="GoToChart" style="border:0px; background-color:white;">
+                                                        <i class="material-icons" aria-hidden="true">search </i>
+                                                    </button>
+                                                </div>
+                                            </section>
+                                        </form>*@
                                 }
                                 catch (Exception)
                                 {
@@ -156,15 +165,15 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-8">
+            <div>
                 @RenderBody()
-            </div>
-            <div class="col-4">
-                @Html.Action("rightBar", "stocks")
             </div>
         </div>
     </div>
-    
+    <div class="rightbar">
+        @Html.Action("rightBar", "stocks")
+    </div>
+
 
     @*footer*@
     <df-messenger intent="WELCOME"
@@ -226,6 +235,6 @@
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
-    
+
 </body>
 </html>

@@ -367,7 +367,7 @@ namespace Test_Login.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName, StockBag=""};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
