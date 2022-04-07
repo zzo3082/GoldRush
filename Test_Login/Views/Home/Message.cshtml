@@ -5,7 +5,9 @@
     List<message>
     messageList = ViewBag.messageList;
 }
-
+@{
+    Layout = "~/Views/Shared/_LayoutRight.cshtml";
+}
 <style>
     body {
         background-color: #f7f7f7;
@@ -98,7 +100,7 @@
 
     .myTag {
         height: 30px;
-/*        width: 88px;*/
+        /*        width: 88px;*/
         text-align: justify-all;
         line-height: 0px;
     }
@@ -148,8 +150,9 @@
     .dropdown {
         position: relative;
         display: inline-block;
-        border-radius:10px;
+        border-radius: 10px;
     }
+
     .img-res:hover {
         cursor: pointer;
         transform: scale(1.15);
@@ -188,26 +191,27 @@
         top: -10px;
     }
     /*條件搜尋*/
-/*    #hashtagStock{
+    /*    #hashtagStock{
         width:50px;
     }*/
-.dddd{
-    display:inline-block;
-}
+    .dddd {
+        display: inline-block;
+    }
+
     .search {
         position: relative;
         display: inline-block;
     }
 
-    table {
+    #Table {
         position: absolute;
-        background-color:white;
+        background-color: white;
         left: 0;
         width: 215px;
         border: solid 1px #e0e0e0;
     }
 
-        table td {
+        #Table td {
             height: 0.6rem;
             padding-left: 15px;
         }
@@ -226,14 +230,15 @@
         <h1 class="nav justify-content-lg-center animated fadeInUp ">討論區</h1>
     </div>
 </section>
-<br /><br />
+<br />
+<br />
 
 
 <div class="container center">
     @if (Request.IsAuthenticated)
     {
         // 有登入 @User.Identity.GetUserName() @User.Identity.GetNickName() @User.Identity.GetStockBag()
-        <h2 >討論區 <input type="text" id="filter" placeholder="輸入代號或名稱 篩選文章" onkeyup="filter()"/><span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
+    <h2>篩選文章 <input type="text" id="filter" placeholder="輸入代號或名稱 篩選文章" onkeyup="filter()" /><span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
         <button id="btnName" data-UserName="@User.Identity.GetNickName()" hidden></button>
         <button id="btnID" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
@@ -1383,7 +1388,7 @@
                 }
             }
         }
-        
+
         if (Keyword.length != 0) {
             //建立table表單
             CreateTable1(Keyword);
@@ -1424,7 +1429,7 @@
         if (!document.getElementById("#Table")) {
             var Table1 = document.createElement('table');
             Table1.id = "Table";
-            Table1.classList.add("Table");
+            /*Table1.classList.add("Table");*/
             $("#search2").append(Table1);
         }
         $("#Table").html(TableContent);

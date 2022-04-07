@@ -642,6 +642,7 @@ namespace GoldRush.Controllers
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 var stockBag = user.StockBag;
                 var target = db.stockPrice.Where(x => stockBag.Contains(x.stockID) && x.stockDate == "20220308").ToList();
+                ViewBag.hot = db.stockPrice.Where(x => x.stockDate == "20220308").OrderByDescending(x => x.numOfSharesTrade).Take(5).ToList();
                 return PartialView("rightBar", target);
             }
             else
