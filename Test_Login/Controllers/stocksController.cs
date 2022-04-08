@@ -647,6 +647,7 @@ namespace GoldRush.Controllers
             }
             else
             {
+                ViewBag.hot = db.stockPrice.Where(x => x.stockDate == "20220308").OrderByDescending(x => x.numOfSharesTrade).Take(5).ToList();
                 return PartialView();
             }
             
