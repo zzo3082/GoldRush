@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Test_Login.Models.stockPrice>
-
+@using Test_Login.Models
+@using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
 @*@{
         ViewBag.Title = ViewBag.id;
     }*@
@@ -102,9 +104,9 @@
         <form method="post" class="justify-content-center" style="justify-content:center">
 
 
-            <div class="btn-group" >
+            <div class="btn-group">
                 <!-- please note that data-target and data-toggle attributes are required -->
-                <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid" >
+                <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid">
                     <button class="btn btn-light selected" data-value="all" style="font-size:20px;">All</button>
                     <button class="btn btn-light" data-value="buy" style="font-size:20px;">多方策略</button>
                     <button class="btn btn-light" data-value="sell" style="font-size:20px;">空方策略</button>
@@ -162,11 +164,21 @@
                                   <h3><b>投信連賣</b></h3>
                                   <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
                               </button>
+                              @if (User.Identity.GetUserTier().ToLower() == "true")
+                              {
+                                  <a href="https://localhost:44327/stocks/Customize" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                                      <h3><b>想要挖掘更多股票嗎?</b></h3>
+                                      <span class="buttonText">點擊了解更多</span>
+                                  </a>
+                              }
+                              else
+                              {
+                                  <a href="https://localhost:44327/Manage/Pay" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                                      <h3><b>想要挖掘更多股票嗎?</b></h3>
+                                      <span class="buttonText">點擊了解更多</span>
+                                  </a>
+                              }
 
-                              <a  href="https://localhost:44327/Manage/Pay"   class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell"style="padding-top:30px;">
-                                  <h3><b>想要挖掘更多股票嗎?</b></h3>
-                                  <span class="buttonText">點擊了解更多</span>
-                              </a>
 
 
 
@@ -188,8 +200,8 @@
 
 
             @*<div class=" alert alert-danger alert-dismissible fade show text-center">
-            <h3 class="text-center">挖掘多方股票</h3>
-        </div>*@
+                    <h3 class="text-center">挖掘多方股票</h3>
+                </div>*@
 
             <div class="positiveStrategy">
 
