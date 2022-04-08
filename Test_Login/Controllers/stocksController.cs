@@ -502,10 +502,6 @@ namespace GoldRush.Controllers
                 {
                     stockList.Add(s.Substring(1));
                 }
-                else if (s.Length == 4)
-                {
-                    stockList.Add(s.Substring(0));
-                }
             }
             // 對每個代號迴圈
             foreach (string s in stockList)
@@ -534,37 +530,18 @@ namespace GoldRush.Controllers
                 {
                     cmd.CommandText = $"select FebTwo, FebTwoYOY ,stockId from Revenues where stockId = {s} order by stockid";
                     cn.Open();
-                    //int check = cmd.ExecuteNonQuery();cn.Close();
-                    var asdaojsid = 3254;
 
                     SqlDataReader res = cmd.ExecuteReader();
                     if (res.Read())
                     {
-                    revenueFebTwo += Convert.ToInt32(res[0]).ToString("N0") + " ";
-                    revenueFebYoY += res[1].ToString() + " ";
+                        revenueFebTwo += Convert.ToInt32(res[0]).ToString("N0") + " ";
+                        revenueFebYoY += res[1].ToString() + " ";
                     }
                     else
                     {
                         revenueFebTwo += "不適用 ";
                         revenueFebYoY += "不適用 ";
                     }
-                    //while (res.Read())
-                    //{
-                    //    revenueFebTwo += res[0].ToString() + " ";
-                    //    revenueFebYoY += res[1].ToString() + " ";
-                    //}
-                    //if (check > 0)
-                    //{
-                    //    cn.Open();
-                    //    SqlDataReader res = cmd.ExecuteReader();
-                    //    revenueFebTwo += res[0].ToString() + " ";
-                    //    revenueFebYoY += res[1].ToString() + " ";
-                    //}
-                    //else
-                    //{
-                        
-                    //}
-
                     cn.Close();
                 }
             }
@@ -680,7 +657,7 @@ namespace GoldRush.Controllers
             if (kdj1 == "true")
             {
                 // Thread.Sleep(5000);
-                resultKDJ1 = "2330";
+                resultKDJ1 = ", 2330, 2409";
                 stockCustomize += resultKDJ1 + " ";
             }
             else if (storedKDJ1 != "")
@@ -692,7 +669,7 @@ namespace GoldRush.Controllers
             string resultKDJ2 = storedKDJ2;
             if (kdj2 == "true")
             {
-                resultKDJ2 = "0050";
+                resultKDJ2 = ", 0050, 0051, 0052";
                 stockCustomize += resultKDJ2 + " ";
             }
             else if (storedKDJ2 != "")
@@ -708,6 +685,102 @@ namespace GoldRush.Controllers
             };
             ViewBag.result = result;
 
+            SqlConnection cn = new SqlConnection(@"Data Source=.;Initial Catalog=Lab;Integrated Security=True");
+            // string id = "Strategy";
+            // string stringID = "";
+            string stockArray = stockCustomize;
+            // int selectResultcount = 0;
+
+            #region 外資投信買賣超/二月營收/YOY加入查詢結果表格內
+            List<string> stockList = new List<string>();
+            string globalCompany = "";
+            string investmentTrust = "";
+            string revenueFebTwo = "";
+            string revenueFebYoY = "";
+            // 抓出每個股票代號
+            char[] a = { ',', ' ' };
+            string[] aaa = stockArray.Split(a);
+            foreach (string s in stockArray.Split(','))
+            {
+                if (s.Length > 4)
+                {
+                    stockList.Add(s.Substring(1));
+                }
+                else if(s.Length == 4)
+                {
+                    stockList.Add(s);
+                }
+            }
+            // 對每個代號迴圈
+            foreach (string s in stockList)
+            {
+                using (SqlCommand cmd = new SqlCommand("", cn))
+                {
+                    cmd.CommandText = "select top(1) globalCompany" +
+                        ", investmentTrust" +
+                        ", stock_date " +
+                        "from buy_and_sell_report " +
+                        $"where StockCode = {s}  " +
+                        "order by stock_date desc";
+                    cn.Open();
+                    SqlDataReader res = cmd.ExecuteReader();
+                    while (res.Read())
+                    {
+                        globalCompany += Convert.ToInt32(res[0]).ToString("N0") + " ";
+                        investmentTrust += Convert.ToInt32(res[1]).ToString("N0") + " ";
+                    }
+                    cn.Close();
+                }
+            }
+            foreach (string s in stockList)
+            {
+                using (SqlCommand cmd = new SqlCommand("", cn))
+                {
+                    cmd.CommandText = $"select FebTwo, FebTwoYOY ,stockId from Revenues where stockId = {s} order by stockid";
+                    cn.Open();
+
+                    SqlDataReader res = cmd.ExecuteReader();
+                    if (res.Read())
+                    {
+                        revenueFebTwo += Convert.ToInt32(res[0]).ToString("N0") + " ";
+                        revenueFebYoY += res[1].ToString() + " ";
+                    }
+                    else
+                    {
+                        revenueFebTwo += "不適用 ";
+                        revenueFebYoY += "不適用 ";
+                    }
+                    cn.Close();
+                }
+            }
+            string[] globalCompanyList = globalCompany.Split(' ');
+            while (Array.IndexOf(globalCompanyList, "") != -1)
+            {
+                globalCompanyList = globalCompanyList.Where((x, index) => index != Array.IndexOf(globalCompanyList, "")).ToArray();
+            }
+            ViewBag.globalCompany = globalCompanyList;
+
+            string[] investmentTrustList = investmentTrust.Split(' ');
+            while (Array.IndexOf(investmentTrustList, "") != -1)
+            {
+                investmentTrustList = investmentTrustList.Where((x, index) => index != Array.IndexOf(investmentTrustList, "")).ToArray();
+            }
+            ViewBag.investmentTrust = investmentTrustList;
+
+            string[] revenueFebTwoList = revenueFebTwo.Split(' ');
+            while (Array.IndexOf(revenueFebTwoList, "") != -1)
+            {
+                revenueFebTwoList = revenueFebTwoList.Where((x, index) => index != Array.IndexOf(revenueFebTwoList, "")).ToArray();
+            }
+            ViewBag.revenueFeb = revenueFebTwoList;
+
+            string[] revenueFebYoYList = revenueFebYoY.Split(' ');
+            while (Array.IndexOf(revenueFebYoYList, "") != -1)
+            {
+                revenueFebYoYList = revenueFebYoYList.Where((x, index) => index != Array.IndexOf(revenueFebYoYList, "")).ToArray();
+            }
+            ViewBag.revenueFebYoY = revenueFebYoYList;
+            #endregion
             // string.split by " " then get the intersection
             return PartialView(db.stockPrice.Where(x => stockCustomize.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
         }

@@ -10,11 +10,10 @@
     .stockCustomize {
         text-align: left;
     }
-
-        .stockCustomize input[type=text] {
-            width: 40px;
-            height: 23px;
-        }
+    .stockCustomize input[type=text] {
+        width: 40px;
+        height: 23px;
+    }
 
     #stockInfo {
         text-align: center;
@@ -561,13 +560,15 @@
             type: "post",
             url: "/stocks/StockResult",
             data: data
+        }).done(function (r) {
+            $("#stockDiv").html(r);
+            console.log("123");
+            $(".spinner-border").css("display", "none");
+            $("#btnKDJ").css("display", "block");
+            $("#kdjModal").modal("hide");
+            //$('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         })
-            .done(function (r) {
-                $("#stockDiv").html(r);
-                $("#kdjModal").modal("hide");
-                $(".spinner-border").css("display", "none");
-                $("#btnKDJ").css("display", "block");
-            })
     }
 
     function kdj2() {

@@ -226,17 +226,17 @@
         @{
             if (Model != null)
             {
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
                             <th></th>
-                            <th colspan="7" style="text-align:center">昨日資訊</th>
+                            <th colspan="6" style="text-align:center">昨日資訊</th>
                             <th colspan="2" style="text-align:center">財務資訊</th>
                         </tr>
 
                         <tr>
                             <th scope="col">股票</th>
-                            <th scope="col">日期</th>
+                            @*<th scope="col">日期</th>*@
                             <th scope="col">收盤價</th>
                             <th scope="col">漲跌</th>
                             <th scope="col">漲跌%</th>
@@ -260,8 +260,9 @@
                             {
                                 // stockDate should use current datetime
                                 var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
-                                decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);
-                                decimal upDownPercent = decimal.Round((upDown / decimal.Parse(item.endPrice)), 2);
+                                var item2 = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[1];
+                                decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item2.endPrice);
+                                decimal upDownPercent = decimal.Round(decimal.Round((upDown / decimal.Parse(item2.endPrice)), 4) * 100, 2);
                                 int num = (int)item.numOfSharesTrade;
                                 string result = num.ToString("N0");
                                 //string globalCompanyTostringN0 = Convert.ToInt32(globalCompany[count]).ToString("N0");
@@ -271,7 +272,7 @@
                                     <td class="">
                                         <input class="stockName btn btn-outline-info" style="padding:0px 3px; " type="button" value="@item.stockID @item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
                                     </td>
-                                    <td>@item.stockDate</td>
+                                    @*<td>@item.stockDate</td>*@
                                     <td>@item.endPrice</td>
                                     <td>@upDown</td>
                                     <td>@upDownPercent </td>
