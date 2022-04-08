@@ -498,9 +498,13 @@ namespace GoldRush.Controllers
             string[] aaa = stockArray.Split(a);
             foreach (string s in stockArray.Split(','))
             {
-                if (s.Length > 0)
+                if (s.Length > 0 && s.Length > 4)
                 {
                     stockList.Add(s.Substring(1));
+                }
+                else if (s.Length == 4)
+                {
+                    stockList.Add(s.Substring(0));
                 }
             }
             // 對每個代號迴圈
