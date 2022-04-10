@@ -238,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\custom.css" />
+    <Content Include="Content\animateCss.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\vendor.css" />
     <Content Include="favicon.ico" />
