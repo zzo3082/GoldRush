@@ -88,9 +88,6 @@
     </nav>
 
 </div>
-
-<br />
-<br />
 @*<p>
         @ViewBag.stringID
     </p>*@
@@ -100,121 +97,7 @@
 
 
 <div class="container animated fadeInUp delay-1s ">
-    <div class=" justify-content-center text-center mx-auto ">
-        <form method="post" class="justify-content-center" style="justify-content:center">
 
-
-            <div class="btn-group">
-                <!-- please note that data-target and data-toggle attributes are required -->
-                <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid">
-                    <button class="btn btn-light selected" data-value="all" style="font-size:20px;">All</button>
-                    <button class="btn btn-light" data-value="buy" style="font-size:20px;">多方策略</button>
-                    <button class="btn btn-light" data-value="sell" style="font-size:20px;">空方策略</button>
-                </div>
-            </div>
-            <br /> <br /> <br />
-                          <div class="shuffle-grid- shuffle-grid-gapshuffle-grid shuffle-grid shuffle-grid justify-content-center" id="projects-grid">
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                                  <h3><b>成交爆大量</b></h3>
-                                  <span class="buttonText">成交量大於5日均量</span>
-                              </button>
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                                  <h3><b>成交爆大量</b></h3>
-                                  <span class="buttonText">成交量大於5日均量</span>
-                              </button>
-                              @*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
-
-
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="四海遊龍" name="str" @*data-toggle="smooth-scroll" data-target="#selectReasult"*@>
-                                  <h3><b>四海遊龍</b></h3>
-                                  <span class="buttonText">四海遊龍 </span>
-                              </button>
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資連買" name="str">
-                                  <h3><b>外資連買</b></h3>
-                                  <span class="buttonText">外資連續五日買超五百張(含)以上</span>
-                              </button>
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="投信連買" name="str">
-                                  <h3><b>投信連買</b></h3>
-                                  <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
-                              </button>
-
-                              <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資投信同買" name="str">
-                                  <h3><b>外資投信同買</b></h3>
-                                  <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
-                              </button>
-
-
-
-                              <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="弱勢股票" name="str">
-                                  <h3><b>弱勢股票</b></h3>
-                                  <span class="buttonText">止跌部漲 </span>
-                              </button>
-
-                              <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="外資連賣" name="str">
-                                  <h3><b>外資連賣</b></h3>
-                                  <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
-                              </button>
-
-                              <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="投信連賣" name="str">
-                                  <h3><b>投信連賣</b></h3>
-                                  <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
-                              </button>
-                              @if (User.Identity.GetUserTier().ToLower() == "true")
-                              {
-                                  <a href="https://localhost:44327/stocks/Customize" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
-                                      <h3><b>想要挖掘更多股票嗎?</b></h3>
-                                      <span class="buttonText">點擊了解更多</span>
-                                  </a>
-                              }
-                              else
-                              {
-                                  <a href="https://localhost:44327/Manage/Pay" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
-                                      <h3><b>想要挖掘更多股票嗎?</b></h3>
-                                      <span class="buttonText">點擊了解更多</span>
-                                  </a>
-                              }
-
-
-
-
-
-                          </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            @*<div class=" alert alert-danger alert-dismissible fade show text-center">
-                    <h3 class="text-center">挖掘多方股票</h3>
-                </div>*@
-
-            <div class="positiveStrategy">
-
-            </div>
-
-
-        </form>
-    </div>
-
-
-
-    <br />
-    <br />
     <script src="/Scripts/jquery-3.4.1.js"></script>
     @*<script>
             console.log($)
@@ -304,5 +187,116 @@
             }
 
         }
+    </div>
+
+    <div class=" justify-content-center text-center mx-auto ">
+        <form method="post" class="justify-content-center" style="justify-content:center">
+
+
+            <div class="btn-group">
+                <!-- please note that data-target and data-toggle attributes are required -->
+                <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid">
+                    <button class="btn btn-light selected" data-value="all" style="font-size:20px;">All</button>
+                    <button class="btn btn-light" data-value="buy" style="font-size:20px;">多方策略</button>
+                    <button class="btn btn-light" data-value="sell" style="font-size:20px;">空方策略</button>
+                </div>
+            </div>
+            <br /> <br /> <br />
+            <div class="shuffle-grid- shuffle-grid-gapshuffle-grid shuffle-grid shuffle-grid justify-content-center" id="projects-grid">
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
+                    <h3><b>成交爆大量</b></h3>
+                    <span class="buttonText">成交量大於5日均量</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
+                    <h3><b>成交爆大量</b></h3>
+                    <span class="buttonText">成交量大於5日均量</span>
+                </button>
+                @*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
+
+
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="四海遊龍" name="str" @*data-toggle="smooth-scroll" data-target="#selectReasult"*@>
+                    <h3><b>四海遊龍</b></h3>
+                    <span class="buttonText">四海遊龍 </span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資連買" name="str">
+                    <h3><b>外資連買</b></h3>
+                    <span class="buttonText">外資連續五日買超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="投信連買" name="str">
+                    <h3><b>投信連買</b></h3>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資投信同買" name="str">
+                    <h3><b>外資投信同買</b></h3>
+                    <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
+                </button>
+
+
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="弱勢股票" name="str">
+                    <h3><b>弱勢股票</b></h3>
+                    <span class="buttonText">止跌部漲 </span>
+                </button>
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="外資連賣" name="str">
+                    <h3><b>外資連賣</b></h3>
+                    <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="投信連賣" name="str">
+                    <h3><b>投信連賣</b></h3>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
+                </button>
+                @if (User.Identity.GetUserTier().ToLower() == "true")
+                {
+                    <a href="https://localhost:44327/stocks/Customize" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                        <h3><b>想要挖掘更多股票嗎?</b></h3>
+                        <span class="buttonText">點擊了解更多</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="https://localhost:44327/Manage/Pay" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                        <h3><b>想要挖掘更多股票嗎?</b></h3>
+                        <span class="buttonText">點擊了解更多</span>
+                    </a>
+                }
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            @*<div class=" alert alert-danger alert-dismissible fade show text-center">
+                    <h3 class="text-center">挖掘多方股票</h3>
+                </div>*@
+
+            <div class="positiveStrategy">
+
+            </div>
+
+
+        </form>
     </div>
 </div>
