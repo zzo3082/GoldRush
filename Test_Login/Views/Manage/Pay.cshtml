@@ -70,6 +70,9 @@
                 </form>
 
                 <br>
+                <div class="spinner-border" role="status" style="display:none">
+                    <span class="sr-only">Loading...</span>
+                </div>
                 <div class="ui button" id="submit">付款</div>
             </div>
         </div>
@@ -123,6 +126,8 @@
         //    }
         //})
         document.querySelector('#submit').addEventListener('click', function (event) {
+            $(".spinner-border").css('display', 'block');
+            $("#submit").css('display', 'none');
             TPDirect.card.getPrime(function (result) {
                 console.log(JSON.stringify(result, null, 4));
                 //document.querySelector('#result').innerHTML  = JSON.stringify(result, null, 4)
