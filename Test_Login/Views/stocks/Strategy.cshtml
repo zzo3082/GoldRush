@@ -9,6 +9,15 @@
     Layout = "~/Views/Shared/_LayoutRight.cshtml";
 }
 <style>
+
+    .button h3 b{
+        font-size:30px;
+    }
+
+    button span{
+        font-size:15px;
+    }
+
     .strategyButton {
         width: 300px;
         height: 105px;
@@ -70,7 +79,7 @@
 </style>
 
 <section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
-    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.jpg" alt="background image" />
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.png" alt="background image" />
     <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
     <div class="section-content container text-left  d-flex flex-column align-items-center">
         @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
@@ -92,7 +101,7 @@
         @ViewBag.stringID
     </p>*@
 
-
+<br />
 
 
 <div class="container animated fadeInUp delay-1s ">
@@ -198,13 +207,10 @@
             <br /> <br /> <br />
             <div class="shuffle-grid- shuffle-grid-gapshuffle-grid shuffle-grid shuffle-grid justify-content-center" id="projects-grid">
 
-                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                    <h3><b>成交爆大量</b></h3>
-                    <span class="buttonText">成交量大於5日均量</span>
-                </button>
+             
 
-                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
-                    <h3><b>成交爆大量</b></h3>
+                <button class="btn btn-outline-danger   strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
+                    <h3 class="btnFont"><b>成交爆大量</b></h3>
                     <span class="buttonText">成交量大於5日均量</span>
                 </button>
                 @*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
@@ -213,7 +219,7 @@
 
                 <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="四海遊龍" name="str" @*data-toggle="smooth-scroll" data-target="#selectReasult"*@>
                     <h3><b>四海遊龍</b></h3>
-                    <span class="buttonText">四海遊龍 </span>
+                    <span class="buttonText">股價皆在四條均線之上 </span>
                 </button>
 
                 <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資連買" name="str">
