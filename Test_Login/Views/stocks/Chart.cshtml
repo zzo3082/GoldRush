@@ -47,14 +47,6 @@
         width: 27px;
     }
 
-    /*.badgebox:focus + .badge {*/
-    /* Set something to make the badge looks focused */
-    /* This really depends on the application, in my case it was: */
-    /* Adding a light border */
-    /*box-shadow: inset 0px 0px 5px;*/
-    /* Taking the difference out of the padding */
-    /*}*/
-
     .badgebox:checked + .badge {
         /*Move the check mark back when checked*/
         text-indent: 0;
@@ -168,58 +160,11 @@
                 </select>
                 <button class="btn btn-light" onclick="removeAll()">移除全部</button>
                 <button class="btn btn-light" onclick="removeSelected()">移除選定</button>
-                <button class="btn btn-light" onclick="chart.contextMenu().show(1100, 260)">設定</button>
+                <button class="btn btn-light" onclick="chart.contextMenu().show(900, 260)">設定</button>
                 <div id="chartjs"></div>
             </div>
         </div>
     </div>
-
-    <br /><hr /><br />
-    <div class="row" style="width:100%;">
-        <div class="table-responsive col-md-6">
-            <div id="info">
-                <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
-                <a href="https://statementdog.com/analysis/3704">財報狗</a>
-                <a href="https://tw.stock.yahoo.com/quote/3704">YAHOO</a>
-                <a href="https://histock.tw/stock/3704#price">HISTOCK</a>
-                <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
-                <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
-            </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">名稱</th>
-                        <th scope="col">資料</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>上市櫃</td>
-                        <td>上櫃</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="table-responsive col-md">
-            <h6>財報比率</h6>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">名稱</th>
-                        <th scope="col">資料</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>上市櫃</td>
-                        <td>上櫃</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
 </body>
 
 <script type="text/javascript">
