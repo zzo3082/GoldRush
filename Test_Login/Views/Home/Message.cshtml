@@ -9,6 +9,10 @@
     Layout = "~/Views/Shared/_LayoutRight.cshtml";
 }
 <style>
+    .btnEdit, .btnDelete {
+        background-color: white;
+    }
+
     body {
         background-color: #f7f7f7;
     }
@@ -263,10 +267,10 @@
                                 <button class="dropbtn" id="op+@article.messageID" hidden onclick="drop(this)" data-messageID="@article.messageID" data-UserName="@article.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                 <div id="myDropdown+@article.messageID" class="dropdown-content">
                                     <button onclick="edit(this)" class="btnEdit" @*data-photoOrg="@article.photo"*@ data-messageID="@article.messageID" data-photo="@string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(article.photo))" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
-                                    <button onclick="myDelete(this)" data-messageID="@article.messageID">刪除</button>
+                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@article.messageID">刪除</button>
                                 </div>
                                 <div id="myDropdown2+@article.messageID" class="dropdown-content">
-                                    <button onclick="report(this)" id="report+@article.messageID">檢舉</button>
+                                    <button onclick="report(this)" id="report+@article.messageID" data-UserName="@article.UserName">檢舉</button>
                                 </div>
                             </div>
                             @*編輯紐*@
@@ -380,7 +384,7 @@
                                                 <button class="dropbtn" id="op+@reply.messageID" hidden onclick="drop(this)" data-messageID="@reply.messageID" data-UserName="@reply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                                 <div id="myDropdown+@reply.messageID" class="dropdown-content">
                                                     <button onclick="edit(this)" class="btnEdit" data-messageID="@reply.messageID" data-UserName="@reply.UserName" data-main="@reply.main">編輯</button>
-                                                    <button onclick="myDelete(this)" data-messageID="@reply.messageID">刪除</button>
+                                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@reply.messageID">刪除</button>
                                                 </div>
                                                 <div id="myDropdown2+@reply.messageID" class="dropdown-content">
                                                     <button onclick="report(this)">檢舉</button>
@@ -479,7 +483,7 @@
                                                                 <button class="dropbtn" id="op+@replyToReply.messageID" hidden onclick="drop(this)" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                                                 <div id="myDropdown+@replyToReply.messageID" class="dropdown-content">
                                                                     <button onclick="edit(this)" class="btnEdit" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" data-main="@replyToReply.main">編輯</button>
-                                                                    <button onclick="myDelete(this)" data-messageID="@replyToReply.messageID">刪除</button>
+                                                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@replyToReply.messageID">刪除</button>
                                                                 </div>
                                                                 <div id="myDropdown2+@replyToReply.messageID" class="dropdown-content">
                                                                     <button onclick="report(this)">檢舉</button>
@@ -963,10 +967,11 @@
                             檢舉使用者名稱
                             @*</label>*@
                             <input type="text"
+                                   id="reportUserName"
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="檢舉使用者名稱"
-                                   value="@User.Identity.GetNickName()"
+                                   value=""
                                    readonly />
                         </div>
 
@@ -1069,8 +1074,10 @@
     $(".btnOK").click(function () {
         $("#MyReportModal").modal('hide');
     })
-    function report() {
+    function report(btn) {
         $("#reportModal").modal({ backdrop: "static" });
+        /*console.log(btn.dataset.username);*/
+        $("#reportUserName").val(btn.dataset.username);
 
     }
 
