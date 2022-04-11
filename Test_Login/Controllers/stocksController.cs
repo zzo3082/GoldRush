@@ -657,7 +657,7 @@ namespace GoldRush.Controllers
             if (kdj1 == "true")
             {
                 // Thread.Sleep(5000);
-                resultKDJ1 = ", 2330, 2409";
+                resultKDJ1 = ", 4133, 6578";
                 stockCustomize += resultKDJ1 + " ";
             }
             else if (storedKDJ1 != "")
@@ -669,7 +669,7 @@ namespace GoldRush.Controllers
             string resultKDJ2 = storedKDJ2;
             if (kdj2 == "true")
             {
-                resultKDJ2 = ", 0050, 0051, 0052";
+                resultKDJ2 = ", 6577, 2543";
                 stockCustomize += resultKDJ2 + " ";
             }
             else if (storedKDJ2 != "")
@@ -782,7 +782,7 @@ namespace GoldRush.Controllers
             ViewBag.revenueFebYoY = revenueFebYoYList;
             #endregion
             // string.split by " " then get the intersection
-            return PartialView(db.stockPrice.Where(x => stockCustomize.Contains(x.stockID)).OrderBy(x => x.stockDate).ToList());
+            return PartialView(db.stockPrice.Where(x => stockCustomize.Contains(x.stockID)).OrderBy(x => x.stockID).ToList());
         }
 
         public ActionResult StockMarketIndex()
