@@ -61,7 +61,7 @@ namespace Test_Login
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "743195990048-s4klvkihcvtge8d450n7rv5o30sof0f4.apps.googleusercontent.com",
-                ClientSecret = "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"
+                ClientSecret = "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"
             });
         }
     }
