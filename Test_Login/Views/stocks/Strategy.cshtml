@@ -91,93 +91,98 @@
 @*<p>
         @ViewBag.stringID
     </p>*@
-@{
-    if (@ViewBag.resultCount > -1)
-    {
-        <nav>
-            <nav class="navbar navbar-light bg-light justify-content-center">
-                <h3 class="navbar-text">挖掘出了 @ViewBag.resultCount 筆資料</h3>
-            </nav>
-        </nav>
-    }
-}
-<div id="selectReasult"></div>
-<div id="stockInfo">
-    @{
-        if (Model != null)
-        {
-            <table class="table table-bordered table-hover" style="width:100%">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th colspan="6" style="text-align:center">昨日資訊</th>
-                        <th colspan="2" style="text-align:center">財務資訊</th>
-                    </tr>
-
-                    <tr>
-                        <th scope="col">股票</th>
-                        @*<th scope="col">日期</th>*@
-                        <th scope="col">收盤價</th>
-                        <th scope="col">漲跌</th>
-                        <th scope="col">漲跌%</th>
-                        <th scope="col">成交量(股數)</th>
-                        <th scope="col">外資買賣超(股數)</th>
-                        <th scope="col">投信買賣超(股數)</th>
-                        <th scope="col">二月營收(仟元)</th>
-                        <th scope="col">二月營收成長率(YOY)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        string[] globalCompany = ViewBag.globalCompany;
-                        string[] investmentTrust = @ViewBag.investmentTrust;
-                        string[] revenueFeb = @ViewBag.revenueFeb;
-                        string[] revenueFebYoY = @ViewBag.revenueFebYoY;
-                        int count = 0;
-                    }
-                    @{
-                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
-                        {
-                            // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
-                            var item2 = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[1];
-                            decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item2.endPrice);
-                            decimal upDownPercent = decimal.Round(decimal.Round((upDown / decimal.Parse(item2.endPrice)), 4) * 100, 2);
-                            int num = (int)item.numOfSharesTrade;
-                            string result = num.ToString("N0");
-                            //string globalCompanyTostringN0 = Convert.ToInt32(globalCompany[count]).ToString("N0");
-                            //string investmentTrustTostringN0 = Convert.ToInt32(investmentTrust[count]).ToString("N0");
-                            //string revenueFebTostringN0 = Convert.ToInt32(revenueFeb[count]).ToString("N0");
-                            <tr>
-                                <td class="">
-                                    <input class="stockName btn btn-outline-info" style="padding:0px 3px; " type="button" value="@item.stockID @item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
-                                </td>
-                                @*<td>@item.stockDate</td>*@
-                                <td>@item.endPrice</td>
-                                <td>@upDown</td>
-                                <td>@upDownPercent </td>
-                                <td>@result</td>
-                                <td>@globalCompany[count]</td>
-                                <td>@investmentTrust[count]</td>
-                                <td>@revenueFeb[count]</td>
-                                <td>@revenueFebYoY[count]</td>
-                            </tr>
-                            count += 1;
-                        }
-                        count = 0;
-                    }
-
-                </tbody>
-            </table>
-        }
-
-    }
-</div>
 
 
 
 
 <div class="container animated fadeInUp delay-1s ">
+    @{
+        if (@ViewBag.resultCount > -1)
+        {
+            <nav>
+                <nav class="navbar navbar-light bg-light justify-content-center">
+                    <h3 class="navbar-text">挖掘出了 @ViewBag.resultCount 筆資料</h3>
+                </nav>
+            </nav>
+        }
+    }
+    <div id="selectReasult"></div>
+    <div id="stockInfo">
+        @{
+            if (Model != null)
+            {
+                <table class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="6" style="text-align:center">昨日資訊</th>
+                            <th colspan="2" style="text-align:center">財務資訊</th>
+                        </tr>
+
+                        <tr>
+                            <th scope="col">股票</th>
+                            @*<th scope="col">日期</th>*@
+                            <th scope="col">收盤價</th>
+                            <th scope="col">漲跌</th>
+                            <th scope="col">漲跌%</th>
+                            <th scope="col">成交量(股數)</th>
+                            <th scope="col">外資買賣超(股數)</th>
+                            <th scope="col">投信買賣超(股數)</th>
+                            <th scope="col">二月營收(仟元)</th>
+                            <th scope="col">二月營收成長率(YOY)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string[] globalCompany = ViewBag.globalCompany;
+                            string[] investmentTrust = @ViewBag.investmentTrust;
+                            string[] revenueFeb = @ViewBag.revenueFeb;
+                            string[] revenueFebYoY = @ViewBag.revenueFebYoY;
+                            int count = 0;
+                        }
+                        @{
+                            foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
+                            {
+                                // stockDate should use current datetime
+                                var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
+                                var item2 = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[1];
+                                decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item2.endPrice);
+                                decimal upDownPercent = decimal.Round(decimal.Round((upDown / decimal.Parse(item2.endPrice)), 4) * 100, 2);
+                                int num = (int)item.numOfSharesTrade;
+                                string result = num.ToString("N0");
+                                //string globalCompanyTostringN0 = Convert.ToInt32(globalCompany[count]).ToString("N0");
+                                //string investmentTrustTostringN0 = Convert.ToInt32(investmentTrust[count]).ToString("N0");
+                                //string revenueFebTostringN0 = Convert.ToInt32(revenueFeb[count]).ToString("N0");
+                                <tr>
+                                    <td class="">
+                                        <input class="stockName btn btn-outline-info" style="padding:0px 3px; " type="button" value="@item.stockID @item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                    </td>
+                                    @*<td>@item.stockDate</td>*@
+                                    <td>@item.endPrice</td>
+                                    <td>@upDown</td>
+                                    <td>@upDownPercent </td>
+                                    <td>@result</td>
+                                    <td>@globalCompany[count]</td>
+                                    <td>@investmentTrust[count]</td>
+                                    <td>@revenueFeb[count]</td>
+                                    <td>@revenueFebYoY[count]</td>
+                                </tr>
+                                count += 1;
+                            }
+                            count = 0;
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+        }
+    </div>
+
+
+
+
+
     <div class=" justify-content-center text-center mx-auto ">
         <form method="post" class="justify-content-center" style="justify-content:center">
 

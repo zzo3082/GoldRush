@@ -211,12 +211,14 @@
     var series = plot.candlestick(mapping).zIndex(10);
     series.name("@ViewBag.id");
 
-    series.risingStroke("#C20000");
-    series.risingFill("#C20000");
-    series.fallingStroke("#00C200");
-    series.fallingFill("#00C200");
+    series.risingStroke("#FF0000");
+    series.risingFill("#FF0000");
+    series.fallingStroke("#006400");
+    series.fallingFill("#006400");
 
-
+    // adjusting major and minor grids
+    //var yGrid = plot.yMinorGrid();
+    //yGrid.stroke('#CFD8DC');
 
     chart.splitters().normal().stroke({
         color: 'red',
@@ -263,10 +265,10 @@
             // sets y-scale
             series_hist.yScale(customScale);
             series_hist.name("成交量");
-            series_hist.risingStroke("#C20000");
-            series_hist.risingFill("#C20000", 0.6);
-            series_hist.fallingStroke("#00C200");
-            series_hist.fallingFill("#00C200", 0.6);
+            series_hist.risingStroke("#FF0000");
+            series_hist.risingFill("#FF0000", 0.6);
+            series_hist.fallingStroke("#006400");
+            series_hist.fallingFill("#006400", 0.6);
         } else {
             console.log('456');
             plot.removeSeries("col");
