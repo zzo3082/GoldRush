@@ -1,17 +1,227 @@
-﻿@{
-    ViewBag.Title = "Contact";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿<section class="section bg-secondary" id="services">
+    <div class="section-content container">
+        <div class="d-flex justify-content-center justify-content-md-between align-items-end">
+            <div class="text-center text-md-left">
+                <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted">
+                    What we do the best
+                </small>
+                <h1>自訂您的策略</h1>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="btn-group">
+                    <div class="radio-buttons-group border-0 " data-toggle="shuffle-grid" data-target="#stockAnalysis">
+                        <button class="btn btn-light " data-value="technical">技術面</button>
+                        <button class="btn btn-light" data-value="fundamental">基本面</button>
+                        <button class="btn btn-light" data-value="chip">籌碼面</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shuffle-grid shuffle-grid-gap-14 shuffle-grid-cols-1 shuffle-grid-cols-lg-2 mt-14" id="stockAnalysis">
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                KDJ
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Kitchen Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                Macd
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                均線
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                K線
+                            </button>
+                        </div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+
+
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                成交量
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*----基本面-----*@
+
+
+
+
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                營收
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Roofing</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                EPS
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                <b>本益比、毛利率、類別</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*----籌碼面--------*@
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                <b>三大法人</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                <b>融資</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                <b>融券</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

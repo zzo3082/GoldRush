@@ -10,10 +10,11 @@
     .stockCustomize {
         text-align: left;
     }
-    .stockCustomize input[type=text] {
-        width: 40px;
-        height: 23px;
-    }
+
+        .stockCustomize input[type=text] {
+            width: 40px;
+            height: 23px;
+        }
 
     #stockInfo {
         text-align: center;
@@ -46,14 +47,13 @@
 </section>
 <br />
 <br />
-<br />
 <div class="container">
     <div id="tech">
-        <h4>技術面</h4>
+       
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#kdjModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#kdjModal">
             KDJ
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="kdjModal" tabindex="-1" aria-labelledby="kdjModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -64,7 +64,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body ">
                         <div class="stockCustomize">
                             <input type="checkbox" id="btnKDJ1" />
                             <select id="kdj1_kdj1">
@@ -165,9 +165,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#macdModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#macdModal">
             MACD
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="macdModal" tabindex="-1" aria-labelledby="macdModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -236,9 +236,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#maModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#maModal">
             均線
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="maModal" tabindex="-1" aria-labelledby="maModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -312,9 +312,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#candleModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#candleModal">
             K線
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="candleModal" tabindex="-1" aria-labelledby="candleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -388,9 +388,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#volumeModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#volumeModal">
             成交量
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="volumeModal" tabindex="-1" aria-labelledby="volumeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -453,13 +453,13 @@
             </div>
         </div>
     </div>
-    <hr />
+    
     <div id="basic">
-        <h4>基本面</h4>
+        
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#revenuModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#revenuModal">
             營收
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="revenuModal" tabindex="-1" aria-labelledby="revenuModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -481,9 +481,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#epsModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#epsModal">
             EPS
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="epsModal" tabindex="-1" aria-labelledby="epsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -505,9 +505,9 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#perModal">
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#perModal">
             本益比、毛利率、類別
-        </button>
+        </button>*@
         <!-- Modal -->
         <div class="modal fade" id="perModal" tabindex="-1" aria-labelledby="perModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -528,10 +528,332 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+        @*---籌碼面Modal------*@
+        <div class="modal fade" id="investorsModal" tabindex="-1" aria-labelledby="investorsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="investorsModalLabel">三大法人</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="marginBuyModal" tabindex="-1" aria-labelledby="marginBuyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginBuyModalLabel">融資</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="marginSellModal" tabindex="-1" aria-labelledby="marginSellModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginSellModalLabel">融券</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <hr />
 </div>
+
+
+<div class="container" style="min-width:1300px;">
+
+    <section class="section bg-secondary" id="services">
+        <div class="section-content container">
+            <div class="d-flex justify-content-center justify-content-md-between align-items-end">
+                <div class="text-center text-md-left">
+                    <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted">
+                        點擊開始進階挖掘
+                    </small>
+                    <h1>自訂您的策略</h1>
+                </div>
+                <div class="d-none d-md-block">
+                    <div class="btn-group">
+                        <div class="radio-buttons-group border-0 bg-cyan-10" data-toggle="shuffle-grid" data-target="#stockAnalysis">
+                            <button class="btn btn-light fs-5" data-value="technical">技術面</button>
+                            <button class="btn btn-light fs-5" data-value="fundamental">基本面</button>
+                            <button class="btn btn-light fs-5" data-value="chip">籌碼面</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid shuffle-grid-gap-14 shuffle-grid-cols-1 shuffle-grid-cols-lg-2 mt-14" id="stockAnalysis">
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#kdjModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b>KDJ</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body py px">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">KD指標</h2>
+                                    <p>一般 K 值與 D 值雖然朝向同一個趨勢發展，但 K 值波動會比 D 值大，所以當 K 值與 D 值交叉時，就會產生比較明確的買進或賣出的訊號。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#macdModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b> Macd</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">MACD指標</h2>
+                                    <p>MADC 就是指數平滑異同移動平均線透過計算「收盤時股價或指數變化的指數移動平均值（ EMA ）」之間的離差程度（ DIF ）而來，用來確定波段漲幅並找到買賣點。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#maModal">
+                                <i class="fa fa-line-chart fs-8"></i>
+                                <b>均線</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">MA</h2>
+                                    <p>均線代表過去一段時間的平均成交價格。如果均線的價格越來越高，代表投資人看好這檔股票，也就代表現階段市場趨勢是往上。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#candleModal">
+                                <i class="fa fa-line-chart fs-8"></i>
+                                <b>K線</b>
+                            </button>
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">K線(Candlestick Chart)</h2>
+                                    <p>用來記錄一段期間某檔標的價格的變化，可以知道某檔標的這段期間的開盤價、收盤價、最高價以及最低價。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#volumeModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b>成交量</b>  
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">成交量</h2>
+                                    <p>成交量（買賣量）是指股票市場整體買賣成立的股票數量。當股票市場整體交易的股票數量增加，成交量（買賣量）就會增加。成交量增加，就代表「市場動能」強勁，暗示未來整體市場行情看好。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*----基本面-----*@
+
+
+
+
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#revenuModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>營收</b> 
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">營收</h2>
+                                    <p>
+                                        是指企業在某段時間內，經由商業行為 取得的收入。
+                                        但不包括成本、費用、稅金。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#epsModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>EPS</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">EPS 每股盈餘</h2>
+                                    <p>在股票的世界裡，要比較兩間不同公司，就是用「每股盈餘」EPS（ Earning per Share），也就是「企業為一張股票賺到多少錢」</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#perModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>本益比、毛利率</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">本益比</h2>
+                                    <p>本益比 PE tatio（ Price-to-Earning Ratio ）就是「這支股票，要多久才會回本」，也可以理解成「每賺一塊錢，要投入多少成本」。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*----籌碼面--------*@
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#investorsModal">
+                                <i class="material-icons fs-8">people</i>
+                                <b>三大法人</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">三大法人</h2>
+                                    <p>
+                                        台灣股票市場的三大法人是指外資、投信、自營商，
+                                        它們是被法律承認的機構團體分類，佔股市總交易量的比重很高，會大幅影響股市的漲跌。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#marginBuyModal">
+                                <i class="material-icons fs-8">monetization_on</i>
+                                <b>融資</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">融資</h2>
+                                    <p>當融資使用率高時，代表著欲追價的散戶多已進場，後勢將有力道缺乏的可能</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#marginSellModal">
+                                <i class="material-icons fs-8">data_usage</i>
+                                <b>資券比</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">資券比</h2>
+                                    <p>是融資餘額與融券餘額之比率。可用以研判個股是否融資過高，有無軋空行情。資券比若高於40%，產生軋空的機會較大。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
 <div class="container" id="stockDiv" tabindex="0"></div>
+<br />
 
 <script>
     function kdj() {
