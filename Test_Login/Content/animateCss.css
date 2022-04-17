@@ -1,0 +1,75 @@
+.tracking-in-contract {
+    animation: tracking-in-contract .8s cubic-bezier(.215,.61,.355,1.000) both
+}
+@keyframes tracking-in-contract{0%{letter-spacing:1em;opacity:0}40%{opacity:.6}100%{letter-spacing:normal;opacity:1}}
+.scale-in-ver-center {
+    animation: scale-in-ver-center .8s cubic-bezier(.39,.575,.565,1.000) both
+}
+@keyframes scale-in-ver-center {
+    0% {
+        transform: scaleY(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: scaleY(1);
+        opacity: 1
+    }
+}
+.fade-in-bottom {
+    animation: fade-in-bottom 1s cubic-bezier(.39,.575,.565,1.000) both
+}
+
+@keyframes fade-in-bottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+
+
+.test-hover::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+.test-hover:hover::before {
+    transform: scaleX(1);
+    transform-origin: top left;
+}
+
+.test-hover::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+}
+
+.test-hover {
+    position: relative;
+    font-size: 5rem;
+}
+
+.cards-hover:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.cards-hover {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: 0.5s;
+}

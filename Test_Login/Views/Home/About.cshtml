@@ -1,7 +1,858 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">*@
 
-<p>Use this area to provide additional VVVVV.</p>
+<style type="text/css">
+    .stockCustomize {
+        text-align: left;
+    }
+
+        .stockCustomize input[type=text] {
+            width: 40px;
+            height: 23px;
+        }
+
+    #stockInfo {
+        text-align: center;
+    }
+
+    .stockName {
+        width: 100px;
+    }
+
+    .modal-backdrop {
+        opacity: 0.5 !important;
+    }
+
+    .search {
+        position: relative;
+        display: inline-block;
+    }
+    .stockBtn{
+        width:180px;
+        height:152px;
+        font-size:20px;
+    }
+</style>
+
+
+<div class="container">
+    <div id="tech">
+        <h4>技術面</h4>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#kdjModal">
+            KDJ
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="kdjModal" tabindex="-1" aria-labelledby="kdjModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="kdjModalLabel">KDJ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ1" />
+                            <select id="kdj1_kdj1">
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            連續
+                            <input type="text" id="kdj1_day1" />
+                            天
+                            <select id="kdj1_dir1">
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" id="kdj1_value1" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ2" />
+                            <select id="kdj2_kdj1">
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select id="kdj2_dir1">
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            前
+                            <input type="text" id="kdj2_day1" />
+                            天
+                            <select kdj2_kdj2>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ3" />
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ4" />
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ5" />
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>K</option>
+                                <option>D</option>
+                                <option>J</option>
+                            </select>
+                            <input type="text" />以上
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ6" />
+                            最近 <input type="text" /> 天KD
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <div class="spinner-border" role="status" style="display:none">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <button type="button" id="btnKDJ" class="btn btn-primary" onclick="kdj()">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#macdModal">
+            MACD
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="macdModal" tabindex="-1" aria-labelledby="macdModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="macdModalLabel">MACD</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD1" />
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            前<input type="text" />天的
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD2" />
+                            MACD近<input type="text" />天都
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD3" />
+                            近<input type="text" />天MACD發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD4" />
+                            MACD發生
+                            <select>
+                                <option>綠柱變紅柱</option>
+                                <option>紅柱變綠柱</option>
+                            </select>
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD5" />
+                            <select>
+                                <option>DIF</option>
+                                <option>MACD</option>
+                            </select>
+                            介於<input type="text" />至<input type="text" />之間
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#maModal">
+            均線
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="maModal" tabindex="-1" aria-labelledby="maModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="maModalLabel">均線</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA1" />
+                            連續<input type="text" />天股價都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA2" />
+                            最近<input type="text" />天內的股價有
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA3" />
+                            今日股價
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>5</option>
+                                <option>20</option>
+                                <option>60</option>
+                                <option>100</option>
+                            </select>
+                            日均線的<input type="text" />%
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA4" />
+                            近<input type="text" />天<input type="text" />日均線和<input type="text" />日均線有發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA5" />
+                            近<input type="text" />天<input type="text" />日均線的斜率
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />%
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#candleModal">
+            K線
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="candleModal" tabindex="-1" aria-labelledby="candleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="candleModalLabel">K線</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle1" />
+                            連續<input type="text" />天股價都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle2" />
+                            最近<input type="text" />天內的股價有
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle3" />
+                            今日股價
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>5</option>
+                                <option>20</option>
+                                <option>60</option>
+                                <option>100</option>
+                            </select>
+                            日均線的<input type="text" />%
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle4" />
+                            近<input type="text" />天<input type="text" />日均線和<input type="text" />日均線有發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle5" />
+                            近<input type="text" />天<input type="text" />日均線的斜率
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />%
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#volumeModal">
+            成交量
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="volumeModal" tabindex="-1" aria-labelledby="volumeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="volumeModalLabel">成交量</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume1" />
+                            近<input type="text" />天都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均量
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume2" />
+                            近<input type="text" />天有<input type="text" />天是
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume3" />
+                            連續<input type="text" />天都是
+                            <select>
+                                <option>綠柱</option>
+                                <option>紅柱</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume4" />
+                            今日成交量創<input type="text" />天新高
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume5" />
+                            <input type="text" />天均量大於<input type="text" />張
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume6" />
+                            今日成交量大於<input type="text" />天均量的<input type="text" />%
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="basic">
+        <h4>基本面</h4>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#revenuModal">
+            營收
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="revenuModal" tabindex="-1" aria-labelledby="revenuModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="revenuModalLabel">營收</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#epsModal">
+            EPS
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="epsModal" tabindex="-1" aria-labelledby="epsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="epsModalLabel">EPS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#perModal">
+            本益比、毛利率、類別
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="perModal" tabindex="-1" aria-labelledby="perModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="perModalLabel">本益比、毛利率、類別</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*---籌碼面Modal------*@
+        <div class="modal fade" id="investorsModal" tabindex="-1" aria-labelledby="investorsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="investorsModalLabel">三大法人</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="marginBuyModal" tabindex="-1" aria-labelledby="marginBuyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginBuyModalLabel">融資</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="marginSellModal" tabindex="-1" aria-labelledby="marginSellModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginSellModalLabel">融券</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <hr />
+</div>
+<div class="container" id="stockDiv" tabindex="0"></div>
+
+
+@*---------------*@
+
+<div class="btn-group">
+    <!-- please note that data-target and data-toggle attributes are required -->
+    <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid">
+        <button class="btn btn-light selected" data-value="all">All</button>
+        <button class="btn btn-light" data-value="buy">多方策略</button>
+        <button class="btn btn-light" data-value="sell">空方策略</button>
+    </div>
+</div>
+@*---------------------*@
+
+<div class="shuffle-grid shuffle-grid-gap-14 shuffle-grid-cols-1 shuffle-grid-cols-md-2 shuffle-grid-cols-xl-4" id="projects-grid">
+
+</div>
+
+<div class="container">
+
+<section class="section bg-secondary" id="services">
+    <div class="section-content container">
+        <div class="d-flex justify-content-center justify-content-md-between align-items-end">
+            <div class="text-center text-md-left">
+                <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted">
+                    What we do the best
+                </small>
+                <h1>自訂您的策略</h1>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="btn-group">
+                    <div class="radio-buttons-group border-0 " data-toggle="shuffle-grid" data-target="#stockAnalysis">
+                        <button class="btn btn-light " data-value="technical">技術面</button>
+                        <button class="btn btn-light" data-value="fundamental">基本面</button>
+                        <button class="btn btn-light" data-value="chip">籌碼面</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shuffle-grid shuffle-grid-gap-14 shuffle-grid-cols-1 shuffle-grid-cols-lg-2 mt-14" id="stockAnalysis">
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#kdjModal">
+                                KDJ
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Kitchen Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#macdModal">
+                                Macd
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#maModal">
+                                均線
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#candleModal">
+                                K線
+                            </button>
+                        </div>
+
+
+
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="shuffle-grid-item" data-groups="technical">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-info stockBtn" data-toggle="modal" data-target="#volumeModal">
+                                成交量
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Bathroom Remodeling</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*----基本面-----*@
+
+
+
+
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-success stockBtn" data-toggle="modal" data-target="#revenuModal">
+                                營收
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Roofing</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-success stockBtn" data-toggle="modal" data-target="#epsModal">
+                                EPS
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid-item" data-groups="fundamental">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-success stockBtn" data-toggle="modal" data-target="#perModal">
+                                <b>本益比、毛利率、類別</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*----籌碼面--------*@
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-warning stockBtn" data-toggle="modal" data-target="#investorsModal">
+                                <i class="fa fa-camera-retro"></i> 
+                                <b>三大法人</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-warning stockBtn" data-toggle="modal" data-target="#marginBuyModal">
+                                <b>融資</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shuffle-grid-item" data-groups="chip">
+                <div class="card border-0">
+                    <div class="row no-gutters">
+                        <div class="col-sm-4 position-relative">
+                            <button type="button" class="btn btn-outline-warning stockBtn" data-toggle="modal" data-target="#marginSellModal">
+                                <b>融券</b>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body py-11 px-14">
+                                <h2 class="fs-5 fs-md-6 fs-lg-7">Windows & Doors</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</section>
+</div>
+@*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    new WOW().init();
+
+</script>

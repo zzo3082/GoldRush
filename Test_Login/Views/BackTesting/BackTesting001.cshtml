@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "BackTesting001";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutRight.cshtml";
+}
 @*https://html-css-js.com/css/generator/box-shadow/*@
 @*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">*@
 <link rel="stylesheet" href="~/Content/vendor.css">
@@ -9,7 +12,7 @@
 <style>
     #nav-tabContent {
         top: 10px;
-        border-radius: 40px 40px 40px 40px;
+        border-radius: 10px;
         box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%)
     }
 
@@ -42,25 +45,51 @@
         table td {
             text-align: left
         }
+
+    .search {
+        position: relative;
+        display: inline-block;
+    }
+
+   
+
 </style>
-<div class="container  text-center" style="width:600px">
+
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.png" alt="background image" />
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+                Easy 3 steps online booking
+            </span>*@
+        <h1 class=" justify-content-lg-center tracking-in-contract" style="font-size:50px;">自訂回測系統</h1>
+    </div>
+</section>
+
+
+
+<br />
+<br />
+
+<div class="container  text-center" style="width:800px;">
     <div class=""></div>
     <div class="radio-buttons-group mb-7" onchange="displayControl()">
-        <button class="btn btn-light" id="btn1" data-value="all">定期定額</button>
-        <button class="btn btn-light" id="btn2" data-value="breakfast">定期定股</button>
+        <button class="btn btn-light selected" id="btn1" data-value="all"  style="font-size: 20px;">定期定額</button>
+        <button class="btn btn-light" id="btn2" data-value="breakfast"style="font-size: 20px;">定期定股</button>
     </div>
-
+    <br />
     @* 定期定額 *@
-    <div class="tab-content" id="nav-tabContent" style="background-color:antiquewhite;">
-        <div id="nav-backTest001" role="tabpanel" class="text-center ">
+    <div class="tab-content animated bounceInUp delay- delay-1s justify-content-lg-center"  id="nav-tabContent" style="background-color:antiquewhite; padding-top:15px; ">
+        <div id="nav-backTest001" role="tabpanel" class="text-center " >
             <h2>定期定額</h2>
-            <table class="">
+            <table class=""  style="margin-bottom:5px;" >
                 <tr>
                     <td>股票標的</td>
                     <td>
                         <input type="text" name="stockID" placeholder="輸入股票代碼" id="stockID1" class="form-control form-control-sm" />
                     </td>
                 </tr>
+              
                 <tr>
                     <td>幾號投入</td>
                     <td>
@@ -68,7 +97,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>固定投入多少錢</td>
+                    @*<td>固定投入多少錢</td>*@
+                    <td>固定金額</td>
                     <td>
                         <input type="text" name="totalUnit" placeholder="填入金額" id="totalUnit1" class="form-control form-control-sm" />
                     </td>
@@ -95,7 +125,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>固定買幾股</td>
+                    @*<td>固定買幾股</td>*@
+                    <td>固定股數</td>
                     <td>
                         <input type="text" name="totalUnit" placeholder="填入數量" id="totalUnit2" class="form-control form-control-sm" />
                     </td>
@@ -107,15 +138,18 @@
     </div>
 
     <div id="result" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>計算結果</h3>
+                    <h3 class="modal-title">計算結果</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <table id="resultTable">
                         <tr>
-                            <td>投資標的</td>
+                            <td>投資標的&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
                             <td id="result_1">股票代號 名稱</td>
                         </tr>
                         <tr>
@@ -123,7 +157,7 @@
                             <td id="result_3">y新台幣/y2股</td>
                         </tr>
                         <tr>
-                            <td>總付出成本(新台幣)</td>
+                            <td>總付出成本</td>
                             <td id="result_4">總成本</td>
                         </tr>
                         <tr>
@@ -141,7 +175,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">確定</button>
+                    <a id="stockLink" href="/stocks/Chart/"><span class="myTag btn btn-outline-dark">前往個股</span></a>
+                    <button class="btn btn-primary" data-dismiss="modal">確定</button>
                 </div>
             </div>
         </div>
@@ -149,7 +184,6 @@
 </div>
 
 <script>
-    //console.log(typeof ($('#btn1').attr('class')))
     function displayControl() {
         if ($('#btn1').attr('class').includes("selected")) {
             //console.log("BTN1 selected")
@@ -184,6 +218,7 @@
             $('#result_7').text(`${e.percentage}%`);
             $("#result").css("display", "block");
             $('#result').modal({ backdrop: "static" })
+            $('#stockLink').attr('href', `/stocks/Chart/${$('#stockID2').val()}`)
         })
 
     })
@@ -194,6 +229,7 @@
             day: $('#day1').val(),
             totalUnit: $('#totalUnit1').val()
         }
+
         var result = $.ajax({
             async: "false",
             type: "post",
@@ -209,7 +245,8 @@
             $('#result_7').text(`${e.percentage}%`);
             $("#result").css("display", "block");
             $('#result').modal({ backdrop: "static" })
+            $('#stockLink').attr('href', `/stocks/Chart/${$('#stockID1').val()}`)
         })
-
     })
+    function stock() { }
 </script>

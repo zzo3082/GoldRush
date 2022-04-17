@@ -151,7 +151,7 @@ namespace Test_Login.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName, StockBag = "", UserTier=false};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -161,7 +161,7 @@ namespace Test_Login.Controllers
                     // 傳送包含此連結的電子郵件
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 <a href=\"" + callbackUrl + "\">這裏</a>");
+                    await UserManager.SendEmailAsync(user.Id, "確認您的帳戶", "請按一下此連結確認您的帳戶 " + callbackUrl );
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -367,7 +367,7 @@ namespace Test_Login.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,NickName = model.NickName, StockBag=""};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

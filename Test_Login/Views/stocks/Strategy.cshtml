@@ -1,10 +1,23 @@
 ﻿@model IEnumerable<Test_Login.Models.stockPrice>
-
+@using Test_Login.Models
+@using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
+@*@{
+        ViewBag.Title = ViewBag.id;
+    }*@
 @{
-    ViewBag.Title = ViewBag.id;
+    Layout = "~/Views/Shared/_LayoutRight.cshtml";
 }
-
 <style>
+
+    .button h3 b{
+        font-size:30px;
+    }
+
+    button span{
+        font-size:15px;
+    }
+
     .strategyButton {
         width: 300px;
         height: 105px;
@@ -22,7 +35,7 @@
     }
 
     .strategyDiv {
-        width: 300px;
+        width: 350px;
         height: 120px;
         padding: 0px;
         margin: 10px;
@@ -35,8 +48,9 @@
     }
 
     .stockName {
-        width: 100px;
+        width: 120px;
         text-align: center;
+        margin-bottom: 5px;
     }
 
     table {
@@ -57,175 +71,246 @@
     #stockInfo {
         text-align: center;
     }
+
+    .search {
+        position: relative;
+        display: inline-block;
+    }
 </style>
 
-<h2 class="nav justify-content-center">常用策略</h2>
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.png" alt="background image" />
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+                Easy 3 steps online booking
+            </span>*@
+        <h1 class="nav justify-content-lg-center tracking-in-contract ">常用策略</h1>
+    </div>
+</section>
+<div class="container">
+
+    <nav>
+        <nav class="navbar navbar-light bg-cyan-50 justify-content-center animated fadeInUp delay-1s">
+            <h3 class="navbar-text">挖掘常用策略</h3>
+        </nav>
+    </nav>
+
+</div>
+@*<p>
+        @ViewBag.stringID
+    </p>*@
+
 <br />
-<br />
-<p>
-    @ViewBag.stringID
-</p>
-
-<div class="formStrategy mx-auto">
-    <form method="post">
-
-        <div class=" alert alert-danger alert-dismissible fade show">
-            <h3>利多</h3>
-
-        </div>
-        <div>
-            <div class="positiveStrategy">
-
-                <button class="btn btn-outline-danger  strategyDiv" value="成交爆大量" name="str">
-                    <h3><b>成交爆大量</b></h3>
-                    <span class="buttonText">成交量大於5日均量</span>
-                </button>
-
-                <button class="btn btn-outline-danger  strategyDiv" value="四海遊龍" name="str">
-                    <h3><b>四海遊龍</b></h3>
-                    <span class="buttonText">四海遊龍 skr skr</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="外資連買" name="str">
-                    <h3><b>外資連買</b></h3>
-                    <span class="buttonText">外資連買?天</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="投信連買" name="str">
-                    <h3><b>投信連買</b></h3>
-                    <span class="buttonText">投信連買?天</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="KD黃金交叉" name="str">
-                    <h3><b>KD黃金交叉</b></h3>
-                    <span class="buttonText">k線和d線交叉</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="EPS創新高" name="str">
-                    <h3><b>EPS創新高</b></h3>
-                    <span class="buttonText">營收創高</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="營收由虧轉盈" name="str">
-                    <h3><b>營收由虧轉盈</b></h3>
-                    <span class="buttonText">收益轉正成長</span>
-                </button>
-                <button class="btn btn-outline-danger  strategyDiv" value="強勢股票" name="str">
-                    <h3><b>強勢股票</b></h3>
-                    <span class="buttonText">漲很兇</span>
-                </button>
 
 
+<div class="container animated fadeInUp delay-1s ">
+    @{
+        if (@ViewBag.resultCount > -1)
+        {
+            <nav>
+                <nav class="navbar navbar-light bg-light justify-content-center">
+                    <h3 class="navbar-text">挖掘出了 @ViewBag.resultCount 筆資料</h3>
+                </nav>
+            </nav>
+        }
+    }
+    <div id="selectReasult"></div>
+    <div id="stockInfo">
+        @{
+            if (Model != null)
+            {
+                <table class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="6" style="text-align:center">昨日資訊</th>
+                            <th colspan="2" style="text-align:center">財務資訊</th>
+                        </tr>
+
+                        <tr>
+                            <th scope="col">股票</th>
+                            @*<th scope="col">日期</th>*@
+                            <th scope="col">收盤價</th>
+                            <th scope="col">漲跌</th>
+                            <th scope="col">漲跌%</th>
+                            <th scope="col">成交量(股數)</th>
+                            <th scope="col">外資買賣超(股數)</th>
+                            <th scope="col">投信買賣超(股數)</th>
+                            <th scope="col">二月營收(仟元)</th>
+                            <th scope="col">二月營收成長率(YOY)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string[] globalCompany = ViewBag.globalCompany;
+                            string[] investmentTrust = @ViewBag.investmentTrust;
+                            string[] revenueFeb = @ViewBag.revenueFeb;
+                            string[] revenueFebYoY = @ViewBag.revenueFebYoY;
+                            int count = 0;
+                        }
+                        @{
+                            foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
+                            {
+                                // stockDate should use current datetime
+                                var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
+                                var item2 = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[1];
+                                decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item2.endPrice);
+                                decimal upDownPercent = decimal.Round(decimal.Round((upDown / decimal.Parse(item2.endPrice)), 4) * 100, 2);
+                                int num = (int)item.numOfSharesTrade;
+                                string result = num.ToString("N0");
+                                //string globalCompanyTostringN0 = Convert.ToInt32(globalCompany[count]).ToString("N0");
+                                //string investmentTrustTostringN0 = Convert.ToInt32(investmentTrust[count]).ToString("N0");
+                                //string revenueFebTostringN0 = Convert.ToInt32(revenueFeb[count]).ToString("N0");
+                                <tr>
+                                    <td class="">
+                                        <input class="stockName btn btn-outline-info" style="padding:0px 3px; " type="button" value="@item.stockID @item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
+                                    </td>
+                                    @*<td>@item.stockDate</td>*@
+                                    <td>@item.endPrice</td>
+                                    <td>@upDown</td>
+                                    <td>@upDownPercent </td>
+                                    <td>@result</td>
+                                    <td>@globalCompany[count]</td>
+                                    <td>@investmentTrust[count]</td>
+                                    <td>@revenueFeb[count]</td>
+                                    <td>@revenueFebYoY[count]</td>
+                                </tr>
+                                count += 1;
+                            }
+                            count = 0;
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+        }
+    </div>
 
 
-                <div class="negativeStrategy">
-                    <div class="alert alert-primary">
-                        <h3>利空</h3>
-                    </div>
 
 
-                    <button class="btn btn-outline-primary  strategyDiv" value="弱勢股票" name="str">
-                        <h3><b>弱勢股票</b></h3>
-                        <span class="buttonText">止跌部漲 嫩</span>
-                    </button>
 
-                    <button class="btn btn-outline-primary  strategyDiv" value="外資連賣" name="str">
-                        <h3><b>外資連賣</b></h3>
-                        <span class="buttonText">外資連續?天賣超</span>
-                    </button>
+    <div class=" justify-content-center text-center mx-auto ">
+        <form method="post" class="justify-content-center" style="justify-content:center">
 
 
-                    <button class="btn btn-outline-primary  strategyDiv" value="投信連賣" name="str">
-                        <h3><b>投信連賣</b></h3>
-                        <span class="buttonText">投信連續?天賣超</span>
-                    </button>
-
-
-                    <button class="btn btn-outline-primary  strategyDiv" value="KD死亡交叉" name="str">
-                        <h3><b>KD死亡交叉</b></h3>
-                        <span class="buttonText">k線低於d線</span>
-                    </button>
-
+            <div class="btn-group">
+                <!-- please note that data-target and data-toggle attributes are required -->
+                <div class="radio-buttons-group" data-toggle="shuffle-grid" data-target="#projects-grid">
+                    <button class="btn btn-light selected" data-value="all" style="font-size:20px;">All</button>
+                    <button class="btn btn-light" data-value="buy" style="font-size:20px;">多方策略</button>
+                    <button class="btn btn-light" data-value="sell" style="font-size:20px;">空方策略</button>
                 </div>
             </div>
-        </div>
-    </form>
+            <br /> <br /> <br />
+            <div class="shuffle-grid- shuffle-grid-gapshuffle-grid shuffle-grid shuffle-grid justify-content-center" id="projects-grid">
+
+             
+
+                <button class="btn btn-outline-danger   strategyDiv shuffle-grid-item" data-groups="buy" value="成交爆大量" name="str" data-toggle="smooth-scroll" data-target="#selectReasult">
+                    <h3 class="btnFont"><b>成交爆大量</b></h3>
+                    <span class="buttonText">成交量大於5日均量</span>
+                </button>
+                @*<a href="#" data-toggle="smooth-scroll" data-target="#page-start-anchor">*@
+
+
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="四海遊龍" name="str" @*data-toggle="smooth-scroll" data-target="#selectReasult"*@>
+                    <h3><b>四海遊龍</b></h3>
+                    <span class="buttonText">股價皆在四條均線之上 </span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資連買" name="str">
+                    <h3><b>外資連買</b></h3>
+                    <span class="buttonText">外資連續五日買超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="投信連買" name="str">
+                    <h3><b>投信連買</b></h3>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-danger  strategyDiv shuffle-grid-item" data-groups="buy" value="外資投信同買" name="str">
+                    <h3><b>外資投信同買</b></h3>
+                    <span class="buttonText">前一日外資投信同買而且漲幅>2%</span>
+                </button>
+
+
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="弱勢股票" name="str">
+                    <h3><b>弱勢股票</b></h3>
+                    <span class="buttonText">止跌部漲 </span>
+                </button>
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="外資連賣" name="str">
+                    <h3><b>外資連賣</b></h3>
+                    <span class="buttonText">外資連續五日賣超一千張(含)以上</span>
+                </button>
+
+                <button class="btn btn-outline-primary  strategyDiv shuffle-grid-item" data-groups="sell" value="投信連賣" name="str">
+                    <h3><b>投信連賣</b></h3>
+                    <span class="buttonText">投信連續五日賣超五百張(含)以上</span>
+                </button>
+                @if (User.Identity.GetUserTier().ToLower() == "true")
+                {
+                    <a href="https://localhost:44327/stocks/Customize" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                        <h3><b>想要挖掘更多股票嗎?</b></h3>
+                        <span class="buttonText">點擊了解更多</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="https://localhost:44327/Manage/Pay" class="btn btn-outline-warning  strategyDiv shuffle-grid-item align-items-center" data-groups="buy,sell" style="padding-top:30px;">
+                        <h3><b>想要挖掘更多股票嗎?</b></h3>
+                        <span class="buttonText">點擊了解更多</span>
+                    </a>
+                }
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            @*<div class=" alert alert-danger alert-dismissible fade show text-center">
+                    <h3 class="text-center">挖掘多方股票</h3>
+                </div>*@
+
+            <div class="positiveStrategy">
+
+            </div>
+
+
+        </form>
+    </div>
+
+
+
+    <br />
+    <br />
+    <script src="/Scripts/jquery-3.4.1.js"></script>
+    @*<script>
+            console.log($)
+            $('.btn').click(function () {
+                alert($(this).val())
+            })
+        </script>*@
+
+
 </div>
-
-<br />
-<br />
-<div id="stockInfo">
-    @{
-        if (Model != null)
-        {
-
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>股票名稱</th>
-                        <th colspan="7" style="text-align:center">今日資訊</th>
-                        <th colspan="4" style="text-align:center">基本資料</th>
-                        <th colspan="4" style="text-align:center">每股盈餘</th>
-                        <th colspan="4" style="text-align:center">近一季獲利指標</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">股票代號</th>
-
-                        <th scope="col">日期</th>
-                        <th scope="col">收盤價</th>
-                        <th scope="col">漲跌</th>
-                        <th scope="col">漲跌%</th>
-                        <th scope="col">成交量</th>
-                        <th scope="col">本益比</th>
-                        <th scope="col">股價淨值比</th>
-
-                        <th scope="col">上市櫃</th>
-                        <th scope="col"> 股票代號</th>
-                        <th scope="col">產業</th>
-                        <th scope="col">股本(億)</th>
-
-                        <th scope="col">今年目前</th>
-                        <th scope="col">近一年</th>
-                        <th scope="col">近一季</th>
-                        <th scope="col">近四季</th>
-
-                        <th scope="col">毛利率(%)</th>
-                        <th scope="col">營業收益率(%)</th>
-                        <th scope="col">稅前純益率(&)</th>
-                        <th scope="col">稅後純益率(%)</th>
-
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
-                        {
-                            // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x =>x.stockDate).ToList()[0];
-                            <tr>
-                                <td class="">
-                                    <input class="stockName btn btn-outline-info" type="button"  value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
-                                    <input class="stockName btn btn-outline-info" type="button"  value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
-                                </td>
-                                <td>@item.stockDate</td>
-                                <td>@item.endPrice</td>
-                                @{ decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);}
-                                <td>@upDown</td>
-                                @{ decimal upDownPercent = decimal.Round((upDown / decimal.Parse(item.endPrice)), 2);}
-                                <td>@upDownPercent </td>
-                                @{ int num = (int)item.numOfSharesTrade;
-                                    string result = num.ToString("N0");}
-                                <td>@result</td>
-
-                          </tr>
-                        }
-                    }
-
-                </tbody>
-            </table>
-        }
-
-    }
-</div>
-
-
-<br />
-<br />
-<br />
-<br />

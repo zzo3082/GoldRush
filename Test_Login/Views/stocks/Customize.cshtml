@@ -3,348 +3,106 @@
 @{
     ViewBag.Title = "自訂策略";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutRight.cshtml";
+}
 <style type="text/css">
     .stockCustomize {
+        text-align: left;
+    }
+
+        .stockCustomize input[type=text] {
+            width: 40px;
+            height: 23px;
+        }
+
+    #stockInfo {
         text-align: center;
     }
-    .card-body input[type=text]{
-        width:50px;
+
+    .stockName {
+        width: 100px;
+    }
+
+    .modal-backdrop {
+        opacity: 0.5 !important;
+    }
+
+    .search {
+        position: relative;
+        display: inline-block;
     }
 </style>
 
 
-<h2 class="nav justify-content-lg-center">自訂策略</h2>
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top:50px; padding-bottom:50PX;">
+    <img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.png" alt="background image" />
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+                Easy 3 steps online booking
+            </span>*@
+        <h1 class="nav justify-content-lg-center animated  tracking-in-contract">自訂策略</h1>
+    </div>
+</section>
+<br />
+<br />
 <div class="container">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本面</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">技術面</a>
-        </li>
-        @*<li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">籌碼面</a>
-            </li>*@
-    </ul>
-
-
-    <div class="tab-content" id="myTabContent">
-        @*基本面*@
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="accordion" id="accordionExample">
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                營收
-                            </button>
-                        </h2>
-                    </div>
-
-                    <div id="collapseOne" class=" collapse show alert-danger" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-                            <form method="post" action="/stocks/Customize">
-                                <div class="stockCustomize">
-                                    <input name="selectDate" type="date" />
-                                    <select name="priceType">
-                                        <option>開盤價</option>
-                                        <option>最高價</option>
-                                        <option>最低價</option>
-                                        <option>收盤價</option>
-                                    </select>
-                                    從<input type="text" name="minValue" value="@(ViewBag.minValue ?? string.Empty)" />
-                                    到<input type="text" name="maxValue" value="@(ViewBag.maxValue ?? string.Empty)" />
-                                    <button type="submit">送出</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                EPS
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[checkbox] [form] in*@
-                            <form method="post" action="/stocks/Customize">
-                                <div class="stockCustomize">
-                                    <input name="selectDate" type="date" />
-                                    <select name="priceType">
-                                        <option>開盤價</option>
-                                        <option>最高價</option>
-                                        <option>最低價</option>
-                                        <option>收盤價</option>
-                                    </select>
-                                    從<input type="text" name="minValue" />
-                                    到<input type="text" name="maxValue" />
-                                    <button type="submit">送出</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                股利、股本、殖利率
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-                            <form method="post" action="/stocks/Customize">
-                                <div class="stockCustomize">
-                                    <input name="selectDate" type="date" />
-                                    <select name="priceType">
-                                        <option>開盤價</option>
-                                        <option>最高價</option>
-                                        <option>最低價</option>
-                                        <option>收盤價</option>
-                                    </select>
-                                    從<input type="text" name="minValue" />
-                                    到<input type="text" name="maxValue" />
-                                    <button type="submit">送出</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingFour">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                本益比、毛利率、類別
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-                            <label>
-                                <input type="checkbox" name="factor1" />&nbsp
-                                <input name="selectDate" type="date" />&nbsp
-                                <select name="priceType">
-                                    &nbsp
-                                    <option>開盤價</option>
-                                    <option>最高價</option>
-                                    <option>最低價</option>
-                                    <option>收盤價</option>
-                                </select>&nbsp
-                                從 <input type="text" name="minValue" />&nbsp
-                                到 <input type="text" name="maxValue" />
-                            </label>
-                            <br />
-                            <label>
-                                <input type="checkbox" name="factor2" />&nbsp
-                                <input name="selectDate" type="date" />&nbsp
-                                <select name="priceType">
-                                    &nbsp
-                                    <option>開盤價</option>
-                                    <option>最高價</option>
-                                    <option>最低價</option>
-                                    <option>收盤價</option>
-                                </select>&nbsp
-                                從 <input type="text" name="minValue" />&nbsp
-                                到 <input type="text" name="maxValue" />
-                            </label>
-                            <br />
-                            <label>
-                                <input type="checkbox" name="factor3" />&nbsp
-                                <input name="selectDate" type="date" />&nbsp
-                                <select name="priceType">
-                                    &nbsp
-                                    <option>開盤價</option>
-                                    <option>最高價</option>
-                                    <option>最低價</option>
-                                    <option>收盤價</option>
-                                </select>&nbsp
-                                從 <input type="text" name="minValue" />&nbsp
-                                到 <input type="text" name="maxValue" />
-                            </label>
-                            <br />
-                            <label>
-                                <input type="checkbox" name="factor4" />&nbsp
-                                <input name="selectDate" type="date" />&nbsp
-                                <select name="priceType">
-                                    &nbsp
-                                    <option>開盤價</option>
-                                    <option>最高價</option>
-                                    <option>最低價</option>
-                                    <option>收盤價</option>
-                                </select>&nbsp
-                                從 <input type="text" name="minValue" />&nbsp
-                                到 <input type="text" name="maxValue" />
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingFive">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                @*[Title] in*@
-                                股東權益報酬率、資產報酬率、負債比率、本業收入、利息保障
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingSix">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                @*[Title] in*@
-                                財報
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingSeven">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                @*[Title] in*@
-                                營業利率、稅後淨利率、股價淨值比
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingEight">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                @*[Title] in*@
-                                流動比率、速動比率、價值估算、合約負債
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingNine">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                                @*[Title] in*@
-                                可轉換公司債、波動率、Beta
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-                @*[card] in*@
-                <div class="card">
-                    <div class="card-header" id="headingTen">
-                        <h2 class="mb-0">
-                            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
-                                @*[Title] in*@
-                                ETF、自選股、期貨
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
-                        <div class="card-body">
-                            @*[form] in*@
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @*技術面*@
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingOne">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseOne" aria-expanded="true" aria-controls="tech_collapseOne">
-                            KDJ
+    <div id="tech">
+       
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#kdjModal">
+            KDJ
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="kdjModal" tabindex="-1" aria-labelledby="kdjModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="kdjModalLabel">KDJ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </h2>
-                </div>
-
-                <div id="tech_collapseOne" class=" collapse" aria-labelledby="tech_headingOne" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
+                    </div>
+                    <div class="modal-body ">
                         <div class="stockCustomize">
-                            <select>
+                            <input type="checkbox" id="btnKDJ1" />
+                            <select id="kdj1_kdj1">
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
                             </select>
                             連續
-                            <input type="text" />
+                            <input type="text" id="kdj1_day1" />
                             天
-                            <select>
+                            <select id="kdj1_dir1">
                                 <option>大於</option>
                                 <option>小於</option>
                             </select>
-                            <input type="text" />
+                            <input type="text" id="kdj1_value1" />
                         </div><hr />
                         <div class="stockCustomize">
-                            <select>
+                            <input type="checkbox" id="btnKDJ2" />
+                            <select id="kdj2_kdj1">
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
                             </select>
-                            <select>
+                            <select id="kdj2_dir1">
                                 <option>大於</option>
                                 <option>小於</option>
                             </select>
                             前
-                            <input type="text" />
+                            <input type="text" id="kdj2_day1" />
                             天
-                            <select>
+                            <select kdj2_kdj2>
                                 <option>K</option>
                                 <option>D</option>
                                 <option>J</option>
                             </select>
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ3" />
                             <select>
                                 <option>K</option>
                                 <option>D</option>
@@ -357,6 +115,7 @@
                             <input type="text" />
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ4" />
                             <select>
                                 <option>K</option>
                                 <option>D</option>
@@ -369,6 +128,7 @@
                             <input type="text" />
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnKDJ5" />
                             <select>
                                 <option>K</option>
                                 <option>D</option>
@@ -386,28 +146,41 @@
                             <input type="text" />以上
                         </div><hr />
                         <div class="stockCustomize">
-                            最近<input type="text" />天KD
+                            <input type="checkbox" id="btnKDJ6" />
+                            最近 <input type="text" /> 天KD
                             <select>
                                 <option>黃金交叉</option>
                                 <option>死亡交叉</option>
                             </select>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <div class="spinner-border" role="status" style="display:none">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <button type="button" id="btnKDJ" class="btn btn-primary" onclick="kdj()">確認</button>
+                    </div>
                 </div>
             </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingTwo">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseTwo" aria-expanded="false" aria-controls="tech_collapseTwo">
-                            MACD
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#macdModal">
+            MACD
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="macdModal" tabindex="-1" aria-labelledby="macdModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="macdModalLabel">MACD</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseTwo" class="collapse" aria-labelledby="tech_headingTwo" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[checkbox] [form] in*@
+                    </div>
+                    <div class="modal-body">
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD1" />
                             <select>
                                 <option>DIF</option>
                                 <option>MACD</option>
@@ -423,6 +196,7 @@
                             </select>
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD2" />
                             MACD近<input type="text" />天都
                             <select>
                                 <option>綠柱</option>
@@ -430,6 +204,7 @@
                             </select>
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD3" />
                             近<input type="text" />天MACD發生
                             <select>
                                 <option>黃金交叉</option>
@@ -437,6 +212,7 @@
                             </select>
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD4" />
                             MACD發生
                             <select>
                                 <option>綠柱變紅柱</option>
@@ -444,6 +220,7 @@
                             </select>
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMACD5" />
                             <select>
                                 <option>DIF</option>
                                 <option>MACD</option>
@@ -451,21 +228,30 @@
                             介於<input type="text" />至<input type="text" />之間
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
                 </div>
             </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingThree">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseThree" aria-expanded="false" aria-controls="tech_collapseThree">
-                            均線
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#maModal">
+            均線
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="maModal" tabindex="-1" aria-labelledby="maModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="maModalLabel">均線</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseThree" class="collapse" aria-labelledby="tech_headingThree" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
+                    </div>
+                    <div class="modal-body">
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA1" />
                             連續<input type="text" />天股價都
                             <select>
                                 <option>大於</option>
@@ -474,6 +260,7 @@
                             <input type="text" />天均線
                         </div><hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA2" />
                             最近<input type="text" />天內的股價有
                             <select>
                                 <option>突破</option>
@@ -483,6 +270,7 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA3" />
                             今日股價
                             <select>
                                 <option>大於</option>
@@ -498,6 +286,7 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA4" />
                             近<input type="text" />天<input type="text" />日均線和<input type="text" />日均線有發生
                             <select>
                                 <option>黃金交叉</option>
@@ -506,6 +295,7 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnMA5" />
                             近<input type="text" />天<input type="text" />日均線的斜率
                             <select>
                                 <option>大於</option>
@@ -514,45 +304,106 @@
                             <input type="text" />%
                         </div>
                     </div>
-                </div>
-            </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingFour">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseFour" aria-expanded="false" aria-controls="tech_collapseFour">
-                            K線
-                        </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseFour" class="collapse" aria-labelledby="tech_headingFour" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
-                        <div class="stockCustomize">
-                            連續<input type="text" />日為
-                            <select>
-                                <option>紅K線</option>
-                                <option>黑K線</option>
-                            </select>
-                        </div>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
                     </div>
                 </div>
             </div>
-            @*[card] in*@
-            <div class="card">
-                <div class="card-header" id="tech_headingFive">
-                    <h2 class="mb-0">
-                        <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#tech_collapseFive" aria-expanded="false" aria-controls="tech_collapseFive">
-                            @*[Title] in*@
-                            成交量
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#candleModal">
+            K線
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="candleModal" tabindex="-1" aria-labelledby="candleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="candleModalLabel">K線</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </h2>
-                </div>
-                <div id="tech_collapseFive" class="collapse" aria-labelledby="tech_headingFive" data-parent="#accordionExample">
-                    <div class="card-body">
-                        @*[form] in*@
+                    </div>
+                    <div class="modal-body">
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle1" />
+                            連續<input type="text" />天股價都
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div><hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle2" />
+                            最近<input type="text" />天內的股價有
+                            <select>
+                                <option>突破</option>
+                                <option>跌破</option>
+                            </select>
+                            <input type="text" />天均線
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle3" />
+                            今日股價
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <select>
+                                <option>5</option>
+                                <option>20</option>
+                                <option>60</option>
+                                <option>100</option>
+                            </select>
+                            日均線的<input type="text" />%
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle4" />
+                            近<input type="text" />天<input type="text" />日均線和<input type="text" />日均線有發生
+                            <select>
+                                <option>黃金交叉</option>
+                                <option>死亡交叉</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnCandle5" />
+                            近<input type="text" />天<input type="text" />日均線的斜率
+                            <select>
+                                <option>大於</option>
+                                <option>小於</option>
+                            </select>
+                            <input type="text" />%
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#volumeModal">
+            成交量
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="volumeModal" tabindex="-1" aria-labelledby="volumeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="volumeModalLabel">成交量</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume1" />
                             近<input type="text" />天都
                             <select>
                                 <option>大於</option>
@@ -562,6 +413,7 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume2" />
                             近<input type="text" />天有<input type="text" />天是
                             <select>
                                 <option>綠柱</option>
@@ -570,6 +422,7 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume3" />
                             連續<input type="text" />天都是
                             <select>
                                 <option>綠柱</option>
@@ -578,347 +431,493 @@
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume4" />
                             今日成交量創<input type="text" />天新高
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume5" />
                             <input type="text" />天均量大於<input type="text" />張
                         </div>
                         <hr />
                         <div class="stockCustomize">
+                            <input type="checkbox" id="btnVolume6" />
                             今日成交量大於<input type="text" />天均量的<input type="text" />%
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="basic">
+        
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#revenuModal">
+            營收
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="revenuModal" tabindex="-1" aria-labelledby="revenuModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="revenuModalLabel">營收</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#epsModal">
+            EPS
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="epsModal" tabindex="-1" aria-labelledby="epsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="epsModalLabel">EPS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        @*<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#perModal">
+            本益比、毛利率、類別
+        </button>*@
+        <!-- Modal -->
+        <div class="modal fade" id="perModal" tabindex="-1" aria-labelledby="perModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="perModalLabel">本益比、毛利率、類別</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        @*籌碼面*@
-        <!--<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseOne" aria-expanded="true" aria-controls="chip_collapseOne">
-                    融資、融券
-                </button>
-            </h2>
-        </div>
-
-        <div id="chip_collapseOne" class=" collapse show alert-danger" aria-labelledby="chip_headingOne" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingTwo">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseTwo" aria-expanded="false" aria-controls="chip_collapseTwo">
-                    三大法人
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseTwo" class="collapse" aria-labelledby="chip_headingTwo" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[checkbox] [form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingThree">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#chip_collapseThree" aria-expanded="false" aria-controls="chip_collapseThree">
-                    主力、中實戶、券商
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseThree" class="collapse" aria-labelledby="chip_headingThree" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingFour">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseFour" aria-expanded="false" aria-controls="chip_collapseFour">
-                    大戶、散戶＜多方＞
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseFour" class="collapse" aria-labelledby="chip_headingFour" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingFive">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseFive" aria-expanded="false" aria-controls="chip_collapseFive">-->
-        @*[Title] in*@
-        <!--大戶、散戶＜空方＞
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseFive" class="collapse" aria-labelledby="chip_headingFive" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingSix">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseSix" aria-expanded="false" aria-controls="chip_collapseSix">-->
-        @*[Title] in*@
-        <!--買賣家數差、籌碼集中度、周轉率、券資比
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseSix" class="collapse" aria-labelledby="chip_headingSix" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-        @*[card] in*@
-        <!--<div class="card">
-        <div class="card-header" id="chip_headingSeven">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#chip_collapseSeven" aria-expanded="false" aria-controls="chip_collapseSeven">-->
-        @*[Title] in*@
-        <!--八大官股、當沖率、董監事
-                </button>
-            </h2>
-        </div>
-        <div id="chip_collapseSeven" class="collapse" aria-labelledby="chip_headingSeven" data-parent="#accordionExample">
-            <div class="card-body">-->
-        @*[form] in*@
-
-        <!--</div>
-            </div>
-        </div>-->
-
-    </div>
-</div>
-</div>
 
 
-<!--<div class="accordion" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    基本面
-                </button>
-            </h2>
-        </div>
 
-        <div id="collapseOne" class=" collapse show alert-danger" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">-->
-@*[form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" value="@(ViewBag.minValue ?? string.Empty)" />
-                    到<input type="text" name="maxValue" value="@(ViewBag.maxValue ?? string.Empty)" />
-                    <button type="submit">送出</button>
+
+        @*---籌碼面Modal------*@
+        <div class="modal fade" id="investorsModal" tabindex="-1" aria-labelledby="investorsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="investorsModalLabel">三大法人</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingTwo">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                技術面
-            </button>
-        </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[checkbox] [form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingThree">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                籌碼面
-            </button>
-        </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[form] in*@
-<!--<form method="post" action="/stocks/Customize">
-                <div class="stockCustomize">
-                    <input name="selectDate" type="date" />
-                    <select name="priceType">
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>
-                    從<input type="text" name="minValue" />
-                    到<input type="text" name="maxValue" />
-                    <button type="submit">送出</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header" id="headingFour">
-        <h2 class="mb-0">
-            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                測試區
-            </button>
-        </h2>
-    </div>
-    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-        <div class="card-body">-->
-@*[form] in*@
-<!--<label>
-                    <input type="checkbox" name="factor1" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor2" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor3" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" name="factor4" />&nbsp
-                    <input name="selectDate" type="date" />&nbsp
-                    <select name="priceType">
-                        &nbsp
-                        <option>開盤價</option>
-                        <option>最高價</option>
-                        <option>最低價</option>
-                        <option>收盤價</option>
-                    </select>&nbsp
-                    從 <input type="text" name="minValue" />&nbsp
-                    到 <input type="text" name="maxValue" />
-                </label>
             </div>
         </div>
+
+        <div class="modal fade" id="marginBuyModal" tabindex="-1" aria-labelledby="marginBuyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginBuyModalLabel">融資</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="marginSellModal" tabindex="-1" aria-labelledby="marginSellModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="marginSellModalLabel">融券</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-</div>-->
+    <hr />
+</div>
 
-<div id="stockInfo">
-    @{
-        if (Model != null)
-        {
 
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>股票名稱</th>
-                        <th colspan="5" style="text-align:center;">今日資訊</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">股票代號</th>
-                        <th scope="col">收盤價</th>
-                        <th scope="col">漲跌</th>
-                        <th scope="col">漲跌%</th>
-                        <th scope="col">成交量</th>
-                        <th scope="col">本益比</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
-                        {
-                            // stockDate should use current datetime
-                            var item = Model.Where(x => x.stockID == s && x.stockDate == ViewBag.date1).ToList()[0];
-                            <tr>
-                                <td>
-                                    <input class="stockName" type="button" value="@item.stockName" onclick="location.href='@Url.Action(s, "stocks/chart")'" /><br />
-                                    <input class="stockName" type="button" value="@item.stockID" onclick="location.href='@Url.Action(s, "stocks/chart")'" />
-                                </td>
-                                <td>@Html.Encode(item.endPrice)</td>
-                                @*<td>@Html.Encode(item.upDowmPrice)</td>
-                                    @{ float ratio = float.Parse(item.upDowmPrice) / float.Parse(item.openPrice);}*@
-                                @*<td>@ratio </td>*@
-                                <td>@Html.Encode(item.numOfSharesTrade)</td>
-                                @*<td>@Html.Encode(item.PER)</td>*@
-                            </tr>
-                        }
-                    }
+<div class="container animated fadeInUp delay-1s" style="min-width:1300px;">
 
-                </tbody>
-            </table>
+    <section class="section bg-secondary" id="services">
+        <div class="section-content container">
+            <div class="d-flex justify-content-center justify-content-md-between align-items-end">
+                <div class="text-center text-md-left">
+                    <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted">
+                        點擊開始進階挖掘
+                    </small>
+                    <h1>自訂您的策略</h1>
+                </div>
+                <div class="d-none d-md-block">
+                    <div class="btn-group">
+                        <div class="radio-buttons-group border-0 bg-cyan-10" data-toggle="shuffle-grid" data-target="#stockAnalysis">
+                            <button class="btn btn-light fs-5" data-value="technical">技術面</button>
+                            <button class="btn btn-light fs-5" data-value="fundamental">基本面</button>
+                            <button class="btn btn-light fs-5" data-value="chip">籌碼面</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shuffle-grid shuffle-grid-gap-14 shuffle-grid-cols-1 shuffle-grid-cols-lg-2 mt-14 " id="stockAnalysis">
+                <div class="shuffle-grid-item " data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters ">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#kdjModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b>KDJ</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body py px">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">KD指標</h2>
+                                    <p>一般 K 值與 D 值雖然朝向同一個趨勢發展，但 K 值波動會比 D 值大，所以當 K 值與 D 值交叉時，就會產生比較明確的買進或賣出的訊號。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#macdModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b> Macd</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">MACD指標</h2>
+                                    <p>MADC 就是指數平滑異同移動平均線透過計算「收盤時股價或指數變化的指數移動平均值（ EMA ）」之間的離差程度（ DIF ）而來，用來確定波段漲幅並找到買賣點。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#maModal">
+                                <i class="fa fa-line-chart fs-8"></i>
+                                <b>均線</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">MA</h2>
+                                    <p>均線代表過去一段時間的平均成交價格。如果均線的價格越來越高，代表投資人看好這檔股票，也就代表現階段市場趨勢是往上。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#candleModal">
+                                <i class="fa fa-line-chart fs-8"></i>
+                                <b>K線</b>
+                            </button>
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">K線(Candlestick Chart)</h2>
+                                    <p>用來記錄一段期間某檔標的價格的變化，可以知道某檔標的這段期間的開盤價、收盤價、最高價以及最低價。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="technical">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-info fs-lg-7" data-toggle="modal" data-target="#volumeModal">
+                                <i class="fa fa-signal fs-8"></i>
+                                <b>成交量</b>  
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">成交量</h2>
+                                    <p>成交量（買賣量）是指股票市場整體買賣成立的股票數量。當股票市場整體交易的股票數量增加，成交量（買賣量）就會增加。成交量增加，就代表「市場動能」強勁，暗示未來整體市場行情看好。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*----基本面-----*@
+
+
+
+
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#revenuModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>營收</b> 
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">營收</h2>
+                                    <p>
+                                        是指企業在某段時間內，經由商業行為 取得的收入。
+                                        但不包括成本、費用、稅金。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#epsModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>EPS</b>
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">EPS 每股盈餘</h2>
+                                    <p>在股票的世界裡，要比較兩間不同公司，就是用「每股盈餘」EPS（ Earning per Share），也就是「企業為一張股票賺到多少錢」</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shuffle-grid-item" data-groups="fundamental">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-success fs-lg-7" data-toggle="modal" data-target="#perModal">
+                                <i class="material-icons fs-8">trending_up</i>
+                                <b>本益比、毛利率</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">本益比</h2>
+                                    <p>本益比 PE tatio（ Price-to-Earning Ratio ）就是「這支股票，要多久才會回本」，也可以理解成「每賺一塊錢，要投入多少成本」。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*----籌碼面--------*@
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#investorsModal">
+                                <i class="material-icons fs-8">people</i>
+                                <b>三大法人</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">三大法人</h2>
+                                    <p>
+                                        台灣股票市場的三大法人是指外資、投信、自營商，
+                                        它們是被法律承認的機構團體分類，佔股市總交易量的比重很高，會大幅影響股市的漲跌。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#marginBuyModal">
+                                <i class="material-icons fs-8">monetization_on</i>
+                                <b>融資</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">融資</h2>
+                                    <p>當融資使用率高時，代表著欲追價的散戶多已進場，後勢將有力道缺乏的可能</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shuffle-grid-item" data-groups="chip">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+
+                            <button type="button" class="col-sm-4 position-relative btn btn-outline-warning fs-lg-7" data-toggle="modal" data-target="#marginSellModal">
+                                <i class="material-icons fs-8">data_usage</i>
+                                <b>資券比</b>
+
+                            </button>
+
+                            <div class="col-sm-8">
+                                <div class="card-body ">
+                                    <h2 class="fs-5 fs-md-6 fs-lg-7">資券比</h2>
+                                    <p>是融資餘額與融券餘額之比率。可用以研判個股是否融資過高，有無軋空行情。資券比若高於40%，產生軋空的機會較大。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+<div class="container" id="stockDiv" tabindex="0"></div>
+<br />
+
+<script>
+    function kdj() {
+        $(".spinner-border").css("display", "block");
+        $("#btnKDJ").css("display", "none");
+        if ($("#btnKDJ1").is(":checked")) {
+            kdj1();
         }
+        if ($("btnKDJ2").is(":checked")) {
+            kdj2();
+        }
+        $("#stockDiv").focus();
 
     }
-</div>
+
+    function kdj1() {
+        var data = {
+            kdj1: $("#btnKDJ1").is(":checked"),
+            kdj2: $("#btnKDJ2").is(":checked"),
+            kdj1_kdj1: $("#kdj1_kdj1 :selected").text(),
+            kdj1_day1: $("#kdj1_day1").val(),
+            kdj1_dir1: $("#kdj1_dir1 :selected").text(),
+            kdj1_value1: $("#kdj1_value1").val(),
+            storedKDJ1: $("#storedKDJ1").text(),
+            storedKDJ2: $("#storedKDJ2").text(),
+            StockArray: $("#storedStockArray").text()
+        }
+        $.ajax({
+            async: "false",
+            type: "post",
+            url: "/stocks/StockResult",
+            data: data
+        }).done(function (r) {
+            $("#stockDiv").html(r);
+            console.log("123");
+            $(".spinner-border").css("display", "none");
+            $("#btnKDJ").css("display", "block");
+            $("#kdjModal").modal("hide");
+            //$('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        })
+    }
+
+    function kdj2() {
+        var data = {
+            kdj1: $("#btnKDJ1").is(":checked"),
+            kdj2: $("#btnKDJ2").is(":checked"),
+            kdj2_kdj1: $("#kdj2_kdj1 :selected").text(),
+            kdj2_dir1: $("#kdj2_dir1 :selected").text(),
+            kdj2_day1: $("#kdj2_day1").val(),
+            kdj2_kdj2: $("#kdj2_kdj2 :selected").text(),
+            storedKDJ1: $("#storedKDJ1").text(),
+            storedKDJ2: $("#storedKDJ2").text(),
+            StockArray: $("#storedStockArray").text()
+        }
+        $.ajax({
+            async: "false",
+            type: "post",
+            url: "/stocks/StockResult",
+            data: data,
+            success: function (data) {
+                $("#stockDiv").html(data);
+            }
+        });
+    }
+
+</script>

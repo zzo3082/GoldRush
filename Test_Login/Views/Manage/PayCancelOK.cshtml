@@ -1,0 +1,27 @@
+﻿@using Test_Login.Models
+@using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+
+
+<body>
+    <div class="ui grid centered doubling stackable">
+        <div class="six wide column">
+            <div class="ui segment">
+                <h1 class="ui header">取消訂閱成功 </h1>
+                <h3> 成功退訂本網站 </h3>
+                <a href="/Home/Index">等待3秒後跳轉頁面</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout("location.href='/Home/Index';", 3000);
+        }
+    </script>
+</body>
+

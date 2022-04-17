@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Test_Login.Models.stockPrice>
+@using Microsoft.AspNet.Identity
+@using Test_Login.Models
+@using Test_Login.Models.Extensions;
 
-@{
-    ViewBag.Title = ViewBag.id;
-}
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
@@ -35,96 +35,113 @@
         display: none !important;
     }
 
-     Hiding the checkbox, but allowing it to be focused 
+    Hiding the checkbox, but allowing it to be focused
     .badgebox {
         opacity: 0;
     }
 
     .badgebox + .badge {
-        /* Move the check mark away when unchecked*/        
+        /* Move the check mark away when unchecked*/
         text-indent: -999999px;
-        /* Makes the badge's width stay the same checked and unchecked*/        
+        /* Makes the badge's width stay the same checked and unchecked*/
         width: 27px;
     }
 
-    /*.badgebox:focus + .badge {*/
-        /* Set something to make the badge looks focused */
-        /* This really depends on the application, in my case it was: */
-        /* Adding a light border */
-        /*box-shadow: inset 0px 0px 5px;*/
-        /* Taking the difference out of the padding */
-    /*}*/
-
     .badgebox:checked + .badge {
-        /*Move the check mark back when checked*/ 
+        /*Move the check mark back when checked*/
         text-indent: 0;
+    }
+
+    .search {
+        position: relative;
+        display: inline-block;
     }
 </style>
 
 <body>
 
     <div class="container">
-        <h2>@ViewBag.id</h2>
+        <h3>
+            @ViewBag.id
+            <span>
+                    @{ 
+                        string user = User.Identity.GetStockBag();
+                        if (user?.Contains(ViewBag.stockID))
+                        {
+                            <label for="isLike">
+                            <svg width="20px" id="likeSVG" class="w-6 h-6" fill="gray" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></label>
+                            <input type="checkbox" id="isLike" onchange="isLikeCheck()" checked style="display:none" />
+                        }
+                        else
+                        {
+                            <label for="isLike">
+                            <svg width="20px" id="likeSVG" class="w-6 h-6" fill="none" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></label>
+                            <input type="checkbox" id="isLike" onchange="isLikeCheck()" style="display:none" />
+                        }
+                    }
+            </span>
+        </h3>
+
         <div class="row">
             <div class="col-md-3">
-                <h6>主圖指標</h6>
+                <h4>主圖指標</h4>
                 <div class="list-group">
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawCol()" id="btnCol" style="display:none">
-                        成交量(Volume)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>成交量(Volume)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawSMA()" id="btnSMA" style="display:none">
-                        移動平均線(MA)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>移動平均線(MA)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawEMA()" id="btnEMA" style="display:none">
-                        指數移動平均線(EMA)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>指數移動平均線(EMA)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawBBands()" id="btnBBands" style="display:none">
-                        布林通道<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>布林通道
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKC()" id="btnKC" style="display:none">
-                        肯特納通道(KC)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>肯特納通道(KC)
                     </label>
                 </div>
-                <h6>副圖指標</h6>
+                <h4>副圖指標</h4>
                 <div class="list-group">
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawKD()" id="btnKD" style="display:none" />
-                        隨機震盪指標(KD)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>隨機震盪指標(KD)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawMACD()" id="btnMACD" style="display:none" />
-                        指數平滑異同移動平均線(MACD)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>指數平滑異同移動平均線(MACD)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawRSI()" id="btnRSI" style="display:none" />
-                        相對強弱指標(RSI)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>相對強弱指標(RSI)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawADL()" id="btnADL" style="display:none" />
-                        累積/分配線(ADL)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>累積/分配線(ADL)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAroon()" id="btnAroon" style="display:none" />
-                        阿隆指標(Aroon)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>阿隆指標(Aroon)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawATR()" id="btnATR" style="display:none" />
-                        真實波動幅度均值(ATR)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>真實波動幅度均值(ATR)
                     </label>
                     <label class="list-group-item list-group-item-action btn">
                         <input class="form-check-input me-1 badgebox" type="checkbox" onchange="drawAO()" id="btnAO" style="display:none" />
-                        動量震盪指標(AO)<span class="badge">&check;</span>
+                        <span class="badge">&check;</span>動量震盪指標(AO)
                     </label>
                 </div>
             </div>
             <div class="col-md-9">
                 <select id="typeSelect" onclick="create()">
-                    <option value="default" selected disabled>工具</option>
+                    <option value="default" selected disabled>繪圖工具</option>
                     <option value="andrews-pitchfork">分叉線</option>
                     <option value="horizontal-line">水平線</option>
                     <option value="vertical-line">垂直線</option>
@@ -143,58 +160,11 @@
                 </select>
                 <button class="btn btn-light" onclick="removeAll()">移除全部</button>
                 <button class="btn btn-light" onclick="removeSelected()">移除選定</button>
-                <button class="btn btn-light" onclick="chart.contextMenu().show(1100, 260)">設定</button>
+                <button class="btn btn-light" onclick="chart.contextMenu().show(900, 260)">設定</button>
                 <div id="chartjs"></div>
             </div>
         </div>
     </div>
-
-    <br /><hr /><br />
-    <div class="row" style="width:100%;">
-        <div class="table-responsive col-md-6">
-            <div id="info">
-                <a href="https://www.cmoney.tw/forum/stock/3704#price">股市同學會</a>
-                <a href="https://statementdog.com/analysis/3704">財報狗</a>
-                <a href="https://tw.stock.yahoo.com/quote/3704">YAHOO</a>
-                <a href="https://histock.tw/stock/3704#price">HISTOCK</a>
-                <a href="https://www.wantgoo.com/stock/3704?price">玩股網</a>
-                <a href="https://pchome.megatime.com.tw/stock/sid3704.html?price">PCHOME</a>
-            </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">名稱</th>
-                        <th scope="col">資料</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>上市櫃</td>
-                        <td>上櫃</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="table-responsive col-md">
-            <h6>財報比率</h6>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">名稱</th>
-                        <th scope="col">資料</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>上市櫃</td>
-                        <td>上櫃</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
 </body>
 
 <script type="text/javascript">
@@ -241,12 +211,14 @@
     var series = plot.candlestick(mapping).zIndex(10);
     series.name("@ViewBag.id");
 
-    series.risingStroke("#C20000");
-    series.risingFill("#C20000");
-    series.fallingStroke("#00C200");
-    series.fallingFill("#00C200");
+    series.risingStroke("#FF0000");
+    series.risingFill("#FF0000");
+    series.fallingStroke("#006400");
+    series.fallingFill("#006400");
 
-
+    // adjusting major and minor grids
+    //var yGrid = plot.yMinorGrid();
+    //yGrid.stroke('#CFD8DC');
 
     chart.splitters().normal().stroke({
         color: 'red',
@@ -293,10 +265,10 @@
             // sets y-scale
             series_hist.yScale(customScale);
             series_hist.name("成交量");
-            series_hist.risingStroke("#C20000");
-            series_hist.risingFill("#C20000", 0.6);
-            series_hist.fallingStroke("#00C200");
-            series_hist.fallingFill("#00C200", 0.6);
+            series_hist.risingStroke("#FF0000");
+            series_hist.risingFill("#FF0000", 0.6);
+            series_hist.fallingStroke("#006400");
+            series_hist.fallingFill("#006400", 0.6);
         } else {
             console.log('456');
             plot.removeSeries("col");
@@ -509,5 +481,33 @@
         var selectedAnnotation = chart.annotations().getSelectedAnnotation();
         // remove the selected annotation
         chart.annotations().removeAnnotation(selectedAnnotation);
+    }
+
+    function isLikeCheck() {
+        // check stockID like by user.StockBag
+        if ($("#isLike").is(":checked")) {
+            $("#likeSVG").css("fill", "gray");
+        } else {
+            $("#likeSVG").css("fill", "none");
+        }
+        if ('@User.Identity.IsAuthenticated') {
+            // ajax to post check to user.stockbag
+            console.log("1234");
+            $.ajax({
+                async: "false",
+                type: "post",
+                url: "/stocks/Chart",
+                data: {
+                    isLike: $("#isLike").is(":checked"),
+                    stockID: '@ViewBag.stockID'
+                },
+                success: function (data) {
+
+                }
+            })
+            console.log("1234");
+
+        }
+
     }
 </script>

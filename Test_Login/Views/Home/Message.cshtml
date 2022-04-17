@@ -1,11 +1,18 @@
 ﻿@using Test_Login.Models
 @using Microsoft.AspNet.Identity
+@using Test_Login.Models.Extensions;
 @{
     List<message>
     messageList = ViewBag.messageList;
 }
-
+@{
+    Layout = "~/Views/Shared/_LayoutRight.cshtml";
+}
 <style>
+    .btnEdit, .btnDelete {
+        background-color: white;
+    }
+
     body {
         background-color: #f7f7f7;
     }
@@ -97,7 +104,7 @@
 
     .myTag {
         height: 30px;
-        width: 88px;
+        /*        width: 88px;*/
         text-align: justify-all;
         line-height: 0px;
     }
@@ -147,6 +154,13 @@
     .dropdown {
         position: relative;
         display: inline-block;
+        border-radius: 10px;
+    }
+
+    .img-res:hover {
+        cursor: pointer;
+        transform: scale(1.15);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.8);
     }
 
     .dropdown-content {
@@ -180,15 +194,57 @@
     label img {
         top: -10px;
     }
+    /*條件搜尋*/
+    /*    #hashtagStock{
+        width:50px;
+    }*/
+    .dddd {
+        display: inline-block;
+    }
+
+    .search {
+        position: relative;
+        display: inline-block;
+    }
+
+    #Table {
+        position: absolute;
+        background-color: white;
+        left: 0;
+        width: 215px;
+        border: solid 1px #e0e0e0;
+    }
+
+        #Table td {
+            height: 0.6rem;
+            padding-left: 15px;
+        }
+    /*條件搜尋*/
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<section class="section jarallax text-white" data-jarallax data-speed="0.5" style="padding-top: 50px; padding-bottom: 50px; background: linear-gradient(20deg, rgb(191, 53, 157), rgb(220, 76, 53), rgb(253, 255, 129)) rgb(191, 53, 157);">
+    @*<img class="section-background-image jarallax-img" src="~/img/pngtree-red-gold-stock.png" alt="background image" />*@
+    <div class="section-background-color" style="background-color: rgba(0, 0, 0, 0.2)"></div>
+    <div class="section-content container text-left  d-flex flex-column align-items-center">
+        @*<span class="badge badge-pill badge-ghost fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption">
+                Easy 3 steps online booking
+            </span>*@
+        <h1 class="nav justify-content-lg-center tracking-in-contract">討論區</h1>
+    </div>
+</section>
+<br />
+<br />
+
+
 <div class="container center">
     @if (Request.IsAuthenticated)
     {
-        // 有登入 @User.Identity.GetUserName()
-        <h2>討論區<span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
-        <button id="btnName" data-UserName="@User.Identity.GetUserName()" hidden></button>
+        // 有登入 @User.Identity.GetUserName() @User.Identity.GetNickName() @User.Identity.GetStockBag()
+    <h2>篩選文章 <input type="text" id="filter" placeholder="輸入代號或名稱 篩選文章" onkeyup="filter()" /><span class="pull-right"><button id="newItem" class="btn btn-outline-success btn-sm">發文</button></span></h2>
+        <button id="btnName" data-UserName="@User.Identity.GetNickName()" hidden></button>
+        <button id="btnID" data-UserName="@User.Identity.GetUserName()" hidden></button>
         @*發文在這*@
         <div class="panel-group ">
             @foreach (message message in messageList)
@@ -201,7 +257,7 @@
                 foreach (message article in articleList)
                 {
                     //文章區塊
-                    <div class="panel panel-primary msg" id="@article.messageID">
+                    <div class="panel panel-primary msg" id="@article.messageID" data-hashtag="@article.hashtagID">
                         @*文章頭*@
                         <div class="panel-heading">
                             @article.UserName
@@ -210,11 +266,11 @@
                                 <label for="op+@article.messageID"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></label>
                                 <button class="dropbtn" id="op+@article.messageID" hidden onclick="drop(this)" data-messageID="@article.messageID" data-UserName="@article.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                 <div id="myDropdown+@article.messageID" class="dropdown-content">
-                                    <button onclick="edit(this)" class="btnEdit" data-messageID="@article.messageID" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
-                                    <button onclick="myDelete(this)" data-messageID="@article.messageID">刪除</button>
+                                    <button onclick="edit(this)" class="btnEdit" @*data-photoOrg="@article.photo"*@ data-messageID="@article.messageID" data-photo="@string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(article.photo))" data-UserName="@article.UserName" data-main="@article.main">編輯</button>
+                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@article.messageID">刪除</button>
                                 </div>
                                 <div id="myDropdown2+@article.messageID" class="dropdown-content">
-                                    <button onclick="report(this)" id="report+@article.messageID">檢舉</button>
+                                    <button onclick="report(this)" id="report+@article.messageID" data-UserName="@article.UserName">檢舉</button>
                                 </div>
                             </div>
                             @*編輯紐*@
@@ -226,9 +282,9 @@
                             <div class="panel-content">
                                 @*文章內文*@
 
-                                @if (@article.hashtagID.ToString() != "0   ")
+                                @if (@article.hashtagID.ToString() != "0")
                                 {
-                                    <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
+                                    <a href="/stocks/Chart/@article.hashtagID.Substring(0,4)"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
                                 }
                                 @article.main
@@ -328,7 +384,7 @@
                                                 <button class="dropbtn" id="op+@reply.messageID" hidden onclick="drop(this)" data-messageID="@reply.messageID" data-UserName="@reply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                                 <div id="myDropdown+@reply.messageID" class="dropdown-content">
                                                     <button onclick="edit(this)" class="btnEdit" data-messageID="@reply.messageID" data-UserName="@reply.UserName" data-main="@reply.main">編輯</button>
-                                                    <button onclick="myDelete(this)" data-messageID="@reply.messageID">刪除</button>
+                                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@reply.messageID">刪除</button>
                                                 </div>
                                                 <div id="myDropdown2+@reply.messageID" class="dropdown-content">
                                                     <button onclick="report(this)">檢舉</button>
@@ -427,7 +483,7 @@
                                                                 <button class="dropbtn" id="op+@replyToReply.messageID" hidden onclick="drop(this)" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" name="test"><img width="20" height="20" class="img img-base img-res dropdown" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMxLjEyMTMgMTcuODc4N0MzMi4yOTI5IDE5LjA1MDIgMzIuMjkyOSAyMC45NDk3IDMxLjEyMTMgMjIuMTIxM0MyOS45NDk3IDIzLjI5MjkgMjguMDUwMiAyMy4yOTI5IDI2Ljg3ODcgMjIuMTIxM0MyNS43MDcxIDIwLjk0OTcgMjUuNzA3MSAxOS4wNTAyIDI2Ljg3ODcgMTcuODc4N0MyOC4wNTAyIDE2LjcwNzEgMjkuOTQ5NyAxNi43MDcxIDMxLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTIyLjEyMTMgMTcuODc4N0MyMy4yOTI5IDE5LjA1MDIgMjMuMjkyOSAyMC45NDk3IDIyLjEyMTMgMjIuMTIxM0MyMC45NDk3IDIzLjI5MjkgMTkuMDUwMiAyMy4yOTI5IDE3Ljg3ODcgMjIuMTIxM0MxNi43MDcxIDIwLjk0OTcgMTYuNzA3MSAxOS4wNTAyIDE3Ljg3ODcgMTcuODc4N0MxOS4wNTAyIDE2LjcwNzEgMjAuOTQ5NyAxNi43MDcxIDIyLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTEzLjEyMTMgMTcuODc4N0MxNC4yOTI5IDE5LjA1MDIgMTQuMjkyOSAyMC45NDk3IDEzLjEyMTMgMjIuMTIxM0MxMS45NDk3IDIzLjI5MjkgMTAuMDUwMiAyMy4yOTI5IDguODc4NjggMjIuMTIxM0M3LjcwNzExIDIwLjk0OTcgNy43MDcxMSAxOS4wNTAyIDguODc4NjggMTcuODc4N0MxMC4wNTAyIDE2LjcwNzEgMTEuOTQ5NyAxNi43MDcxIDEzLjEyMTMgMTcuODc4N1oiIGZpbGw9IiM4RjhGOEYiLz4KPC9zdmc+Cg==" lazy="loaded"></button>
                                                                 <div id="myDropdown+@replyToReply.messageID" class="dropdown-content">
                                                                     <button onclick="edit(this)" class="btnEdit" data-messageID="@replyToReply.messageID" data-UserName="@replyToReply.UserName" data-main="@replyToReply.main">編輯</button>
-                                                                    <button onclick="myDelete(this)" data-messageID="@replyToReply.messageID">刪除</button>
+                                                                    <button onclick="myDelete(this)" class="btnDelete" data-messageID="@replyToReply.messageID">刪除</button>
                                                                 </div>
                                                                 <div id="myDropdown2+@replyToReply.messageID" class="dropdown-content">
                                                                     <button onclick="report(this)">檢舉</button>
@@ -546,7 +602,7 @@
                         <hr />
                         <div class="panel-body">
                             <div class="panel-content">
-                                @if (@article.hashtagID != "0   ")
+                                @if (@article.hashtagID != "0")
                                 {
                                     <a href="/stocks/Chart/@article.hashtagID"><span class="myTag btn btn-outline-dark">@article.hashtagID</span></a>
                                     <br /><br />
@@ -720,20 +776,22 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
                         <div class="msginfo" id="hashtagBox">
                             <span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span>
                             <div class="btnSearch pull-right">
-                                <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
-                                    <i class="material-icons" aria-hidden="true">search </i>
-                                </button>
-                                <input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" />
+                                <section class="search" id="search2">
+                                    <div class="row dddd">
+                                        <input type="text" class="form-control-sm mb-3 pull-right" onkeyup="tipBox1(this)" autocomplete="off" placeholder="股票代碼..." id="hashtagStock" name="hashtagStock">
+                                        <button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block">
+                                            <i class="material-icons" aria-hidden="true">search </i>
+                                        </button>
+                                    </div>
+                                </section>
                             </div>
-
-                            @*<button type="button" class="btn btn-outline-dark pull-right" id="hashtag">#標個股</button>*@
                         </div>
 
                         <div class="form-group">
@@ -795,7 +853,7 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
@@ -841,7 +899,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/Home/Edit">
+                    <form method="post" action="/Home/Edit" enctype="multipart/form-data">
                         <div>
                             <input type="text" id="EditmessageID" name="messageID" value="0" hidden />
                         </div>
@@ -854,7 +912,7 @@
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value="@User.Identity.GetNickName()"
                                    readonly />
                         </div>
 
@@ -872,6 +930,8 @@
                                       id="editMain"
                                       value=""
                                       rows="3"></textarea>
+                            <input type="file" accept=".png, .jpg, .jpeg" name="imageBoxEdit" id="imageBoxEdit" onchange="setPreview1(this)" />
+                            <img id="previewEdit" src="#" />
                         </div>
 
                         <div class="modal-footer">
@@ -907,10 +967,11 @@
                             檢舉使用者名稱
                             @*</label>*@
                             <input type="text"
+                                   id="reportUserName"
                                    name="UserNameBox"
                                    class="form-control"
                                    placeholder="檢舉使用者名稱"
-                                   value="@User.Identity.GetUserName()"
+                                   value=""
                                    readonly />
                         </div>
 
@@ -941,7 +1002,7 @@
             </div>
         </div>
     </div>
-    <!-- 編輯貼文 -->
+    <!-- 檢舉貼文 -->
     <!-- 檢舉貼文 -->
     <div id="MyReportModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -971,7 +1032,7 @@
             </div>
         </div>
     </div>
-    <!-- 修改貼文 -->
+    <!-- 檢舉貼文 -->
 </div>
 @*<script>CKEDITOR.replace("mainBox");</script>*@
 @*<script>CKEDITOR.replace("UserIdbox");</script>*@
@@ -981,6 +1042,7 @@
 
 <script>
     let name = document.getElementById('btnName').dataset.username
+    let ID = document.getElementById('btnID').dataset.username
     $("#newItem").click(function () {
         $("#newsModal").modal({ backdrop: "static" });
     })
@@ -993,6 +1055,16 @@
         $("#EditmessageID").val(this.dataset.messageid);
         $("#editMain").val(this.dataset.main);
         $("#editModal").modal({ backdrop: "static" });
+        $("#previewEdit").attr('src', this.dataset.photo);
+        /*$("#imageOrg").val(this.dataset.photoOrg);*/
+        //var reader = new FileReader();
+        //reader.onload = function (e) {
+        //    $('#previewEdit')
+        //        .attr('src', e.target.result)
+        //        .maxHeight(150) // 設定圖片最大高度
+
+        //        .maxWidth(200); // 設定圖片最大寬度
+
     })
     $(".Report").click(function () {
         $("#reportResult").val("");
@@ -1002,8 +1074,10 @@
     $(".btnOK").click(function () {
         $("#MyReportModal").modal('hide');
     })
-    function report() {
+    function report(btn) {
         $("#reportModal").modal({ backdrop: "static" });
+        /*console.log(btn.dataset.username);*/
+        $("#reportUserName").val(btn.dataset.username);
 
     }
 
@@ -1048,13 +1122,30 @@
     })
 
     $('#preview').hide();
+
     function setPreview(input) {
         $('#preview').show(); // 設定顯示圖片
-
+        console.log($("imageBox").val());
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 $('#preview')
+                    .attr('src', e.target.result)
+                    .maxHeight(150) // 設定圖片最大高度
+
+                    .maxWidth(200); // 設定圖片最大寬度
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function setPreview1(input) {
+        $('#previewEdit').show(); // 設定顯示圖片
+        console.log($("imageBoxEdit").val());
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#previewEdit')
                     .attr('src', e.target.result)
                     .maxHeight(150) // 設定圖片最大高度
 
@@ -1073,7 +1164,7 @@
             messageID: 0,
             heart: -1,
             dislike: -1,
-            UserName: name,
+            UserName: ID,
             UserId: name
         }
         if (cb.checked) {
@@ -1142,7 +1233,7 @@
             messageID: 0,
             heart: -1,
             dislike: -1,
-            UserName: name,
+            UserName: ID,
             UserId: name
         }
         if (cb.checked) {
@@ -1219,7 +1310,7 @@
     }
 
     function cancelHashtag() {
-        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span><div class="btnSearch pull-right"><button id = "hashtag" type = "button" onclick = "confirmHashtag()" class= "pull-right" style = "border:0px; background-color:white; position:relative; display:inline-block" ><i class="material-icons" aria-hidden="true">search </i></button ><input type="text" class="form-control-sm mb-3 pull-right" aria-label="search" id="hashtagStock" placeholder="股票代碼..." aria-invalid="false" value="" /></div >');
+        $("#hashtagBox").html('<span class="glyphicon glyphicon-time" id="thinking">想標記個股嗎?</span><div class= "btnSearch pull-right" ><section class="search" id="search2"><div class="row dddd"><input type="text" class="form-control-sm mb-3 pull-right" onkeyup="tipBox1(this)" autocomplete="off" placeholder="股票代碼..." id="hashtagStock" name="hashtagStock"><button id="hashtag" type="button" onclick="confirmHashtag()" class="pull-right" style="border:0px; background-color:white; position:relative; display:inline-block"><i class="material-icons" aria-hidden="true">search </i></button></div></section>');
         $("#hashtagBoxid").remove();
     }
 
@@ -1258,6 +1349,133 @@
             document.getElementById(`${btn.dataset.messageid}`).classList.toggle("none")
         })
     }
+    // 將資料庫的股票代號資料轉到JS內
+    var jScriptArray=[];
+        var array = @Html.Raw(Json.Encode(@ViewBag.stockID));
+        for(var i = 0; i < array.length; i++) {
+            jScriptArray[i] = array[i];
+    }
+    // 當input text keypu時執行比對 加入提示table
+    function tipBox1(txt) {
+        QueryKeyword1($(txt).val(), jScriptArray);
+        console.log("ok");
+    }
 
+    //檢索數組裡是否有對應關鍵詞
+    function QueryKeyword1(SearchName, ArrayList) {
+        //初始化陣列
+        var Keyword = [];
+        console.log(array);
+        //遍歷陣列內容
+        if (parseInt(SearchName).toString() == "NaN") {
+            //alert("not a number");
+            for (var i = 0; i < ArrayList.length; i++) {
+                //查詢判斷陣列內是否包含關鍵詞
+                if (SearchName.length != 0) {
+                    //中文有包含就輸出
+                    if ((ArrayList[i]).includes(SearchName)) {
+                        //新增資料
+                        Keyword.push(ArrayList[i]);
+                        console.log(i);
+                    }
+                }
+            }
+        } else {
+            //alert("數字");
+            for (var i = 0; i < ArrayList.length; i++) {
+                //查詢判斷陣列內是否包含關鍵詞
+                if (SearchName.length != 0) {
+                    //搜尋框輸入資料全等於陣列內字串引數
+                    // 數字從頭開始比對
+                    if (SearchName === ArrayList[i].substr(0, SearchName.length)) {
+                        //新增資料
+                        Keyword.push(ArrayList[i]);
+                        console.log(i);
+                    }
+                }
+            }
+        }
 
+        if (Keyword.length != 0) {
+            //建立table表單
+            CreateTable1(Keyword);
+        } else {
+            //刪除table表單
+            RemoveTable1();
+        }
+    }
+
+    //監控table表單點選事件,修改input內容
+    function TableOnclick(id) {
+        $("#hashtagStock").val($("#" + id).html());
+        $("#Table").remove();
+        var stockid = $("#hashtagStock").val();
+        if (stockid == "") {
+            //alert("請輸入股票代號")
+            $("#thinking").text("請輸入股票代號!!!!!!");
+            $("#thinking").addClass("btn btn-outline-danger");
+        } else {
+            $("#UserIdbox").after(`<input type="text" name = "hashtagBox" id = "hashtagBoxid" value = "${stockid}" hidden >`);
+            //$("#hashtagBoxid").val(stockid);
+            // alert(stockid);
+            $("#hashtagBox").html(`<button type="button" class="btn btn-outline-dark" onclick="cancelHashtag()" width="40px" id="hashtaged" data-hashtag="${stockid}" value="${stockid}">${stockid}  <img alt="" width="16" height="16" class="img img-base img-res" data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjgiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTUuMjk4NjYgMTEuMzI5OUM1LjEzNTIxIDExLjMzOTUgNC45NzQ0NiAxMS4yODQ1IDQuODUwMzIgMTEuMTc2NkM0LjYwNTQ4IDEwLjkyNzQgNC42MDU0OCAxMC41MjUgNC44NTAzMiAxMC4yNzU4TDEwLjIxMTUgNC44NTIyMkMxMC40NjYyIDQuNjExMTYgMTAuODY1OCA0LjYyNDU2IDExLjEwNCA0Ljg4MjE4QzExLjMxOTUgNS4xMTUxNCAxMS4zMzIxIDUuNDczMjEgMTEuMTMzNSA1LjcyMTAyTDUuNzQwNjcgMTEuMTc2NkM1LjYxODEzIDExLjI4MyA1LjQ1OTk2IDExLjMzNzggNS4yOTg2NiAxMS4zMjk5WiIgZmlsbD0iI0YwRjBGMCIvPgo8cGF0aCBkPSJNMTAuNjUzNSAxMS4zMjk5QzEwLjQ4NzkgMTEuMzI5MiAxMC4zMjkxIDExLjI2MjYgMTAuMjExNSAxMS4xNDQ2TDQuODUwMjcgNS43MjEwMUM0LjYyMzQzIDUuNDUzMDQgNC42NTQyNyA1LjA0OTc2IDQuOTE5MTYgNC44MjAyN0M1LjE1NTU4IDQuNjE1NDUgNS41MDQyNSA0LjYxNTQ1IDUuNzQwNjQgNC44MjAyN0wxMS4xMzM0IDEwLjI0MzlDMTEuMzg4IDEwLjQ4NSAxMS40MDEyIDEwLjg4OTMgMTEuMTYyOCAxMS4xNDY4QzExLjE1MzMgMTEuMTU3MSAxMS4xNDM1IDExLjE2NyAxMS4xMzM0IDExLjE3NjZDMTEuMDAxNCAxMS4yOTI3IDEwLjgyNzYgMTEuMzQ4MiAxMC42NTM1IDExLjMyOTlaIiBmaWxsPSIjRjBGMEYwIi8+Cjwvc3ZnPgo=" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjgiIGZpbGw9IiM4RjhGOEYiLz4KPHBhdGggZD0iTTUuMjk4NjYgMTEuMzI5OUM1LjEzNTIxIDExLjMzOTUgNC45NzQ0NiAxMS4yODQ1IDQuODUwMzIgMTEuMTc2NkM0LjYwNTQ4IDEwLjkyNzQgNC42MDU0OCAxMC41MjUgNC44NTAzMiAxMC4yNzU4TDEwLjIxMTUgNC44NTIyMkMxMC40NjYyIDQuNjExMTYgMTAuODY1OCA0LjYyNDU2IDExLjEwNCA0Ljg4MjE4QzExLjMxOTUgNS4xMTUxNCAxMS4zMzIxIDUuNDczMjEgMTEuMTMzNSA1LjcyMTAyTDUuNzQwNjcgMTEuMTc2NkM1LjYxODEzIDExLjI4MyA1LjQ1OTk2IDExLjMzNzggNS4yOTg2NiAxMS4zMjk5WiIgZmlsbD0iI0YwRjBGMCIvPgo8cGF0aCBkPSJNMTAuNjUzNSAxMS4zMjk5QzEwLjQ4NzkgMTEuMzI5MiAxMC4zMjkxIDExLjI2MjYgMTAuMjExNSAxMS4xNDQ2TDQuODUwMjcgNS43MjEwMUM0LjYyMzQzIDUuNDUzMDQgNC42NTQyNyA1LjA0OTc2IDQuOTE5MTYgNC44MjAyN0M1LjE1NTU4IDQuNjE1NDUgNS41MDQyNSA0LjYxNTQ1IDUuNzQwNjQgNC44MjAyN0wxMS4xMzM0IDEwLjI0MzlDMTEuMzg4IDEwLjQ4NSAxMS40MDEyIDEwLjg4OTMgMTEuMTYyOCAxMS4xNDY4QzExLjE1MzMgMTEuMTU3MSAxMS4xNDM1IDExLjE2NyAxMS4xMzM0IDExLjE3NjZDMTEuMDAxNCAxMS4yOTI3IDEwLjgyNzYgMTEuMzQ4MiAxMC42NTM1IDExLjMyOTlaIiBmaWxsPSIjRjBGMEYwIi8+Cjwvc3ZnPgo=" lazy="loaded"></button>`);
+            //console.log($("#hashtagBoxid").val());
+        }
+    }
+
+    //建立table表單
+    function CreateTable1(Keyword) {
+        var TableContent = "";
+        for (var i = 0; i < Keyword.length; i++) {
+            TableContent += "" +
+                "<tr>" +
+                "<td id='" + i + "' onclick='TableOnclick(this.id)'>" + Keyword[i] + "</td>" +
+                "</tr>";
+        }
+        //table表單不存在時進行建立
+        if (!document.getElementById("#Table")) {
+            var Table1 = document.createElement('table');
+            Table1.id = "Table";
+            /*Table1.classList.add("Table");*/
+            $("#search2").append(Table1);
+        }
+        $("#Table").html(TableContent);
+    }
+
+    //刪除table表單
+    function RemoveTable1() {
+        $("#Table").remove();
+    }
+
+    // 篩選文章
+    function filter() {
+        if ($("#filter").val() != "") {
+            //console.log("有自");
+            //console.log($(".msg")[0].dataset.apple);
+            //console.log($(".msg").length);
+            //console.log($("#filter").val());
+            $(".msg").each(function (i) {
+                //console.log($(".msg")[i].dataset.hashtag);
+                if ($(".msg")[i].dataset.hashtag.length < 5) {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.add("none");
+                }
+                if (($(".msg")[i].dataset.hashtag).includes($("#filter").val())) {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.remove("none");
+                    document.getElementById($(".msg")[i].id).classList.add("show");
+                } else {
+                    //console.log($(".msg")[i].id);
+                    document.getElementById($(".msg")[i].id).classList.remove("show");
+                    document.getElementById($(".msg")[i].id).classList.add("none");
+                }
+            })
+        } else {
+            //console.log("沒自");
+            $(".msg").each(function (i) {
+                document.getElementById($(".msg")[i].id).classList.remove("none");
+                document.getElementById($(".msg")[i].id).classList.add("show");
+            })
+        }
+    }
 </script>

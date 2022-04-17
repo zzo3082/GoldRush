@@ -31,7 +31,7 @@ namespace Test_Login
                     // 讓應用程式在使用者登入時驗證安全性戳記。
                     // 這是您變更密碼或將外部登入新增至帳戶時所使用的安全性功能。  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
+                        validateInterval: TimeSpan.FromMilliseconds(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });            
@@ -61,7 +61,7 @@ namespace Test_Login
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "743195990048-s4klvkihcvtge8d450n7rv5o30sof0f4.apps.googleusercontent.com",
-                ClientSecret = "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"
+                ClientSecret = "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"
             });
         }
     }

@@ -5,11 +5,11 @@
 <br />
 <br />
 
-<div class="container">
-    <div class=" row justify-content-center">
+<div class="container animated fadeInUp slow">
+    <div class=" row justify-content-center" >
         <div class="col-md-7">
-            <div class="flex-wrap row justify-content-center" style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%); height: 700px;">
-                <section style="width: 400px;">
+            <div class="flex-wrap row justify-content-center" style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 75%); height: 700px; ">
+                <section style="width: 400px; padding-top: 30px;">
 
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "justify-content-center", role = "form" }))
                     {
@@ -18,9 +18,9 @@
                         <div class="row justify-content-center">
                             <div class="  text-center">
                                 <small class="fs-1 font-family-secondary text-uppercase font-weight-bold letter-spacing-caption text-muted">
-                                    Testttttttttttttt
+
                                 </small>
-                                <h2>註冊新帳號</h2>
+                                <h2 class="alert alert-info">註冊新帳號</h2>
                             </div>
                         </div>
 
@@ -30,6 +30,13 @@
                             @Html.LabelFor(m => m.Email, new { @class = " control-label" })
 
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NickName, new { @class = " control-label" })
+
+                            @Html.TextBoxFor(m => m.NickName, new { @class = "form-control" })
 
                         </div>
 

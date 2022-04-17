@@ -1,22 +1,48 @@
-﻿<!DOCTYPE html>
+﻿@using Test_Login.Models.Extensions;
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gold Rush</title>
-    <logo> </logo>
-
+    <link rel="icon" href="~/img/logo2.png" />
     <link rel="stylesheet" href="~/Content/vendor.css">
     <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/animateCss.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="~/assets/custom.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+    <script href="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <style>
         html, body {
             height: 100%;
             /* background-color: azure; */
         }
+
+        df-messenger {
+            --df-messenger-bot-message: #878fac;
+            --df-messenger-button-titlebar-color: #fdb813;
+            --df-messenger-chat-background-color: #fafafa;
+            --df-messenger-font-color: white;
+            --df-messenger-send-icon: #878fac;
+            --df-messenger-user-message: #479b3d;
+        }
+
+        .Table1 {
+            position: absolute;
+            background-color: white;
+            left: 0;
+            width: 215px;
+            border: solid 1px #e0e0e0;
+        }
+
+            .Table1 td {
+                height: 0.6rem;
+                padding-left: 15px;
+            }
+        /*條件搜尋*/
     </style>
 
 </head>
@@ -64,7 +90,7 @@
                                 </li>*@
                             <li class="nav-item  ">
                                 <a class="nav-link text-white justify-content-md-between" href="https://demo.htmlhunters.com/profi/documentation/getting-started/customizing.html">
-                                    <span class="text-uppercase">
+                                    <span class="text-uppercase" style="color: #17a2b8">
                                         LayoutDemo
                                     </span>
                                 </a>
@@ -100,9 +126,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
-                                        自訂策略
-                                    </a>
+                                    @if (User.Identity.GetUserTier().ToLower() == "true")
+                                    {
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/Customize">
+                                            自訂策略
+                                        </a>
+                                    }
+                                    else
+                                    {<a class="nav-link text-uppercase " data-toggle="none" href="/Manage/Pay">
+                                            <img src="~/img/lock-removebg-preview.png" width="10" height="10" /> 自訂策略
+                                        </a>
+                                    }
+
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/BackTesting/BackTesting001">
@@ -111,20 +146,20 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
-                    大盤走向
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="/stocks/StockMarketIndex">
+                                            大盤走向
+                                        </a>
+                                    </li>*@
                                 @*<li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
-                    會員註冊
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
-                    會員登入
-                </a>
-            </li>*@
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/beauty.html">
+                                            會員註冊
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-uppercase " data-toggle="none" href="https://demo.htmlhunters.com/profi/restaurant.html">
+                                            會員登入
+                                        </a>
+                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase " data-toggle="none" href="/Home/Message">
                                         討論區
@@ -143,13 +178,9 @@
                             @{
                                 try
                                 {
-                                    <form>
-                                        <button id="GoToChart" style="border:0px; background-color:white;">
-                                            <i class="material-icons" aria-hidden="true">search </i>
-                                        </button>
+                                    @*@Html.Partial("_SearchBox");*@
+                                    @Html.Action("SearchBox", "Home")
 
-                                        <input type="text" class="form-control-sm mb-3 " aria-label="search" id="selectStock" placeholder="股票代碼..." aria-invalid="false" value="" />
-                                    </form>
                                 }
                                 catch (Exception)
                                 {
@@ -168,8 +199,16 @@
     @RenderBody()
 
     @*footer*@
+    <df-messenger intent="WELCOME"
+                  chat-title="GoldRushBot"
+                  chat-icon="https://i.imgur.com/VSmAgpd.png"
+                  agent-id="c7e2956c-5b2c-424f-b914-590a1b66ce19"
+                  wait-open="true"
+                  language-code="zh-tw">
 
-    <section class="footer bg-secondary" style=" width: 100%; position:relative; bottom:0; top:30%">
+    </df-messenger>
+
+    <section class="footer bg-cyan-30" style=" width: 100%; position:relative; bottom:0; top:30%">
         <div class="container py-19 py-sm-23 py-lg-25">
             <div class="row align-items-center">
                 <div class="col-12 col-md-6 col-lg-5 mb-14 mb-md-0">
@@ -204,7 +243,7 @@
                 <div class="col-12 col-md-6 col-lg-5 text-center text-md-right">
                     <ul class="footer-menu">
                         <li><a href="#" data-toggle="smooth-scroll">聯絡我們</a></li>
-                        <li><a href="#">^_^</a></li>
+                        <li><a href="#"></a></li>
                     </ul>
                 </div>
             </div>
@@ -219,12 +258,6 @@
     <script src="~/Scripts/vendor.js"></script>
     <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
-    <script>
-        $("#GoToChart").click(function (e) {
-            e.preventDefault();
-            window.location = "/stocks/Chart/" + $("#selectStock").val();
 
-        });
-    </script>
 </body>
 </html>

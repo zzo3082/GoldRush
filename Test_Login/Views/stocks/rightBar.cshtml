@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Test_Login.Models.stockPrice>
+@using Microsoft.AspNet.Identity
+
+<style>
+        .rightBar {
+        width: 240px;
+    }
+/*    .rightBar th{
+        width:auto;
+    }*/
+    #like {
+        display: none;
+    }
+</style>
+
+<div class="radio-buttons-group mb-7" onchange="displayControl2()">
+    <button class="btn btn-light selected" id="btnpopular" data-value="breakfast">熱門個股</button>
+    <button class="btn btn-light" id="custom" data-value="all">自選個股</button>
+</div>
+@*<ul class="nav nav-tabs" id="myTab" role="tablist">*@
+    @*<li class="nav-item" role="presentation">
+        <a class="nav-link active text-blue" id="like-tab" data-toggle="tab" href="#like" role="tab" aria-controls="like" aria-selected="true">我的追蹤</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-blue" id="popular-tab" data-toggle="tab" href="#popular" role="tab" aria-controls="popular" aria-selected="false">熱門台股</a>
+    </li>*@
+    @*<li class="nav-item" role="presentation">
+            <a class="nav-link text-blue" id="visited-tab" data-toggle="tab" href="#visited" role="tab" aria-controls="visited" aria-selected="false">最近訪問</a>
+        </li>*@
+    <!--<li class="nav-item ml-auto">-->
+    <!-- Button trigger modal -->
+    <!--<button type="button" style="width:30px; padding:0px" class="btn" data-toggle="modal" data-target="#exampleModal">
+        <svg class="w-6 h-6" width="20px" fill="none" stroke="black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+    </button>-->
+    <!-- Modal -->
+    <!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>-->
+@*</ul>*@
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="like" role="tabpanel" aria-labelledby="like-tab">
+        <table class="rightBar table">
+            <thead>
+                <tr>
+                    <th scope="col">代號</th>
+                    <th scope="col">股票</th>
+                    <th scope="col">最新價</th>
+                    @*<th scope="col">成交量</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Request.IsAuthenticated && Model != null)
+                    {
+                        foreach (string s in Model.Select(x => x.stockID).Distinct().ToList())
+                        {
+                            // stockDate should use current datetime
+                            var item = Model.Where(x => x.stockID == s).OrderByDescending(x => x.stockDate).ToList()[0];
+                            <tr>
+                                <td><a href="/stocks/Chart/@item.stockID">@item.stockID</a></td>
+                                <td>@item.stockName</td>
+                                <td>@item.endPrice</td>
+                                @*<td>@item.numOfSharesTrade</td>*@
+                                @*@{ decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);}
+                                    <td>@upDown</td>
+                                    @{ decimal upDownPercent = decimal.Round((upDown / decimal.Parse(item.endPrice)), 2);}
+                                    <td>@upDownPercent </td>*@
+                            </tr>
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade show active" id="popular" role="tabpanel" aria-labelledby="popular-tab" >
+        <table class="rightBar table">
+            <thead>
+                <tr>
+                    <th scope="col">代號</th>
+                    <th scope="col">股票</th>
+                    <th scope="col">最新價</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.hot)
+                {
+                    <tr>
+                        <td><a href="/stocks/Chart/@item.stockID">@item.stockID</a></td>
+                        <td>@item.stockName</td>
+                        <td>@item.endPrice</td>
+                        @*<td>@item.numOfSharesTrade</td>*@
+                        @*@{ decimal upDown = decimal.Parse(item.endPrice) - decimal.Parse(item.openPrice);}
+                            <td>@upDown</td>
+                            @{ decimal upDownPercent = decimal.Round((upDown / decimal.Parse(item.endPrice)), 2);}
+                            <td>@upDownPercent </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*熱門*@
+<!--<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active text-blue" id="popular-tab" data-toggle="tab" href="#popular" role="tab" aria-controls="popular" aria-selected="true">熱門台股</a>
+    </li>-->
+    @*<li class="nav-item" role="presentation">
+        <a class="nav-link text-blue" id="random-tab" data-toggle="tab" href="#random" role="tab" aria-controls="random" aria-selected="false">隨機推薦</a>
+    </li>*@
+<!--</ul>-->
+<script>
+    function displayControl2() {
+        if ($('#custom').attr('class').includes("selected")) {
+            //console.log("BTN1 selected")
+            $("#like").css("display", "block")
+            $("#popular").css("display", "none")
+        }
+        if ($('#btnpopular').attr('class').includes("selected")) {
+            //console.log("BTN2 selected")
+            $("#like").css("display", "none")
+            $("#popular").css("display", "block")
+        }
+    }
+</script>

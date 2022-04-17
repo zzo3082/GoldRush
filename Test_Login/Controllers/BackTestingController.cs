@@ -151,7 +151,7 @@ namespace Test_Login.Controllers
             double percentage = Math.Round((double)profit_and_loss / total_cost, 2);
             string stockName = db.stockPrice.Where(x => x.stockID == stockID).Select(x => x.stockName).ToList()[0];
             ViewBag.stockName2 = stockName;              // 股票名稱
-            ViewBag.stockID2 = stockID;                  // 股票ID
+            ViewBag.stockID = stockID;                  // 股票ID
             ViewBag.day2 = day;                          // 買進日
             ViewBag.count2 = totalUnit;                  // 買X金額
             ViewBag.total_cost2 = total_cost;            // 總成本

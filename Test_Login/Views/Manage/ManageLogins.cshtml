@@ -4,7 +4,7 @@
     ViewBag.Title = "管理您的外部登入";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 @{
@@ -19,8 +19,11 @@
     }
     else
     {
+
         if (Model.CurrentLogins.Count > 0)
+
         {
+
             <h4>受限制的登入</h4>
             <table class="table">
                 <tbody>

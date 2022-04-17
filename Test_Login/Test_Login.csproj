@@ -178,7 +178,28 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203130910162_InitialCreate.cs" />
+    <Compile Include="Migrations\202203130910162_InitialCreate.designer.cs">
+      <DependentUpon>202203130910162_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203301534036_AddedFieldintable.cs" />
+    <Compile Include="Migrations\202203301534036_AddedFieldintable.designer.cs">
+      <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204010320166_AddedFieldintable1.cs" />
+    <Compile Include="Migrations\202204010320166_AddedFieldintable1.designer.cs">
+      <DependentUpon>202204010320166_AddedFieldintable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204041126513_AddedFieldintable2.cs" />
+    <Compile Include="Migrations\202204041126513_AddedFieldintable2.designer.cs">
+      <DependentUpon>202204041126513_AddedFieldintable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\buy_and_sell_report.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityExtensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member.cs">
@@ -204,11 +225,11 @@
     <Compile Include="Models\Mymessage.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockAll.cs" />
-    <Compile Include="Models\stockPrice.cs">
+    <Compile Include="Models\Revenues.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\stocks.cs">
+    <Compile Include="Models\StockAll.cs" />
+    <Compile Include="Models\stockPrice.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\stockTech.cs" />
@@ -217,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\custom.css" />
+    <Content Include="Content\animateCss.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\vendor.css" />
     <Content Include="favicon.ico" />
@@ -243,14 +265,15 @@
     <Content Include="fonts\font-awesome\webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\backgroundImage-2.jpg" />
-    <Content Include="img\backgroundImage-3.jpg" />
     <Content Include="img\backgroundImage-3.png" />
+    <Content Include="img\backgroundImage-new.png" />
     <Content Include="img\haveMoney.jpg" />
-    <Content Include="img\investment-pattaya.jpg" />
+    <Content Include="img\lock-removebg-preview.png" />
     <Content Include="img\LOgo.png" />
+    <Content Include="img\logo2.png" />
+    <Content Include="img\pngtree-red-gold-stock.png" />
     <Content Include="img\stock-vector-abstract.jpg" />
     <Content Include="img\stock-vector.jpg" />
-    <Content Include="img\TotheMoon.jpg" />
     <Content Include="Models\model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>model.Context.cs</LastGenOutput>
@@ -302,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TEMP\" />
     <Folder Include="Views\TEST\" />
   </ItemGroup>
   <ItemGroup>
@@ -337,9 +361,31 @@
     <Content Include="Views\stocks\Index.cshtml" />
     <Content Include="Views\stocks\StockMarketIndex.cshtml" />
     <Content Include="Views\stocks\Strategy.cshtml" />
+    <Content Include="Views\stocks\StockResult.cshtml" />
+    <Content Include="Views\Manage\Pay.cshtml" />
+    <Content Include="Views\Manage\PayOK.cshtml" />
+    <Content Include="Views\Manage\PayCancel.cshtml" />
+    <Content Include="Views\Shared\_LayoutRight.cshtml" />
+    <Content Include="Views\stocks\rightBar.cshtml" />
+    <Content Include="Views\Home\SearchBox.cshtml" />
+    <Content Include="Views\Manage\PayCancelOK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202203130910162_InitialCreate.resx">
+      <DependentUpon>202203130910162_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203301534036_AddedFieldintable.resx">
+      <DependentUpon>202203301534036_AddedFieldintable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204010320166_AddedFieldintable1.resx">
+      <DependentUpon>202204010320166_AddedFieldintable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204041126513_AddedFieldintable2.resx">
+      <DependentUpon>202204041126513_AddedFieldintable2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -15,11 +15,14 @@ namespace Test_Login.Models
     public partial class Mymessage
     {
         public int messageID { get; set; }
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string main { get; set; }
         public Nullable<int> replyID { get; set; }
         public Nullable<int> heart { get; set; }
         public Nullable<int> dislike { get; set; }
+        public string wholike { get; set; }
+        public string whohate { get; set; }
         public Nullable<System.DateTime> initDate { get; set; }
     }
 }

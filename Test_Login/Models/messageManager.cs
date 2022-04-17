@@ -121,9 +121,18 @@ namespace Test_Login.Models
         public void EditMessage(message message)
         {
             SqlConnection conn = new SqlConnection(ConnStr);
-            SqlCommand cmd = new SqlCommand(
-                $"update Mymessage set main = @main where messageID = {message.messageID}",
-                conn);
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            if (message.photo != null)
+            {
+                cmd.CommandText = $"update Mymessage set main = @main , photo = @photo where messageID = {message.messageID}";
+                cmd.Parameters.Add(new SqlParameter("photo", message.photo));
+            }
+            else
+            {
+                cmd.CommandText = $"update Mymessage set main = @main where messageID = {message.messageID}";
+            }
             cmd.Parameters.Add(new SqlParameter("main", message.main));
             conn.Open();
             cmd.ExecuteNonQuery();
